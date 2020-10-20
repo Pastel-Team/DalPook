@@ -33,11 +33,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-                // 대충 수정했다는 의미
-                // 밥 좀 먹고 와서 할까
-                // 굶으러
-                //오늘은 스팸마요!
             }
         });
     }
