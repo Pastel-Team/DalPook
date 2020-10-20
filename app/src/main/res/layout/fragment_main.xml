@@ -10,7 +10,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오늘의 할일"/>
+        android:layout_margin="20dp"
+        android:text="오늘의 할일" />
+
+
     <TextView
         android:id="@+id/txt_year"
         android:layout_width="wrap_content"
@@ -26,6 +29,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="일"/>
+
+    <view
+        class="androidx.appcompat.app.AlertController$RecycleListView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
+
 
 
 
