@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // 대충 수정했다는 의미
                 // 밥 좀 먹고 와서 할까
+                // 굶으러
             }
         });
     }
