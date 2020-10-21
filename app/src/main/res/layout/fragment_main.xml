@@ -17,6 +17,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10.5dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="16dp"
             android:text="오늘의 할일" />
 
         <View
@@ -29,14 +32,19 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="30dp"
+                android:layout_height="30.5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="36.5dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_launcher_background"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                android:layout_marginRight="11dp">
+
 
                 <TextView
                     android:id="@+id/txt_year"
@@ -88,6 +96,11 @@
         android:id="@+id/lv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ly_main_header"/>
+        android:layout_below="@+id/ly_main_header"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="9.5dp"
+        android:dividerHeight="8dp" />
+
 
 </RelativeLayout>
