@@ -5,7 +5,8 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.PlaceholderFragment">
+    tools:context=".ui.main.PlaceholderFragment"
+    android:background="#2e3145">
 
 
     <LinearLayout
@@ -20,7 +21,9 @@
             android:layout_marginLeft="10.5dp"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="16dp"
-            android:text="오늘의 할일" />
+            android:text="오늘의 할일"
+            android:textColor="#c4ccff"
+            android:textSize="12dp"/>
 
         <View
             android:layout_width="0dp"
@@ -50,41 +53,53 @@
                     android:id="@+id/txt_year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0000"/>
+                    android:text="0000"
+                    android:textColor="#e8c792"
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:id="@+id/txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/txt_year"
-                    android:text="년 "/>
+                    android:text="년 "
+                    android:textColor="#e8c792"
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:id="@+id/txt_month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/txt1"
-                    android:text="00"/>
+                    android:text="00"
+                    android:textColor="#e8c792"
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:id="@+id/txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/txt_month"
-                    android:text="월 "/>
+                    android:text="월 "
+                    android:textColor="#e8c792"
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:id="@+id/txt_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/txt2"
-                    android:text="00"/>
+                    android:text="00"
+                    android:textColor="#e8c792"
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/txt_day"
-                    android:text="일"/>
+                    android:text="일"
+                    android:textColor="#e8c792"
+                    android:textSize="12dp"/>
             </RelativeLayout>
 
         </RelativeLayout>
@@ -98,9 +113,10 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/ly_main_header"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="1dp"
         android:layout_marginRight="9.5dp"
-        android:dividerHeight="8dp" />
+        android:dividerHeight="8dp"
+
+        />
 
 
 </RelativeLayout>
