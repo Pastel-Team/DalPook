@@ -23,7 +23,7 @@
             android:layout_marginBottom="16dp"
             android:text="오늘의 할일"
             android:textColor="#c4ccff"
-            android:textSize="12dp"/>
+            android:textSize="12sp"/>
 
         <View
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="36.5dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/moon"/>
+                android:src="@drawable/ic_moon"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:text="0000"
                     android:textColor="#e8c792"
-                    android:textSize="12dp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/txt1"
@@ -64,7 +64,7 @@
                     android:layout_toEndOf="@id/txt_year"
                     android:text="년 "
                     android:textColor="#e8c792"
-                    android:textSize="12dp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/txt_month"
@@ -73,7 +73,7 @@
                     android:layout_toEndOf="@+id/txt1"
                     android:text="00"
                     android:textColor="#e8c792"
-                    android:textSize="12dp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/txt2"
@@ -82,7 +82,7 @@
                     android:layout_toEndOf="@+id/txt_month"
                     android:text="월 "
                     android:textColor="#e8c792"
-                    android:textSize="12dp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/txt_day"
@@ -91,7 +91,7 @@
                     android:layout_toEndOf="@+id/txt2"
                     android:text="00"
                     android:textColor="#e8c792"
-                    android:textSize="12dp"/>
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                     android:layout_toEndOf="@+id/txt_day"
                     android:text="일"
                     android:textColor="#e8c792"
-                    android:textSize="12dp"/>
+                    android:textSize="12sp"/>
             </RelativeLayout>
 
         </RelativeLayout>
