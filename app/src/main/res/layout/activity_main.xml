@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,23 +10,18 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_above="@+id/bottom_navi"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:background="@drawable/ic_grad_tab"
         app:itemIconTint="@drawable/selector_tab"
         app:itemTextColor="@drawable/selector_tab"
-        app:layout_behavior="tech.thdev.app.view.BottomNavigationBehavior"
+        app:layout_behavior=".BottomNavigationViewBehavior"
         app:menu="@menu/tab_item"
         style="@style/BottomNavigationView"/>
 
-
-
-
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
