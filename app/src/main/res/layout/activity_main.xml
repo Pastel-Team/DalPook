@@ -11,21 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_above="@+id/appbar"/>
+        android:layout_above="@+id/bottom_navi"/>
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navi"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:theme="@style/TabTheme">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/main_color"/>
-    </com.google.android.material.appbar.AppBarLayout>
+        android:background="@drawable/ic_grad_tab"
+        app:itemIconTint="@drawable/selector_tab"
+        app:itemTextColor="@drawable/selector_tab"
+        app:layout_behavior="tech.thdev.app.view.BottomNavigationBehavior"
+        app:menu="@menu/tab_item"
+        style="@style/BottomNavigationView"/>
 
 
 

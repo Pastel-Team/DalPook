@@ -32,4 +32,26 @@
 
         <item name="colorAccent">#c4ccff</item>                    <!-- 하단 움직이는 바 색-->
     </style>
+
+    <!-- 텍스트 폰트, 크기 지정 -->
+    <style name="BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.Inactive</item>
+    </style>
+
+    <!-- blank styles for better code readability-->
+    <style name="TextAppearance"/>
+    <style name="TextAppearance.BottomNavigationView"/>
+
+    <!-- inactive tab icon style -->
+    <style name="TextAppearance.BottomNavigationView.Inactive">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/mapo_flower_island</item>
+    </style>
+
+    <!-- active tab icon style -->
+    <style name="TextAppearance.BottomNavigationView.Active">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/mapo_flower_island</item>
+    </style>
 </resources>
