@@ -4,8 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#2e3145">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="338.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_grad_center">
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_cal"
@@ -23,8 +31,6 @@
         android:layout_marginStart="9.5dp"
         android:layout_marginEnd="9.5dp"
         android:layout_below="@+id/rcv_cal">
-
-
 
     </TableLayout>
 

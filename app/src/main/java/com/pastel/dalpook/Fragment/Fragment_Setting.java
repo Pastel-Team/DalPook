@@ -19,7 +19,7 @@ public class Fragment_Setting extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LayoutInflater lf = Objects.requireNonNull(getActivity()).getLayoutInflater();
-        View rootView = lf.inflate(R.layout.fragment_second, container, false); //pass the correct layout name for the fragment
+        View rootView = lf.inflate(R.layout.fragment_third, container, false); //pass the correct layout name for the fragment
         init(rootView);
 
 

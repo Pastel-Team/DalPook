@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2e3145">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="338.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_grad_center">
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
