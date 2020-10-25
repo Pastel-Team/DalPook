@@ -16,139 +16,237 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/ly_push"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="49.5dp"
         android:layout_marginTop="9dp"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp"
-        android:orientation="horizontal">
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:text="일정알림"
-            android:textsize="16sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="일정이 있기전에 알림으로 알려줍니다"
-            android:textsize="12sp"/>
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:text="일정알림"
+                android:textSize="16sp"
+                android:textColor="#E8C792"
+                android:fontFamily="@font/mapo_flower_island"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6.5dp"
+                android:layout_marginStart="8dp"
+                android:text="일정이 있기전에 알림으로 알려줍니다"
+                android:textSize="12sp"
+                android:textColor="#999fc9"
+                android:fontFamily="@font/mapo_flower_island"/>
+        </LinearLayout>
 
         <CheckBox
+            android:id="@+id/chk_push"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginLeft="306dp"
-            android:layout_marginRight="12dp" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="9dp"
+            android:layout_centerVertical="true"
+            android:checked="true"
+            android:text="ON"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:fontFamily="@font/mapo_flower_island"
+            android:textColor="@drawable/selector_on_off"
+            android:button="@null"/>
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/txt1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="12dp">
+        android:layout_below="@+id/ly_push"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="11dp"
+        android:text="보이는 달력 설정"
+        android:textSize="12sp"
+        android:textColor="#666D99"
+        android:fontFamily="@font/mapo_flower_island"/>
 
-
+    <RelativeLayout
+        android:id="@+id/ly_month"
+        android:layout_width="match_parent"
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/txt1"
+        android:layout_marginTop="6.5dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="보이는 달력 설정"
-            android:textsize="12sp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp"
-        >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
             android:text="월간달력"
-            android:textsize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="#E8C792"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/mapo_flower_island"/>
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/selector_chk"
+            android:gravity="center"/>
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ly_month_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp" >
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/ly_month"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
             android:text="월간목록달력"
-            android:textsize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="#E8C792"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/mapo_flower_island"/>
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/selector_chk"
+            android:gravity="center"/>
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ly_week"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp">
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/ly_month_list"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
             android:text="주간달력"
-            android:textsize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="#E8C792"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/mapo_flower_island"/>
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/selector_chk"
+            android:gravity="center"/>
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ly_lesson"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp">
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/ly_week"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
             android:text="수강시간표"
-            android:textsize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="#E8C792"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/mapo_flower_island"/>
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/selector_chk"
+            android:gravity="center"/>
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ly_diary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp">
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/ly_lesson"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="업무일지"/>
+            android:layout_marginStart="9dp"
+            android:text="일지기록"
+            android:textSize="16sp"
+            android:textColor="#E8C792"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/mapo_flower_island"/>
 
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/selector_chk"
+            android:gravity="center"/>
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="9.5dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="후원해주신 금액은 허기를 채우는데 쓰입니다"
-            android:textSize="12dp"/>
-
-    </LinearLayout>
+        android:layout_below="@+id/ly_diary"
+        android:layout_marginTop="33dp"
+        android:layout_marginStart="10.5dp"
+        android:text="후원해주신 금액은 허기를 채우는데 쓰입니다"
+        android:textSize="12sp"
+        android:textColor="#666d99"
+        android:fontFamily="@font/mapo_flower_island"/>
     
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_donate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/txt2"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
         android:text="후원하기(3,300W)"
-        android:layout_marginTop="50.5dp"
-        android:layout_marginLeft="10.5dp"
-        android:layout_marginRight="10dp"
-        />
-
-
-
+        android:textSize="16sp"
+        android:textColor="#E8C792"
+        android:fontFamily="@font/mapo_flower_island"
+        android:background="@drawable/roundbutton"/>
 
 </RelativeLayout>
