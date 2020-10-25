@@ -99,6 +99,7 @@
             android:fontFamily="@font/mapo_flower_island"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chk_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -118,7 +119,7 @@
         android:background="@drawable/roundcorner">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"
             android:text="월간목록달력"
@@ -128,6 +129,7 @@
             android:fontFamily="@font/mapo_flower_island"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chk_month_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -147,7 +149,7 @@
         android:background="@drawable/roundcorner">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"
             android:text="주간달력"
@@ -157,6 +159,7 @@
             android:fontFamily="@font/mapo_flower_island"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chk_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -176,7 +179,7 @@
         android:background="@drawable/roundcorner">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"
             android:text="수강시간표"
@@ -186,6 +189,37 @@
             android:fontFamily="@font/mapo_flower_island"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chk_lesson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:button="@drawable/selector_chk"
+            android:gravity="center"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ly_work"
+        android:layout_width="match_parent"
+        android:layout_height="49.5dp"
+        android:layout_below="@+id/ly_lesson"
+        android:layout_marginTop="4.5dp"
+        android:layout_marginStart="10.5dp"
+        android:layout_marginEnd="10.5dp"
+        android:background="@drawable/roundcorner">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:text="업무일지"
+            android:textSize="16sp"
+            android:textColor="#E8C792"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/mapo_flower_island"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chk_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -198,23 +232,24 @@
         android:id="@+id/ly_diary"
         android:layout_width="match_parent"
         android:layout_height="49.5dp"
-        android:layout_below="@+id/ly_lesson"
+        android:layout_below="@+id/ly_work"
         android:layout_marginTop="4.5dp"
         android:layout_marginStart="10.5dp"
         android:layout_marginEnd="10.5dp"
         android:background="@drawable/roundcorner">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"
-            android:text="일지기록"
+            android:text="다이어리"
             android:textSize="16sp"
             android:textColor="#E8C792"
             android:layout_centerVertical="true"
             android:fontFamily="@font/mapo_flower_island"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/chk_diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
