@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="338.5dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/ic_grad_center">
-
-    </RelativeLayout>
+        android:background="@drawable/ic_grad_center"/>
 
     <LinearLayout
         android:id="@+id/ly_main_header"

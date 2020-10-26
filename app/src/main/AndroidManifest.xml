@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DalPook">
         <activity
-            android:name=".Calendar.CalMonthActivity"
+            android:name=".Calendar.MonthActivity"
             android:theme="@style/Theme.DalPook.NoActionBar"/>
         <activity
             android:name=".MainActivity"

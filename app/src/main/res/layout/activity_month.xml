@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Calendar.MonthActivity"
+    android:background="#2e3145">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="338.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_grad_center"/>
+    
+    <RelativeLayout
+        android:id="@+id/ly_month_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8.5dp"
+            android:layout_marginStart="8.5dp"
+            android:layout_marginEnd="8.5dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_month_back"
+                android:layout_width="9dp"
+                android:layout_height="17dp"
+                android:background="@drawable/ic_back"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7.5dp"
+                android:layout_gravity="center_vertical"
+                android:text="월간달력"
+                android:textSize="16sp"
+                android:textColor="#999fc9"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_month_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:text="일정등록"
+                android:textColor="#e8c792"
+                android:textSize="16sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_month_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ly_month_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15.5dp"
+        android:text="0000"
+        android:textSize="10sp"
+        android:textColor="#666d99"
+        android:fontFamily="@font/mapo_flower_island"/>
+
+    <RelativeLayout
+        android:id="@+id/ly_month_monsel"
+        android:layout_width="115dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/txt_month_year"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/roundsel">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_month_monback"
+            android:layout_width="5dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="9dp"
+            android:background="@drawable/ic_month_back"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/txt_month_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="00월"
+            android:textSize="12dp"
+            android:textColor="#c4ccff"
+            android:fontFamily="@font/mapo_flower_island"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_month_monnext"
+            android:layout_width="5dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="9dp"
+            android:background="@drawable/ic_month_next"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <org.hugoandrade.calendarviewlib.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ly_month_monsel"
+        android:layout_marginTop="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:content_background_color="#fff"
+        app:week_header_background_color="#fff"
+        app:week_header_text_color="?attr/colorPrimary"
+        app:current_day_circle_enable="true"
+        app:month_header_show="false"
+        app:week_header_movable="false" />
+
+
+</RelativeLayout>

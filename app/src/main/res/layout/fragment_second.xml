@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="338.5dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/ic_grad_center">
-
-    </RelativeLayout>
+        android:background="@drawable/ic_grad_center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_cal"
@@ -33,6 +31,12 @@
         android:layout_below="@+id/rcv_cal">
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/btn_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="테스트버튼"/>
 
 
 </RelativeLayout>

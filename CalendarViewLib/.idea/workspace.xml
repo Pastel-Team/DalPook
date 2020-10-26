@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="40ee936d-9200-4197-b365-281b59624a58" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/proguard-rules.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/hugoandrade/calendarviewlib/CalendarView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/hugoandrade/calendarviewlib/helpers/FrameLinearLayout.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/hugoandrade/calendarviewlib/helpers/MultipleTriangleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/hugoandrade/calendarviewlib/helpers/SelectedTextView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/hugoandrade/calendarviewlib/helpers/YMDCalendar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_chevron_end.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_chevron_start.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/xml_calendar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/xml_calendar_container.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/xml_calendar_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/xml_grid_item_day.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/values/attrs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/com/pastel/dalpook/Calendar/CalMonthActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/java/com/pastel/dalpook/Fragment/Fragment_Cal.java" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/java/com/pastel/dalpook/Fragment/Fragment_Cal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_second.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/main/res/layout/fragment_second.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1jPvUuUY5lJrNtPrWB7AiIT8knV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="40ee936d-9200-4197-b365-281b59624a58" name="Default Changelist" comment="" />
+      <created>1603718559595</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1603718559595</updated>
+    </task>
+    <servers />
+  </component>
+</project>

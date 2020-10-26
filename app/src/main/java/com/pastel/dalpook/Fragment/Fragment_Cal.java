@@ -12,18 +12,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pastel.dalpook.Calendar.CalMonthActivity;
+import com.pastel.dalpook.Calendar.MonthActivity;
 import com.pastel.dalpook.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.time.Month;
 import java.util.Objects;
 
 public class Fragment_Cal extends Fragment {
 
     private RecyclerView rcv;
+    private Button btn_test;
 
     @Nullable
     @Override
@@ -32,11 +30,19 @@ public class Fragment_Cal extends Fragment {
         View rootView = lf.inflate(R.layout.fragment_second, container, false); //pass the correct layout name for the fragment
         init(rootView);
 
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), MonthActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
 
     private void init(View view){
         rcv = (RecyclerView)view.findViewById(R.id.rcv_cal);
+        btn_test = (Button)view.findViewById(R.id.btn_test);
     }
 }
