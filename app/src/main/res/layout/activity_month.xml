@@ -26,12 +26,17 @@
             android:layout_marginEnd="8.5dp"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_month_back"
-                android:layout_width="9dp"
-                android:layout_height="17dp"
-                android:background="@drawable/ic_back"
-                android:layout_gravity="center_vertical"/>
+            <RelativeLayout
+                android:layout_width="15dp"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_month_back"
+                    android:layout_width="9dp"
+                    android:layout_height="17dp"
+                    android:background="@drawable/ic_back"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,12 +123,16 @@
         android:layout_below="@+id/ly_month_monsel"
         android:layout_marginTop="10dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:content_background_color="#fff"
-        app:week_header_background_color="#fff"
-        app:week_header_text_color="?attr/colorPrimary"
+        app:content_background_color="#00FF0000"
+        app:week_header_background_color="#2e3145"
+        app:week_header_text_color="#c4ccff"
         app:current_day_circle_enable="true"
+        app:current_day_circle_color="#505578"
+        app:current_day_text_color="#e8c792"
         app:month_header_show="false"
-        app:week_header_movable="false" />
+        app:week_header_movable="false"
+        app:day_text_color="#c4ccff"
+        app:selected_day_border_color="#c4ccff"/>
 
 
 </RelativeLayout>

@@ -8,4 +8,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#2e3145</color>
+    <color name="transparent">#33000000</color>
+    <!--
+        투명도
+        100% — FF
+        90% — E6
+        80% — CC
+        70% — B3
+        60% — 99
+        50% — 80
+        40% — 66
+        30% — 4D
+        20% — 33
+        10% — 1A
+        0% — 00
+        -->
 </resources>

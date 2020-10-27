@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 
+
 import androidx.annotation.ColorInt;
 
 import org.hugoandrade.calendarviewlib.R;
@@ -69,7 +70,8 @@ public class FrameLinearLayout extends LinearLayout {
         a.recycle();
 
         strokePaint.setStyle(Paint.Style.FILL);
-        strokePaint.setColor(Color.parseColor("#2E3145"));
+        //strokePaint.setColor(Color.parseColor("#2E3145"));
+        strokePaint.setColor(frameColor);
 
         setWillNotDraw(false);
     }
@@ -123,8 +125,8 @@ public class FrameLinearLayout extends LinearLayout {
         if (frameColor != color) {
             frameColor = color;
             strokePaint.setStyle(Paint.Style.FILL);
-            //strokePaint.setColor(frameColor);
-            strokePaint.setColor(Color.parseColor("#2E3145"));
+            strokePaint.setColor(frameColor);
+            //strokePaint.setColor(Color.parseColor("#2E3145"));
         }
         invalidate();
     }

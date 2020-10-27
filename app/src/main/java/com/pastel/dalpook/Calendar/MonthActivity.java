@@ -1,44 +1,51 @@
 package com.pastel.dalpook.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.pastel.dalpook.R;
-import com.pastel.dalpook.Utils.TranslateAnimationBuilder;
+import com.pastel.dalpook.Utils.CalendarDialog;
+import com.pastel.dalpook.data.Event;
 
 import org.hugoandrade.calendarviewlib.CalendarView;
 
 import java.text.DateFormatSymbols;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Objects;
 
 public class MonthActivity extends AppCompatActivity {
 
+    private final static int CREATE_EVENT_REQUEST_CODE = 100;
+
     private View vCreateEventInnerContainer;
     private View vCreateEventOuterContainer;
+    private CalendarDialog mCalendarDialog;
+
+    private List<Event> mEventList = new ArrayList<>();
 
     private String[] mShortMonths;
     private CalendarView mCalendarView;
-    private OptionsAdapter mOptionsAdapter;
 
     private TextView txt_month_year;
     private TextView txt_month_month;
+
+    private Button btn_month_back;
+    private Button btn_month_monback;
+    private Button btn_month_monnext;
+    private Button btn_month_add;
 
     public static Intent makeIntent(Context context) {
         return new Intent(context, MonthActivity.class);
@@ -51,6 +58,10 @@ public class MonthActivity extends AppCompatActivity {
 
         txt_month_month = (TextView) findViewById(R.id.txt_month_month);
         txt_month_year = (TextView) findViewById(R.id.txt_month_year);
+        btn_month_monback = (Button) findViewById(R.id.btn_month_monback);
+        btn_month_monnext= (Button) findViewById(R.id.btn_month_monnext);
+        btn_month_back = (Button) findViewById(R.id.btn_month_back);
+        btn_month_add = (Button) findViewById(R.id.btn_month_add);
 
         mShortMonths = new DateFormatSymbols().getShortMonths();
 
@@ -59,20 +70,33 @@ public class MonthActivity extends AppCompatActivity {
             @Override
             public void onMonthChanged(int month, int year) {
                 txt_month_year.setText(Integer.toString(year));
-                switch (mShortMonths[month]){
-                    case "Jan" : txt_month_month.setText("1월"); break;
-                    case "Feb" : txt_month_month.setText("2월"); break;
-                    case "Mar" : txt_month_month.setText("3월"); break;
-                    case "Apr" : txt_month_month.setText("4월"); break;
-                    case "May" : txt_month_month.setText("5월"); break;
-                    case "Jun" : txt_month_month.setText("6월"); break;
-                    case "Jul" : txt_month_month.setText("7월"); break;
-                    case "Aug" : txt_month_month.setText("8월"); break;
-                    case "Sep" : txt_month_month.setText("9월"); break;
-                    case "Oct" : txt_month_month.setText("10월"); break;
-                    case "Nov" : txt_month_month.setText("11월"); break;
-                    case "Dec" : txt_month_month.setText("12월"); break;
+
+                if(mShortMonths[month].equals("Jan") || mShortMonths[month].equals("1월")){
+                    txt_month_month.setText("1월");
+                }else if(mShortMonths[month].equals("Feb") || mShortMonths[month].equals("2월")) {
+                    txt_month_month.setText("2월");
+                }else if(mShortMonths[month].equals("Mar") || mShortMonths[month].equals("3월")){
+                    txt_month_month.setText("3월");
+                }else if(mShortMonths[month].equals("Apr") || mShortMonths[month].equals("4월")){
+                    txt_month_month.setText("4월");
+                }else if(mShortMonths[month].equals("May") || mShortMonths[month].equals("5월")){
+                    txt_month_month.setText("5월");
+                }else if(mShortMonths[month].equals("Jun") || mShortMonths[month].equals("6월")){
+                    txt_month_month.setText("6월");
+                }else if(mShortMonths[month].equals("Jul") || mShortMonths[month].equals("7월")){
+                    txt_month_month.setText("7월");
+                }else if(mShortMonths[month].equals("Aug") || mShortMonths[month].equals("8월")){
+                    txt_month_month.setText("8월");
+                }else if(mShortMonths[month].equals("Sep") || mShortMonths[month].equals("9월")){
+                    txt_month_month.setText("9월");
+                }else if(mShortMonths[month].equals("Oct") || mShortMonths[month].equals("10월")){
+                    txt_month_month.setText("10월");
+                }else if(mShortMonths[month].equals("Nov") || mShortMonths[month].equals("11월")){
+                    txt_month_month.setText("11월");
+                }else if(mShortMonths[month].equals("Dec") || mShortMonths[month].equals("12월")){
+                    txt_month_month.setText("12월");
                 }
+
             }
         });
 
@@ -81,131 +105,117 @@ public class MonthActivity extends AppCompatActivity {
         //getSupportActionBar().setTitle(mShortMonths[month]);
         //getSupportActionBar().setSubtitle(Integer.toString(year));
         txt_month_year.setText(Integer.toString(year));
-        switch (mShortMonths[month]){
-            case "Jan" : txt_month_month.setText("1월"); break;
-            case "Feb" : txt_month_month.setText("2월"); break;
-            case "Mar" : txt_month_month.setText("3월"); break;
-            case "Apr" : txt_month_month.setText("4월"); break;
-            case "May" : txt_month_month.setText("5월"); break;
-            case "Jun" : txt_month_month.setText("6월"); break;
-            case "Jul" : txt_month_month.setText("7월"); break;
-            case "Aug" : txt_month_month.setText("8월"); break;
-            case "Sep" : txt_month_month.setText("9월"); break;
-            case "Oct" : txt_month_month.setText("10월"); break;
-            case "Nov" : txt_month_month.setText("11월"); break;
-            case "Dec" : txt_month_month.setText("12월"); break;
+        if(mShortMonths[month].equals("Jan") || mShortMonths[month].equals("1월")){
+            txt_month_month.setText("1월");
+        }else if(mShortMonths[month].equals("Feb") || mShortMonths[month].equals("2월")) {
+            txt_month_month.setText("2월");
+        }else if(mShortMonths[month].equals("Mar") || mShortMonths[month].equals("3월")){
+            txt_month_month.setText("3월");
+        }else if(mShortMonths[month].equals("Apr") || mShortMonths[month].equals("4월")){
+            txt_month_month.setText("4월");
+        }else if(mShortMonths[month].equals("May") || mShortMonths[month].equals("5월")){
+            txt_month_month.setText("5월");
+        }else if(mShortMonths[month].equals("Jun") || mShortMonths[month].equals("6월")){
+            txt_month_month.setText("6월");
+        }else if(mShortMonths[month].equals("Jul") || mShortMonths[month].equals("7월")){
+            txt_month_month.setText("7월");
+        }else if(mShortMonths[month].equals("Aug") || mShortMonths[month].equals("8월")){
+            txt_month_month.setText("8월");
+        }else if(mShortMonths[month].equals("Sep") || mShortMonths[month].equals("9월")){
+            txt_month_month.setText("9월");
+        }else if(mShortMonths[month].equals("Oct") || mShortMonths[month].equals("10월")){
+            txt_month_month.setText("10월");
+        }else if(mShortMonths[month].equals("Nov") || mShortMonths[month].equals("11월")){
+            txt_month_month.setText("11월");
+        }else if(mShortMonths[month].equals("Dec") || mShortMonths[month].equals("12월")){
+            txt_month_month.setText("12월");
         }
+        mCalendarView.setOnItemClickedListener(new CalendarView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(List<CalendarView.CalendarObject> calendarObjects,
+                                      Calendar previousDate,
+                                      Calendar selectedDate) {
+                if (calendarObjects.size() != 0) {
+                    mCalendarDialog.setSelectedDate(selectedDate);
+                    mCalendarDialog.show();
+                }
+                else {
+                    if (diffYMD(previousDate, selectedDate) == 0)
+                        createEvent(selectedDate);
+                }
+            }
+        });
 
-        Button btn_month_add = findViewById(R.id.btn_month_add);
+        mCalendarDialog = CalendarDialog.Builder.instance(this)
+                .setEventList(mEventList)
+                .setOnItemClickListener(new CalendarDialog.OnCalendarDialogListener() {
+                    @Override
+                    public void onEventClick(Event event) {
+                        onEventSelected(event);
+                    }
+
+                    @Override
+                    public void onCreateEvent(Calendar calendar) {
+                        createEvent(calendar);
+                    }
+                })
+                .create();
+
         btn_month_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showUnitSelector();
+                createEvent(mCalendarView.getSelectedDate());
             }
         });
 
-        @SuppressLint("InflateParams") View EventContView = (View)getLayoutInflater().inflate(R.layout.layout_create_calendar_event,null);
-        vCreateEventInnerContainer = (View) EventContView.findViewById(R.id.create_event_inner_container);//findViewById(R.id.create_event_inner_container);
-        vCreateEventInnerContainer.setTranslationY(0);
-        vCreateEventOuterContainer = (View) EventContView.findViewById(R.id.create_event_outer_container);//findViewById(R.id.create_event_outer_container);
-        vCreateEventOuterContainer.setVisibility(View.INVISIBLE);
-        vCreateEventOuterContainer.setOnClickListener(new View.OnClickListener() {
+        btn_month_monback.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                hideUnitSelector();
+            public void onClick(View view) {
+                mCalendarView.getmViewPager().setCurrentItem(mCalendarView.getmViewPager().getCurrentItem() - 1, true);
             }
         });
-
-        View tvCancel = (View) EventContView.findViewById(R.id.tv_cancel);
-        tvCancel.setOnClickListener(new View.OnClickListener() {
+        btn_month_monnext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                hideUnitSelector();
+            public void onClick(View view) {
+                mCalendarView.getmViewPager().setCurrentItem(mCalendarView.getmViewPager().getCurrentItem() + 1, true);
             }
         });
 
-        View tvSet = (View) EventContView.findViewById(R.id.tv_set);
-        tvSet.setOnClickListener(new View.OnClickListener() {
+        btn_month_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                hideUnitSelector();
-                addEventToCalendarView(mOptionsAdapter.getSelectedColor());
+            public void onClick(View view) {
+                finish();
             }
         });
 
-        RecyclerView rvColors = (RecyclerView) EventContView.findViewById(R.id.rv_colors);
-        rvColors.setHasFixedSize(true);
-        rvColors.setLayoutManager(new GridLayoutManager(this, 6,  LinearLayoutManager.VERTICAL, false));
-
-        mOptionsAdapter = new OptionsAdapter(
-                Color.rgb(159, 225, 231),
-                Color.rgb(220, 39, 39),
-                Color.rgb(219, 173, 255),
-                Color.rgb(164, 189, 252),
-                Color.rgb(84, 132, 237),
-                Color.rgb(70, 214, 219),
-                Color.rgb(122, 231, 191),
-                Color.rgb(81, 183, 73),
-                Color.rgb(251, 215, 91),
-                Color.rgb(255, 184, 120),
-                Color.rgb(255, 136, 124),
-                Color.rgb(225, 225, 225)
-        );
-        mOptionsAdapter.setOnClickListener(new OptionsAdapter.OnClickListener() {
-            @Override
-            public void onClick(int color) {
-                hideUnitSelector();
-                addEventToCalendarView(color);
-            }
-        });
-        rvColors.setAdapter(mOptionsAdapter);
     }
 
-    private void addEventToCalendarView(int color) {
-        mCalendarView.addCalendarObject(new CalendarView.CalendarObject(
-                null,
-                mCalendarView.getSelectedDate(),
-                color,
-                Color.TRANSPARENT
-        ));
+
+    private void onEventSelected(Event event) {
+        Activity context = MonthActivity.this;
+        Intent intent = CreateEventActivity.makeIntent(context, event);
+
+        startActivityForResult(intent, CREATE_EVENT_REQUEST_CODE);
+        overridePendingTransition( R.anim.slide_in_up, R.anim.stay );
     }
 
-    private void showUnitSelector() {
-        vCreateEventOuterContainer.setVisibility(View.VISIBLE);
+    private void createEvent(Calendar selectedDate) {
+        Activity context = MonthActivity.this;
+        Intent intent = CreateEventActivity.makeIntent(context, selectedDate);
 
-        mOptionsAdapter.setSelectedItem(0);
-
-        TranslateAnimationBuilder.instance()
-                .setFromY(vCreateEventInnerContainer.getHeight())
-                .setToY(0)
-                .start(vCreateEventInnerContainer);
-    }
-
-    private void hideUnitSelector() {
-
-        TranslateAnimationBuilder.instance()
-                .setFromY(0)
-                .setToY(vCreateEventInnerContainer.getHeight())
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        vCreateEventOuterContainer.setVisibility(View.INVISIBLE);
-                    }
-                })
-                .start(vCreateEventInnerContainer);
+        startActivityForResult(intent, CREATE_EVENT_REQUEST_CODE);
+        overridePendingTransition( R.anim.slide_in_up, R.anim.stay );
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        /*
         getMenuInflater().inflate(R.menu.menu_toolbar_calendar_view, menu);
-*/
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*
         switch (item.getItemId()) {
             case R.id.action_today: {
                 mCalendarView.setSelectedDate(Calendar.getInstance());
@@ -213,91 +223,78 @@ public class MonthActivity extends AppCompatActivity {
             }
         }
 
-         */
         return super.onOptionsItemSelected(item);
     }
 
-    static class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHolder> {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CREATE_EVENT_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                int action = CreateEventActivity.extractActionFromIntent(data);
+                Event event = CreateEventActivity.extractEventFromIntent(data);
 
-        final int[] mColors;
-        int mSelectedItem;
-        OnClickListener mListener;
+                switch (action) {
+                    case CreateEventActivity.ACTION_CREATE: {
+                        mEventList.add(event);
+                        mCalendarView.addCalendarObject(parseCalendarObject(event));
+                        mCalendarDialog.setEventList(mEventList);
+                        break;
+                    }
+                    case CreateEventActivity.ACTION_EDIT: {
+                        Event oldEvent = null;
+                        for (Event e : mEventList) {
+                            if (Objects.equals(event.getID(), e.getID())) {
+                                oldEvent = e;
+                                break;
+                            }
+                        }
+                        if (oldEvent != null) {
+                            mEventList.remove(oldEvent);
+                            mEventList.add(event);
 
-        OptionsAdapter(int... colors) {
-            mColors = colors;
-            mSelectedItem = 0;
-        }
+                            mCalendarView.removeCalendarObjectByID(parseCalendarObject(oldEvent));
+                            mCalendarView.addCalendarObject(parseCalendarObject(event));
+                            mCalendarDialog.setEventList(mEventList);
+                        }
+                        break;
+                    }
+                    case CreateEventActivity.ACTION_DELETE: {
+                        Event oldEvent = null;
+                        for (Event e : mEventList) {
+                            if (Objects.equals(event.getID(), e.getID())) {
+                                oldEvent = e;
+                                break;
+                            }
+                        }
+                        if (oldEvent != null) {
+                            mEventList.remove(oldEvent);
+                            mCalendarView.removeCalendarObjectByID(parseCalendarObject(oldEvent));
 
-        @Override
-        public OptionsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater vi = LayoutInflater.from(parent.getContext());
-            return new ViewHolder(vi.inflate(R.layout.list_item_color, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(OptionsAdapter.ViewHolder holder, int position) {
-            int color = mColors[holder.getAdapterPosition()];
-
-            holder.cardViewInner.setCardBackgroundColor(color);
-
-            if (holder.getAdapterPosition() == mSelectedItem) {
-                holder.cardViewOuter.setCardBackgroundColor(Color.RED);
+                            mCalendarDialog.setEventList(mEventList);
+                        }
+                        break;
+                    }
+                }
             }
-            else {
-                holder.cardViewOuter.setCardBackgroundColor(Color.TRANSPARENT);
-            }
+            return;
         }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
-        @Override
-        public int getItemCount() {
-            return mColors.length;
-        }
+    public static int diffYMD(Calendar date1, Calendar date2) {
+        if (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) &&
+                date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH) &&
+                date1.get(Calendar.DAY_OF_MONTH) == date2.get(Calendar.DAY_OF_MONTH))
+            return 0;
 
-        void setOnClickListener(OnClickListener listener) {
-            mListener = listener;
-        }
+        return date1.before(date2) ? -1 : 1;
+    }
 
-        void setSelectedItem(int position) {
-            int oldPosition = mSelectedItem;
-            mSelectedItem = position;
-
-            notifyItemChanged(oldPosition);
-            notifyItemChanged(mSelectedItem);
-        }
-
-        int getSelectedColor() {
-            return mColors[mSelectedItem];
-        }
-
-        interface OnClickListener {
-            void onClick(int color);
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-            CardView cardViewInner;
-            CardView cardViewOuter;
-
-            ViewHolder(View itemView) {
-                super(itemView);
-
-                itemView.setOnClickListener(this);
-
-                cardViewInner = itemView.findViewById(R.id.cardView_inner);
-                cardViewOuter = itemView.findViewById(R.id.cardView_outer);
-            }
-
-            @Override
-            public void onClick(View v) {
-                int oldPosition = mSelectedItem;
-                mSelectedItem = getAdapterPosition();
-
-                notifyItemChanged(oldPosition);
-                notifyItemChanged(mSelectedItem);
-
-                if (mListener != null)
-                    mListener.onClick(mColors[mSelectedItem]);
-            }
-        }
+    private static CalendarView.CalendarObject parseCalendarObject(Event event) {
+        return new CalendarView.CalendarObject(
+                event.getID(),
+                event.getDate(),
+                event.getColor(),
+                event.isCompleted() ? Color.TRANSPARENT : Color.parseColor("#e8c792"));
     }
 }

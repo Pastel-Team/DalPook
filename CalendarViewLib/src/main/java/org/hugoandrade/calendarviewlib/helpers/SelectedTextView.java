@@ -82,8 +82,8 @@ public class SelectedTextView extends AppCompatTextView {
         setLayerType(LAYER_TYPE_HARDWARE, null);
 
         mPaint = new Paint();
-        //mPaint.setColor(mSelectedColor);
-        mPaint.setColor(Color.parseColor("#2E3145"));
+        mPaint.setColor(mSelectedColor);
+        //mPaint.setColor(Color.parseColor("#2E3145"));
         mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OUT));
     }
@@ -92,8 +92,8 @@ public class SelectedTextView extends AppCompatTextView {
         if (mSelectedColor != color) {
             mSelectedColor = color;
             if (mPaint != null) {
-                //mPaint.setColor(mSelectedColor);
-                mPaint.setColor(Color.parseColor("#2E3145"));
+                mPaint.setColor(mSelectedColor);
+                //mPaint.setColor(Color.parseColor("#2E3145"));
             }
         }
         invalidate();

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Scroller;
@@ -63,8 +64,8 @@ public class CalendarView extends FrameLayout {
             parseCalendar(DEFAULT_MAX_DATE, TEMPLATE, Locale.getDefault()));
 
     private final int[] weekHeaderIds = {
-            R.id.tv_weekday_1, R.id.tv_weekday_2, R.id.tv_weekday_3, R.id.tv_weekday_4,
-            R.id.tv_weekday_5, R.id.tv_weekday_6, R.id.tv_weekday_7
+            R.id.tv_weekday_2, R.id.tv_weekday_3, R.id.tv_weekday_4,
+            R.id.tv_weekday_5, R.id.tv_weekday_6, R.id.tv_weekday_7, R.id.tv_weekday_1
     };
 
     private View mHeader;
@@ -341,7 +342,7 @@ public class CalendarView extends FrameLayout {
         int j = (7 + dayOffset - startingWeekDay)%7;
         for (int i = 0 ; i < weekHeaderIds.length ; i++) {
             TextView tv = view.findViewById(weekHeaderIds[i]);
-            tv.setText(weekHeaderTexts[i]);
+            tv.setText(weekHeaderTexts[i].substring(0,1));
             tv.setAllCaps(true);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
 
@@ -351,6 +352,10 @@ public class CalendarView extends FrameLayout {
             }
             else {
                 tv.setTextColor(weekHeaderOffsetDayTextColor);
+                tv.setBackgroundColor(weekHeaderOffsetDayBackgroundColor);
+            }
+            if( i == 5){
+                tv.setTextColor(Color.parseColor("#6176ff"));
                 tv.setBackgroundColor(weekHeaderOffsetDayBackgroundColor);
             }
         }
@@ -558,7 +563,7 @@ public class CalendarView extends FrameLayout {
 
             FrameLinearLayout container = (FrameLinearLayout) view;
             SelectedTextView tvDay = (SelectedTextView) view.findViewById(R.id.tv_calendar_day);
-            tvDay.setBackgroundColor(Color.parseColor("#2E3145"));
+            //tvDay.setBackgroundColor(Color.parseColor("#2E3145"));
             MultipleTriangleView vNotes = view.findViewById(R.id.v_notes);
 
             // Set Notes
@@ -586,9 +591,14 @@ public class CalendarView extends FrameLayout {
             // Set offset day (sundays or mondays)
             int dayOffset = mAttributes.get(Attr.dayOffset);
             int startingWeekDay = mAttributes.get(Attr.startingWeekDay);
-            boolean isOffsetDay = position % 7 == (7 + dayOffset - startingWeekDay) % 7;
+            boolean isOffsetDay = position % 7 == (7 + dayOffset - startingWeekDay) % 7 -6 ;
+            boolean isSatDay = position % 7 == (7 + dayOffset - startingWeekDay) % 7 ;
             if (isOffsetDay) {
                 tvDay.setTextColor(mAttributes.get(Attr.offsetDayTextColor));
+                container.setBackgroundColor(mAttributes.get(Attr.offsetDayBackgroundColor));
+            }
+            if (isSatDay) {
+                tvDay.setTextColor(Color.parseColor("#6176ff"));
                 container.setBackgroundColor(mAttributes.get(Attr.offsetDayBackgroundColor));
             }
 
@@ -596,7 +606,8 @@ public class CalendarView extends FrameLayout {
             if (day.equals(mSelectedDate)) {
                 if (isOffsetDay) {
                     tvDay.setTextColor(mAttributes.get(Attr.offsetDayTextColor));
-                } else {
+                } else if(isSatDay){
+                } else {tvDay.setTextColor(Color.parseColor("#6176ff"));
                     tvDay.setTextColor(mAttributes.get(Attr.selectedDayTextColor));
                 }
                 container.setFrameColor(mAttributes.get(Attr.selectedDayBorderColor));
@@ -609,8 +620,9 @@ public class CalendarView extends FrameLayout {
                     tvDay.setTextColor(mAttributes.get(Attr.offsetDayTextColor));
                     tvDay.setSelectedColor(mAttributes.get(Attr.offsetDayTextColor));
                 } else {
-                    tvDay.setTextColor(mAttributes.get(Attr.currentDayTextColor));
+                    //tvDay.setTextColor(mAttributes.get(Attr.currentDayTextColor));
                     tvDay.setSelectedColor(mAttributes.get(Attr.currentDayCircleColor));
+                    tvDay.setTextColor(Color.parseColor("#e8c792"));
                 }
                 changeTypeface(tvDay, mAttributes.get(Attr.currentDayTextStyle));
                 tvDay.setSelectedEnabled(mAttributes.get(Attr.currentDayCircleEnable) == 1);
@@ -736,7 +748,7 @@ public class CalendarView extends FrameLayout {
 
             // Previous month offset days in order to fill first week
             int firstDayOfPreviousMonthToDisplayInCalendar
-                    = maximumDayOfPreviousMonth - (firstWeekDayOfMonth - 1);
+                    = maximumDayOfPreviousMonth - (firstWeekDayOfMonth );
 
             // Setting the first date as ivPrevious month's required date.
             prevMonth.set(Calendar.DAY_OF_MONTH, firstDayOfPreviousMonthToDisplayInCalendar);
@@ -1145,8 +1157,8 @@ public class CalendarView extends FrameLayout {
     }
 
     private static class Attr {
-        static final int dayOffset = 1;
-        static final int startingWeekDay = 2;
+        static final int dayOffset = 0;
+        static final int startingWeekDay = 1;
 
         static final int monthHeaderBackgroundColor = 16;
         static final int monthHeaderTextColor = 17;
@@ -1220,5 +1232,9 @@ public class CalendarView extends FrameLayout {
             }
         }
         return text;
+    }
+
+    public CalendarViewPager getmViewPager(){
+        return mViewPager;
     }
 }

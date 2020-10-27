@@ -3,31 +3,19 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
 
-    <string name="material_calendar_monday">월</string>
-    <string name="material_calendar_tuesday">화</string>
-    <string name="material_calendar_wednesday">수</string>
-    <string name="material_calendar_thursday">목</string>
-    <string name="material_calendar_friday">금</string>
-    <string name="material_calendar_saturday">토</string>
-    <string name="material_calendar_sunday">일</string>
-
-    <array name="material_calendar_months_array">
-        <item>1월</item>
-        <item>2월</item>
-        <item>3월</item>
-        <item>4월</item>
-        <item>5월</item>
-        <item>6월</item>
-        <item>7월</item>
-        <item>8월</item>
-        <item>9월</item>
-        <item>10월</item>
-        <item>11월</item>
-        <item>12월</item>
-    </array>
-
-
-    <string name="material_calendar_today_button">Today</string>
-    <string name="material_calendar_positive_button">OK</string>
-    <string name="material_calendar_negative_button">Cancel</string>
+    <string name="title_activity_simple_calendar_view" translatable="false">Simple CalendarView</string>
+    <string name="title_activity_mini_calendar_view_popup" translatable="false">CalendarView Popup</string>
+    <string name="today">today</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">ok</string>
+    <string name="new_event">New Event</string>
+    <string name="save">save</string>
+    <string name="title">Title</string>
+    <string name="completed">Completed</string>
+    <string name="set">set</string>
+    <string name="double_dots" translatable="false">:</string>
+    <string name="select_color_instruction">Select color of event</string>
+    <string name="event_default_title">My event</string>
+    <string name="no_events">no events</string>
+    <string name="delete">delete</string>
 </resources>
