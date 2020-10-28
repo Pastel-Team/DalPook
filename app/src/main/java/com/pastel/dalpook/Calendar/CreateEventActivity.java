@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.ColorUtils;
 import com.pastel.dalpook.Utils.SelectColorDialog;
@@ -35,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -48,9 +50,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
     private static final int SET_DATE_AND_TIME_REQUEST_CODE = 200;
 
-    @SuppressLint({"ConstantLocale", "SimpleDateFormat"})
     private final static SimpleDateFormat dateFormat
-            = new SimpleDateFormat("EEEE, MM월 dd일    HH:mm");
+            = new SimpleDateFormat("EEEE, MM월 dd일    HH:mm", Locale.KOREA);
 
     private Event mOriginalEvent;
 
@@ -133,7 +134,7 @@ public class CreateEventActivity extends AppCompatActivity {
         if (mOriginalEvent == null) {
             mCalendar = extractCalendarFromIntent(getIntent());
             if (mCalendar == null)
-                mCalendar = Calendar.getInstance();
+                mCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
             Calendar newtimeC = Calendar.getInstance();
             newtimeC.setTime(new Date());
             mCalendar.set(Calendar.HOUR, newtimeC.get(Calendar.HOUR));
@@ -309,7 +310,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 false//mIsCompleteCheckBox.isChecked()
         );
 
-
         setResult(RESULT_OK, new Intent()
                 .putExtra(INTENT_EXTRA_ACTION, action)
                 .putExtra(INTENT_EXTRA_EVENT, mOriginalEvent));
@@ -317,6 +317,16 @@ public class CreateEventActivity extends AppCompatActivity {
 
         if (action == ACTION_CREATE)
             overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
+
+        // DB insert
+        DBHelper dbHelper = new DBHelper(this);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd", Locale.KOREA);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
+        Calendar secCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+        String secStr = String.valueOf(secCal.get(Calendar.SECOND));
+        String date = dateFormat.format(mCalendar.getTime());
+        String time = timeFormat.format(mCalendar.getTime()) + ":"+secStr;
+        dbHelper.insertConts(date, time, rawTitle, "M", String.valueOf(mColor));
 
     }
 

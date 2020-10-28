@@ -43,4 +43,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     implementation project(':CalendarViewLib')
+
+    //SQLITE DB 실시간 확인
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation 'com.facebook.stetho:stetho-js-rhino:1.5.0'
 }

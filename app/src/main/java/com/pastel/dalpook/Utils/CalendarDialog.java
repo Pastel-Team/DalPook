@@ -35,16 +35,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Integer.*;
+
 public class CalendarDialog {
+
     @SuppressWarnings("unused")
     private static final String TAG = CalendarDialog.class.getSimpleName();
 
-    private final static Calendar sToday = Calendar.getInstance();
+    private final static Calendar sToday = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
 
     private static final SimpleDateFormat timeFormat =
-            new SimpleDateFormat("HH:mm", Locale.getDefault());
+            new SimpleDateFormat("HH:mm", Locale.KOREA);
 
     private static final float MIN_OFFSET = 0f;
     private static final float MAX_OFFSET = 0.5f;
@@ -57,6 +61,7 @@ public class CalendarDialog {
     private Calendar mSelectedDate = sToday;
 
     private List<Event> mEventList = new ArrayList<>();
+    private List<Event> setEventList = new ArrayList<>();
     private OnCalendarDialogListener mListener;
 
     private AlertDialog mAlertDialog;
@@ -65,6 +70,8 @@ public class CalendarDialog {
     private ViewPagerAdapter mViewPagerAdapter;
 
     private Handler mHandler;
+
+    private int currentPos;
 
     public CalendarDialog(Context context) {
         mContext = context;
@@ -114,10 +121,24 @@ public class CalendarDialog {
                 updatePager(mViewPager.findViewWithTag(position + 2), 0);
                 updatePager(mViewPager.findViewWithTag(position - 1), 0);
             }
+
+            @Override
+            public void onPageSelected(int pos){
+
+                if(currentPos < pos){  // 오른쪽에서 왼쪽으로 스와이프 ( 다음 날짜로 이동 )
+                    mSelectedDate.add(Calendar.DATE, +1);
+                }else if(currentPos > pos) {  // 이전 날짜로 이동.
+                    mSelectedDate.add(Calendar.DATE, -1);
+                }
+                currentPos = pos;
+            }
         });
+
         mViewPagerAdapter = new ViewPagerAdapter(mSelectedDate, mEventList);
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setCurrentItem(mViewPagerAdapter.initialPageAndDay.first);
+
+        currentPos = mViewPager.getCurrentItem();
 
         mView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -178,8 +199,8 @@ public class CalendarDialog {
         private static final String DEFAULT_MIN_DATE = "01/01/1992";
         private static final String DEFAULT_MAX_DATE = "01/01/2100";
 
-        private Calendar mMinDate = getCalendarObjectForLocale(DEFAULT_MIN_DATE, Locale.getDefault());
-        private Calendar mMaxDate = getCalendarObjectForLocale(DEFAULT_MAX_DATE, Locale.getDefault());
+        private Calendar mMinDate = getCalendarObjectForLocale(DEFAULT_MIN_DATE, Locale.KOREA);
+        private Calendar mMaxDate = getCalendarObjectForLocale(DEFAULT_MAX_DATE, Locale.KOREA);
 
         private Pair<Integer, Calendar> initialPageAndDay;
 
@@ -230,8 +251,8 @@ public class CalendarDialog {
                 });
             }
 
-            tvDay.setText(new SimpleDateFormat("d", Locale.getDefault()).format(day.getTime()));
-            tvDayOfWeek.setText(new SimpleDateFormat("EEEE", Locale.getDefault()).format(day.getTime()));
+            tvDay.setText(new SimpleDateFormat("d", Locale.KOREA).format(day.getTime()));
+            tvDayOfWeek.setText(new SimpleDateFormat("EEEE", Locale.KOREA).format(day.getTime()));
 
             rvDay.setLayoutManager(new LinearLayoutManager(collection.getContext(), LinearLayoutManager.VERTICAL, false));
             rvDay.setAdapter(new CalendarEventAdapter(eventList));
@@ -289,8 +310,8 @@ public class CalendarDialog {
         }
 
         private Calendar getCalendarObjectForLocale(String date, Locale locale) {
-            Calendar calendar = Calendar.getInstance(locale);
-            DateFormat DATE_FORMATTER = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), locale);
+            DateFormat DATE_FORMATTER = new SimpleDateFormat("MM/dd/yyyy", locale);
             if (date == null || date.isEmpty()) {
                 return calendar;
             }
@@ -298,7 +319,7 @@ public class CalendarDialog {
             try {
                 final Date parsedDate = DATE_FORMATTER.parse(date);
                 if (calendar == null)
-                    calendar = Calendar.getInstance();
+                    calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), locale);
                 calendar.setTime(parsedDate);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -359,8 +380,12 @@ public class CalendarDialog {
 
             @Override
             public void onClick(View v) {
-                if (mListener != null)
-                    mListener.onEventClick(mEventList.get(getAdapterPosition()));
+
+                if (mListener != null){
+                    setEventList = mViewPagerAdapter.getCalendarEventsOfDay(mSelectedDate);
+                    mListener.onEventClick(setEventList.get(getAdapterPosition()));
+
+                }
             }
         }
     }
@@ -370,7 +395,7 @@ public class CalendarDialog {
         void onCreateEvent(Calendar calendar);
     }
 
-    private static int diffYMD(Calendar date1, Calendar date2) {
+    private static int diffYMD(Calendar date1, Calendar date2) { // data1 : 비교대상 , data2 : 오늘
         if (date1.get(Calendar.YEAR) == date2.get(Calendar.YEAR) &&
                 date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH) &&
                 date1.get(Calendar.DAY_OF_MONTH) == date2.get(Calendar.DAY_OF_MONTH))

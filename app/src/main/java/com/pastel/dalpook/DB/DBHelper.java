@@ -27,6 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_CONT = "cont";
     public static final String COLUMN_FLAG = "flag"; //달력 식별용.  M:월간 / W:주간 / L:수강표 / B:업무일지 / D:다이어리
+    public static final String COLUMN_COLOR = "color";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,12 +52,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_TIME + " TEXT," +
                 COLUMN_CONT + " TEXT, " +
+                COLUMN_COLOR + " TEXT, " +
                 COLUMN_FLAG + " TEXT);"
         );
 
         // 초기 설정
         ContentValues infValues = new ContentValues();
-        infValues.put(COLUMN_PUSH, "T"); // 초기 티어 돌맹이
+        infValues.put(COLUMN_PUSH, "T");
         infValues.put(COLUMN_MONTH, "T");
         infValues.put(COLUMN_MONTH_LIST, "T");
         infValues.put(COLUMN_WEEK, "T");
@@ -91,11 +93,33 @@ public class DBHelper extends SQLiteOpenHelper {
      * Query only 1 record
      **/
     // GOAL 데이터 셀렉트
-    public Cursor getConts() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT  * FROM " + TABLE_NAME_CONT;
-        Cursor cursor = db.rawQuery(query, null);
+    public Cursor getConts(String flag) {
 
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                COLUMN_DATE,
+                COLUMN_TIME,
+                COLUMN_CONT,
+                COLUMN_FLAG,
+                COLUMN_COLOR
+        };
+
+        String selction = COLUMN_FLAG + " = '" + flag +"'";
+
+        Cursor cursor = db.query(
+                TABLE_NAME_CONT,
+                projection,
+                selction,
+                null,
+                null,
+                null,
+                null);
+
+/*
+        String query = "SELECT  * FROM " + TABLE_NAME_CONT ;
+        Cursor cursor = db.rawQuery(query, null);
+*/
         return cursor;
     }
 
@@ -123,20 +147,21 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // 기록 내용 변경
-    public void updateConts(String date, String time, String content, String flag) {
+    public void updateConts(String date, String time, String content, String flag, String color) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + TABLE_NAME_CONT + " SET '" + COLUMN_DATE + "' = '" + date + "', '" + COLUMN_TIME + "' = '"+ time +"', '" + COLUMN_CONT + "', '" + content + "'" +
+        db.execSQL("UPDATE " + TABLE_NAME_CONT + " SET '" + COLUMN_DATE + "' = '" + date + "', '" + COLUMN_TIME + "' = '"+ time +"', '" + COLUMN_COLOR + "' = '" + color + "', '" + COLUMN_CONT + "' = '" + content + "'" +
                 "WHERE '" + COLUMN_DATE + "' = '" + date + "' AND '" + COLUMN_TIME + "' = '" + time + "' AND '" + COLUMN_FLAG + "' = '" + flag + "'");
     }
 
     // 기록 내용 추가
-    public void insertConts(String date, String time, String content, String flag){
+    public void insertConts(String date, String time, String content, String flag, String color){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues infValues = new ContentValues();
         infValues.put(COLUMN_DATE, date);
         infValues.put(COLUMN_TIME, time);
         infValues.put(COLUMN_CONT, content);
         infValues.put(COLUMN_FLAG, flag);
+        infValues.put(COLUMN_COLOR, color);
         db.insert(TABLE_NAME_CONT, null, infValues);
     }
 

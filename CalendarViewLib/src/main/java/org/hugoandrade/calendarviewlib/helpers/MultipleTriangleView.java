@@ -185,6 +185,10 @@ public class MultipleTriangleView extends View {
             invalidate();
     }
 
+    public void setContent(String content){
+
+    }
+
     public boolean setColor(int i, int color) {
         if (i >= mTriangleAttr.size())
             return false;

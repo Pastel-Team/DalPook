@@ -14,6 +14,8 @@ import org.hugoandrade.calendarviewlib.CalendarView;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class SelectDateAndTimeActivity extends AppCompatActivity {
     private static final String INTENT_EXTRA_CALENDAR = "intent_extra_calendar";
@@ -44,7 +46,7 @@ public class SelectDateAndTimeActivity extends AppCompatActivity {
 
         mCalendar = extractCalendarFromIntent(getIntent());
         if (mCalendar == null) {
-            mCalendar = Calendar.getInstance();
+            mCalendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
             mCalendar.set(Calendar.HOUR_OF_DAY, 8);
             mCalendar.set(Calendar.MINUTE, 0);
             mCalendar.set(Calendar.SECOND, 0);

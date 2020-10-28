@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.CalendarDialog;
 import com.pastel.dalpook.data.Event;
@@ -24,7 +26,9 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class MonthActivity extends AppCompatActivity {
 
@@ -47,14 +51,14 @@ public class MonthActivity extends AppCompatActivity {
     private Button btn_month_monnext;
     private Button btn_month_add;
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, MonthActivity.class);
-    }
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month);
+
+        dbHelper = new DBHelper(this);
 
         txt_month_month = (TextView) findViewById(R.id.txt_month_month);
         txt_month_year = (TextView) findViewById(R.id.txt_month_year);
@@ -188,6 +192,8 @@ public class MonthActivity extends AppCompatActivity {
             }
         });
 
+        getDB();
+
     }
 
 
@@ -218,7 +224,7 @@ public class MonthActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_today: {
-                mCalendarView.setSelectedDate(Calendar.getInstance());
+                mCalendarView.setSelectedDate(Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA));
                 return true;
             }
         }
@@ -296,5 +302,51 @@ public class MonthActivity extends AppCompatActivity {
                 event.getDate(),
                 event.getColor(),
                 event.isCompleted() ? Color.TRANSPARENT : Color.parseColor("#e8c792"));
+    }
+
+    private void getDB(){
+        dbHelper = new DBHelper(this);
+        Cursor contCursor = dbHelper.getConts("M");
+
+        //INF 정보
+        if (contCursor.getCount() > 0) {
+            if(contCursor.moveToFirst()){
+                do{
+                    String date = contCursor.getString(contCursor.getColumnIndex("date"));
+                    String time = contCursor.getString(contCursor.getColumnIndex("time"));
+                    String[] splDate = date.split("-");
+                    String[] splTime = time.split(":");
+
+                    String year = splDate[0];
+                    String month = splDate[1];
+                    String day = splDate[2];
+
+                    String hour = splTime[0];
+                    String minute = splTime[1];
+                    String second = splTime[2];
+
+                    Calendar setCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+                    setCal.set(Calendar.YEAR, Integer.parseInt(year));
+                    setCal.set(Calendar.MONTH, Integer.parseInt(month)-1);
+                    setCal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
+                    setCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+                    setCal.set(Calendar.MINUTE, Integer.parseInt(minute));
+                    setCal.set(Calendar.SECOND, Integer.parseInt(second));
+
+                    Event event = new Event(
+                            Long.toString(System.currentTimeMillis()),
+                            contCursor.getString(contCursor.getColumnIndex("cont")),
+                            setCal,
+                            Integer.parseInt(contCursor.getString(contCursor.getColumnIndex("color"))),
+                            false//mIsCompleteCheckBox.isChecked()
+                    );
+
+                    mEventList.add(event);
+                    mCalendarView.addCalendarObject(parseCalendarObject(event));
+                }while (contCursor.moveToNext());
+
+                mCalendarDialog.setEventList(mEventList);
+            }
+        }
     }
 }

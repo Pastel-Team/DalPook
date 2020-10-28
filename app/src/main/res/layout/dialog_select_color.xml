@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:background="#2e3145"
             android:padding="16dp">
 
             <TextView
@@ -22,8 +23,9 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="?attr/colorPrimary"
-                android:text="@string/select_color_instruction"
+                android:textColor="#666d99"
+                android:text="이벤트 등록 색상 선택"
+                android:fontFamily="@font/mapo_flower_island"
                 android:padding="5dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -36,10 +38,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/cancel"
+                android:text="닫기"
+                android:fontFamily="@font/mapo_flower_island"
                 android:background="?attr/selectableItemBackground"
                 android:layout_gravity="end"
-                android:textColor="?attr/colorPrimary"
+                android:textColor="#c4ccff"
                 android:textStyle="bold"
                 android:textAllCaps="true"/>
 

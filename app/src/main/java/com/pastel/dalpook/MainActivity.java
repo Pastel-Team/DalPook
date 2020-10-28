@@ -4,6 +4,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.facebook.stetho.Stetho;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.pastel.dalpook.Fragment.Fragment_Cal;
@@ -36,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         *  네비게이션 / 뷰페이저 세팅
-         */
+        Stetho.initializeWithDefaults(this);
+
+                /**
+                 *  네비게이션 / 뷰페이저 세팅
+                 */
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         setupViewPager(viewPager);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
