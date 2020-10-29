@@ -71,7 +71,9 @@ public class CalendarDialog {
 
     private Handler mHandler;
 
-    private int currentPos;
+    private int focusedPos;
+    private Pair<Integer, Calendar> setPageAndDay;
+    private Calendar setCal = sToday;
 
     public CalendarDialog(Context context) {
         mContext = context;
@@ -84,6 +86,8 @@ public class CalendarDialog {
         mSelectedDate = selectedDate;
         mViewPagerAdapter.setSelectedDate(mSelectedDate);
         mViewPager.setCurrentItem(mViewPagerAdapter.initialPageAndDay.first);
+
+        setCal = selectedDate;
     }
 
     public void setEventList(List<Event> eventList) {
@@ -121,24 +125,11 @@ public class CalendarDialog {
                 updatePager(mViewPager.findViewWithTag(position + 2), 0);
                 updatePager(mViewPager.findViewWithTag(position - 1), 0);
             }
-
-            @Override
-            public void onPageSelected(int pos){
-
-                if(currentPos < pos){  // 오른쪽에서 왼쪽으로 스와이프 ( 다음 날짜로 이동 )
-                    mSelectedDate.add(Calendar.DATE, +1);
-                }else if(currentPos > pos) {  // 이전 날짜로 이동.
-                    mSelectedDate.add(Calendar.DATE, -1);
-                }
-                currentPos = pos;
-            }
         });
 
         mViewPagerAdapter = new ViewPagerAdapter(mSelectedDate, mEventList);
         mViewPager.setAdapter(mViewPagerAdapter);
         mViewPager.setCurrentItem(mViewPagerAdapter.initialPageAndDay.first);
-
-        currentPos = mViewPager.getCurrentItem();
 
         mView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -215,6 +206,8 @@ public class CalendarDialog {
             int initialPosition = (int) TimeUnit.MILLISECONDS.toDays(Math.abs(selectedDate.getTimeInMillis() - mMinDate.getTimeInMillis()));
 
             initialPageAndDay = new Pair<>(initialPosition, selectedDate);
+
+            setPageAndDay = initialPageAndDay;
         }
 
         @NonNull
@@ -383,7 +376,7 @@ public class CalendarDialog {
 
                 if (mListener != null){
                     setEventList = mViewPagerAdapter.getCalendarEventsOfDay(mSelectedDate);
-                    mListener.onEventClick(setEventList.get(getAdapterPosition()));
+                    mListener.onEventClick(mCalendarEvents.get(getAdapterPosition()));
 
                 }
             }
