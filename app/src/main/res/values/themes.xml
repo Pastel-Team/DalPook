@@ -116,4 +116,9 @@
         <item name="android:layout_marginStart">18dp</item>
         <item name="android:layout_marginEnd">18dp</item>
     </style>
+
+    <style name="selectablebackground">
+        <item name="android:background">@drawable/roundcorner</item>
+        <item name="selectableItemBackground">?attr/selectableItemBackground</item>
+    </style>
 </resources>

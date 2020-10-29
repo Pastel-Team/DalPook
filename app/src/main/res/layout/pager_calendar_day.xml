@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:cardCornerRadius="20dp"
-    app:cardBackgroundColor="#fff">
+    app:cardBackgroundColor="#2e3145">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="32sp"
-            android:textColor="#9ea9ab"
+            android:textColor="#c4ccff"
             android:textStyle="bold"
             android:textAllCaps="true"
             android:fontFamily="@font/mapo_flower_island"
@@ -35,7 +35,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:textSize="12sp"
-            android:textColor="#9ea9ab"
+            android:textColor="#c4ccff"
             android:textAllCaps="true"
             android:fontFamily="@font/mapo_flower_island"
             tools:text="Wednesday"/>
@@ -95,7 +95,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="bottom|end"
                 android:tint="#fff"
-                app:backgroundTint="?attr/colorAccent"
+                app:backgroundTint="#e8c792"
                 app:elevation="0dp"
                 app:srcCompat="@android:drawable/ic_input_add"/>
 
