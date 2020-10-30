@@ -13,10 +13,12 @@
     android:layout_marginStart="7.5dp"
     android:layout_marginEnd="7.5dp"
     android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:clickable="true"
     android:focusable="true"
     style="@style/selectablebackground">
 
+    <!--
     <View
         android:id="@+id/rcl_calendar_event_icon"
         android:layout_width="4dp"
@@ -25,6 +27,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginTop="9dp"
         />
+    -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,6 +61,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_event_list_delete"
         android:layout_width="35dp"
         android:layout_height="41.5dp"
         android:background="@drawable/ic_delete"

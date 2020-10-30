@@ -2,10 +2,12 @@ package com.pastel.dalpook.Utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.sip.SipSession;
 import android.os.Handler;
 import android.util.Pair;
 import android.view.Display;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,20 +27,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.pastel.dalpook.Calendar.CreateEventActivity;
+import com.pastel.dalpook.Calendar.MonthActivity;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.data.Event;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import static android.app.Activity.RESULT_OK;
+import static com.pastel.dalpook.Calendar.CreateEventActivity.ACTION_DELETE;
 import static java.lang.Integer.*;
 
 public class CalendarDialog {
@@ -63,6 +72,7 @@ public class CalendarDialog {
     private List<Event> mEventList = new ArrayList<>();
     private List<Event> setEventList = new ArrayList<>();
     private OnCalendarDialogListener mListener;
+    private OnCalendarDialogDeleteListener mDelListener;
 
     private AlertDialog mAlertDialog;
     private View mView;
@@ -97,6 +107,10 @@ public class CalendarDialog {
 
     void setOnCalendarDialogListener(OnCalendarDialogListener listener) {
         mListener = listener;
+    }
+
+    void setOnCalendarDialogDeleteListener(OnCalendarDialogDeleteListener mListener){
+        mDelListener = mListener;
     }
 
     public void show() {
@@ -345,7 +359,7 @@ public class CalendarDialog {
             String title = event.getTitle() == null ? defaultTitle : event.getTitle();
 
             holder.tvEventName.setText(title);
-            holder.rclEventIcon.setBackgroundColor(event.getColor());
+            //holder.rclEventIcon.setBackgroundColor(event.getColor());
             holder.tvEventStatus.setText(timeFormat.format(event.getDate().getTime()));
 
             Typeface typeFace = ResourcesCompat.getFont(mContext, R.font.mapo_flower_island);
@@ -362,20 +376,35 @@ public class CalendarDialog {
             View rclEventIcon;
             TextView tvEventName;
             TextView tvEventStatus;
+            Button btn_delete;
 
             ViewHolder(View view) {
                 super(view);
-                rclEventIcon = view.findViewById(R.id.rcl_calendar_event_icon);
+                //rclEventIcon = view.findViewById(R.id.rcl_calendar_event_icon);
                 tvEventName = view.findViewById(R.id.tv_calendar_event_name);
                 tvEventStatus = view.findViewById(R.id.tv_calendar_event_status);
+                btn_delete = view.findViewById(R.id.btn_event_list_delete);
                 view.setOnClickListener(this);
+
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(mDelListener!=null){
+                            mDelListener.onDelete(view, mCalendarEvents.get(getAdapterPosition()));
+                        }
+                    }
+                });
             }
 
             @Override
             public void onClick(View v) {
 
                 if (mListener != null){
-                    setEventList = mViewPagerAdapter.getCalendarEventsOfDay(mSelectedDate);
+                    //setEventList = mViewPagerAdapter.getCalendarEventsOfDay(mSelectedDate);
+                    //int year = mCalendarEvents.get(getAdapterPosition()).getDate().getTime().getYear();
+                    //int month = mCalendarEvents.get(getAdapterPosition()).getDate().getTime().getMonth();
+                    //int sec = mCalendarEvents.get(getAdapterPosition()).getDate().getTime().getSeconds();
+
                     mListener.onEventClick(mCalendarEvents.get(getAdapterPosition()));
 
                 }
@@ -386,6 +415,10 @@ public class CalendarDialog {
     public interface OnCalendarDialogListener {
         void onEventClick(Event event);
         void onCreateEvent(Calendar calendar);
+    }
+
+    public interface OnCalendarDialogDeleteListener{
+        void onDelete(View view, Event event);
     }
 
     private static int diffYMD(Calendar date1, Calendar date2) { // data1 : 비교대상 , data2 : 오늘
@@ -423,6 +456,10 @@ public class CalendarDialog {
             P.mOnCalendarDialogListener = listener;
             return this;
         }
+        public Builder setOnDeleteClick(OnCalendarDialogDeleteListener listener){
+            P.mOnCalendarDialogDeleteListener = listener;
+            return this;
+        }
 
         public CalendarDialog create() {
             CalendarDialog calendarDialog = new CalendarDialog(P.mContext);
@@ -442,6 +479,8 @@ public class CalendarDialog {
 
         OnCalendarDialogListener mOnCalendarDialogListener;
 
+        OnCalendarDialogDeleteListener mOnCalendarDialogDeleteListener;
+
         CalendarDialogParams(Context context) {
             mContext = context;
         }
@@ -450,6 +489,7 @@ public class CalendarDialog {
             calendarDialog.setSelectedDate(mSelectedDate);
             calendarDialog.setEventList(mEventList);
             calendarDialog.setOnCalendarDialogListener(mOnCalendarDialogListener);
+            calendarDialog.setOnCalendarDialogDeleteListener(mOnCalendarDialogDeleteListener);
         }
     }
 }

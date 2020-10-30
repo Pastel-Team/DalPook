@@ -80,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Query only 1 record
      **/
-    // INF 데이터 셀렉트
+    // 세팅값 데이터 셀렉트
     public Cursor getSets() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT  * FROM " + TABLE_NAME_SET;
@@ -92,7 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Query only 1 record
      **/
-    // GOAL 데이터 셀렉트
+    // 기록내용 데이터 셀렉트
     public Cursor getConts(String flag) {
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -116,10 +116,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 null,
                 null);
 
-/*
-        String query = "SELECT  * FROM " + TABLE_NAME_CONT ;
-        Cursor cursor = db.rawQuery(query, null);
-*/
         return cursor;
     }
 
@@ -147,10 +143,17 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // 기록 내용 변경
-    public void updateConts(String date, String time, String content, String flag, String color) {
+    public void updateConts(String oldDate, String oldTime, String newDate, String newTime, String newCont, int newColor, String flag) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + TABLE_NAME_CONT + " SET '" + COLUMN_DATE + "' = '" + date + "', '" + COLUMN_TIME + "' = '"+ time +"', '" + COLUMN_COLOR + "' = '" + color + "', '" + COLUMN_CONT + "' = '" + content + "'" +
-                "WHERE '" + COLUMN_DATE + "' = '" + date + "' AND '" + COLUMN_TIME + "' = '" + time + "' AND '" + COLUMN_FLAG + "' = '" + flag + "'");
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE, newDate);
+        values.put(COLUMN_TIME, newTime);
+        values.put(COLUMN_CONT, newCont);
+        values.put(COLUMN_COLOR, newColor);
+
+        db.update(TABLE_NAME_CONT, values, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?", new String[]{oldDate, oldTime, flag});
+
     }
 
     // 기록 내용 추가
@@ -168,7 +171,8 @@ public class DBHelper extends SQLiteOpenHelper {
     // 기록 삭제
     public void deleteConts(String date, String time, String flag) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_NAME_CONT + " WHERE '" + COLUMN_DATE + "' = '" + date + "' AND '" + COLUMN_TIME + "' = '" + time + "' AND '" + COLUMN_FLAG + "' = '" + flag + "'" );
+        db.delete(TABLE_NAME_CONT, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?" , new String[]{date, time, flag});
+        //db.execSQL("DELETE FROM " + TABLE_NAME_CONT + " WHERE '" + COLUMN_DATE + "' = '" + date + "' AND '" + COLUMN_TIME + "' = '" + time + "' AND '" + COLUMN_FLAG + "' = '" + flag + "'" );
         //Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
     }

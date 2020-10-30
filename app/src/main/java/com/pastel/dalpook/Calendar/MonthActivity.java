@@ -2,6 +2,7 @@ package com.pastel.dalpook.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,9 +23,11 @@ import com.pastel.dalpook.data.Event;
 import org.hugoandrade.calendarviewlib.CalendarView;
 
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -52,6 +55,8 @@ public class MonthActivity extends AppCompatActivity {
     private Button btn_month_add;
 
     private DBHelper dbHelper;
+
+    private Event DelTargetEvent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +168,38 @@ public class MonthActivity extends AppCompatActivity {
                         createEvent(calendar);
                     }
                 })
+                .setOnDeleteClick(new CalendarDialog.OnCalendarDialogDeleteListener() {
+                    @Override
+                    public void onDelete(View view, Event targetEvent) {
+                        Event oldEvent = null;
+                        for (Event e : mEventList) {
+                            if (Objects.equals(targetEvent.getID(), e.getID())) {
+                                oldEvent = e;
+                                break;
+                            }
+                        }
+                        if (oldEvent != null) {
+                            mEventList.remove(oldEvent);
+                            mCalendarView.removeCalendarObjectByID(parseCalendarObject(oldEvent));
+
+                            mCalendarDialog.setEventList(mEventList);
+                        }
+
+                        // DB Delete
+                        Calendar deleteCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+
+                        DBHelper dbHelper = new DBHelper(getApplicationContext());
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
+                        String oldSec = String.valueOf(oldEvent.getDate().getTime().getSeconds());
+
+                        deleteCal = oldEvent.getDate();
+                        String date = dateFormat.format(deleteCal.getTime());
+                        String time = timeFormat.format(deleteCal.getTime()) + ":"+oldSec;
+                        dbHelper.deleteConts(date, time,"M");
+
+                    }
+                })
                 .create();
 
         btn_month_add.setOnClickListener(new View.OnClickListener() {
@@ -240,10 +277,26 @@ public class MonthActivity extends AppCompatActivity {
                 Event event = CreateEventActivity.extractEventFromIntent(data);
 
                 switch (action) {
-                    case CreateEventActivity.ACTION_CREATE: {
+                    case CreateEventActivity.ACTION_CREATE: { // insert
                         mEventList.add(event);
                         mCalendarView.addCalendarObject(parseCalendarObject(event));
                         mCalendarDialog.setEventList(mEventList);
+
+                        // DB Insert
+                        Calendar insertCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+
+                        DBHelper dbHelper = new DBHelper(this);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
+                        Calendar secCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+                        String secStr = String.valueOf(secCal.get(Calendar.SECOND));
+
+                        insertCal = event.getDate();
+                        String date = dateFormat.format(insertCal.getTime());
+                        String time = timeFormat.format(insertCal.getTime()) + ":"+secStr;
+                        String title = event.getTitle();
+                        int color = event.getColor();
+                        dbHelper.insertConts(date, time, title, "M", String.valueOf(color));
                         break;
                     }
                     case CreateEventActivity.ACTION_EDIT: {
@@ -255,16 +308,39 @@ public class MonthActivity extends AppCompatActivity {
                             }
                         }
                         if (oldEvent != null) {
+
                             mEventList.remove(oldEvent);
                             mEventList.add(event);
 
+                            // DB Update
+                            Calendar oldCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+                            Calendar newCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+                            DBHelper dbHelper = new DBHelper(this);
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
+                            String oldSec = String.valueOf(event.getDate().getTime().getSeconds());
+
+                            oldCal = oldEvent.getDate();
+                            newCal = event.getDate();
+
+                            String oldDate = dateFormat.format(oldCal.getTime());
+                            String oldTime = timeFormat.format(oldCal.getTime()) + ":"+oldSec;
+
+                            String newDate = dateFormat.format(newCal.getTime());
+                            String newTime = timeFormat.format(newCal.getTime()) + ":"+oldSec;
+                            String newTitle = event.getTitle();
+                            int newColor = event.getColor();
+
+                            dbHelper.updateConts(oldDate, oldTime, newDate, newTime, newTitle, newColor, "M");
+
+                            mCalendarDialog.setEventList(mEventList);
                             mCalendarView.removeCalendarObjectByID(parseCalendarObject(oldEvent));
                             mCalendarView.addCalendarObject(parseCalendarObject(event));
-                            mCalendarDialog.setEventList(mEventList);
                         }
                         break;
                     }
                     case CreateEventActivity.ACTION_DELETE: {
+
                         Event oldEvent = null;
                         for (Event e : mEventList) {
                             if (Objects.equals(event.getID(), e.getID())) {
@@ -349,4 +425,5 @@ public class MonthActivity extends AppCompatActivity {
             }
         }
     }
+
 }

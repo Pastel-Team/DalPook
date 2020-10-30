@@ -9,7 +9,9 @@
         android:roundIcon="@drawable/ic_blackmoon"
         android:supportsRtl="true"
         android:theme="@style/Theme.DalPook">
-        <activity android:name=".Calendar.SelectDateAndTimeActivity"></activity>
+        <activity
+            android:name=".Calendar.SelectDateAndTimeActivity"
+            android:theme="@style/Transparent"/>
         <activity
             android:name=".Calendar.CreateEventActivity"
             android:theme="@style/Transparent"/>

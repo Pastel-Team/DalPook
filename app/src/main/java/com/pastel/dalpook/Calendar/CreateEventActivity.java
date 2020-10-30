@@ -317,17 +317,6 @@ public class CreateEventActivity extends AppCompatActivity {
 
         if (action == ACTION_CREATE)
             overridePendingTransition(R.anim.stay, R.anim.slide_out_down);
-
-        // DB insert
-        DBHelper dbHelper = new DBHelper(this);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd", Locale.KOREA);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
-        Calendar secCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
-        String secStr = String.valueOf(secCal.get(Calendar.SECOND));
-        String date = dateFormat.format(mCalendar.getTime());
-        String time = timeFormat.format(mCalendar.getTime()) + ":"+secStr;
-        dbHelper.insertConts(date, time, rawTitle, "M", String.valueOf(mColor));
-
     }
 
     @Override

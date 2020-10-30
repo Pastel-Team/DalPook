@@ -2,8 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null">
 
     <LinearLayout
         android:gravity="bottom"
@@ -22,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#fff"
+            android:background="#2e3145"
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp">
@@ -32,13 +33,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:current_day_circle_enable="true"
-                app:current_day_circle_color="?attr/colorPrimary"
-                app:month_header_arrows_color="?attr/colorPrimary"
-                app:month_header_text_color="?attr/colorPrimary"
-                app:selected_day_border_color="#00000000"
-                app:week_header_text_color="?attr/colorPrimary"
-                app:week_header_background_color="#00000000"
-                app:week_header_movable="false"/>
+                app:current_day_circle_color="#505578"
+                app:month_header_arrows_color="#c4ccff"
+                app:month_header_text_color="#c4ccff"
+                app:week_header_text_color="#c4ccff"
+                app:week_header_background_color="#2e3145"
+                app:day_text_color="#c4ccff"
+                app:week_header_movable="false"
+                app:content_background_color="#00FF0000"
+                app:current_day_text_color="#e8c792"
+                app:month_header_show="true"
+                app:selected_day_border_color="#c4ccff"/>
 
             <View
                 android:layout_width="match_parent"
@@ -60,10 +65,10 @@
                     android:layout_height="wrap_content"
                     app:np_wrapSelectorWheel="true"
                     app:np_textSize="28sp"
-                    app:np_textColor="#000000"
+                    app:np_textColor="#c4ccff"
                     app:np_typeface="sans-serif-light"
                     app:np_selectedTextSize="32sp"
-                    app:np_selectedTextColor="?attr/colorPrimary"
+                    app:np_selectedTextColor="#e8c792"
                     app:np_selectedTypeface="sans-serif-condensed"
                     app:np_dividerThickness="0dp"
                     app:np_min="0"
@@ -77,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="@string/double_dots"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="#c4ccff"
                     android:textSize="28sp" />
 
                 <com.pastel.dalpook.Utils.NumberPicker
@@ -86,10 +91,10 @@
                     android:layout_height="wrap_content"
                     app:np_wrapSelectorWheel="true"
                     app:np_textSize="28sp"
-                    app:np_textColor="#000000"
+                    app:np_textColor="#c4ccff"
                     app:np_typeface="sans-serif-light"
                     app:np_selectedTextSize="32sp"
-                    app:np_selectedTextColor="?attr/colorPrimary"
+                    app:np_selectedTextColor="#e8c792"
                     app:np_selectedTypeface="sans-serif-condensed"
                     app:np_dividerThickness="0dp"
                     app:np_min="0"
@@ -118,8 +123,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
-                    android:text="@string/cancel"
-                    android:textColor="?attr/colorPrimary"
+                    android:text="취소"
+                    android:textSize="16sp"
+                    android:textColor="#c4ccff"
+                    android:fontFamily="@font/mapo_flower_island"
                     android:textStyle="bold"
                     android:textAllCaps="true"/>
 
@@ -132,8 +139,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="2dp"
-                    android:text="@string/set"
-                    android:textColor="?attr/colorPrimary"
+                    android:text="선택"
+                    android:textSize="16sp"
+                    android:textColor="#e8c792"
+                    android:fontFamily="@font/mapo_flower_island"
                     android:textStyle="bold"
                     android:textAllCaps="true"/>
             </LinearLayout>
