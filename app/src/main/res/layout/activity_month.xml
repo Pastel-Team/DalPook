@@ -59,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@null"
+                android:drawableEnd="@drawable/button_add_resize"
                 android:text="일정등록"
                 android:textColor="#e8c792"
                 android:textSize="16sp"
