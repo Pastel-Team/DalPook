@@ -22,18 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8.5dp"
-            android:layout_marginStart="8.5dp"
             android:layout_marginEnd="8.5dp"
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="15dp"
+                android:id="@+id/btn_month_back"
+                android:layout_width="30dp"
                 android:layout_height="match_parent">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_month_back"
                     android:layout_width="9dp"
                     android:layout_height="17dp"
+                    android:layout_marginStart="8.5dp"
                     android:background="@drawable/ic_back"
                     android:layout_centerVertical="true"/>
             </RelativeLayout>

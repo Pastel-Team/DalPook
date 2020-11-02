@@ -9,6 +9,7 @@ public class DBModels {
     private String flag;
 
     // 설정값
+    private int setCount = 7;
     private String push;
     private String month;
     private String month_list;
@@ -104,4 +105,7 @@ public class DBModels {
     public void setDiary(String diary) {
         this.diary = diary;
     }
+
+    public int getCount(){return this.setCount;}
+
 }

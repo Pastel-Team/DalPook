@@ -1,6 +1,8 @@
 package com.pastel.dalpook.Utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.sip.SipSession;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -18,15 +21,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pastel.dalpook.Calendar.CreateEventActivity;
 import com.pastel.dalpook.Calendar.MonthActivity;
 import com.pastel.dalpook.R;
@@ -50,6 +57,8 @@ import static com.pastel.dalpook.Calendar.CreateEventActivity.ACTION_DELETE;
 import static java.lang.Integer.*;
 
 public class CalendarDialog {
+
+    private LoadingDialog loadingDialog;
 
     @SuppressWarnings("unused")
     private static final String TAG = CalendarDialog.class.getSimpleName();
@@ -389,8 +398,10 @@ public class CalendarDialog {
                 btn_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         if(mDelListener!=null){
                             mDelListener.onDelete(view, mCalendarEvents.get(getAdapterPosition()));
+
                         }
                     }
                 });
@@ -406,6 +417,7 @@ public class CalendarDialog {
                     //int sec = mCalendarEvents.get(getAdapterPosition()).getDate().getTime().getSeconds();
 
                     mListener.onEventClick(mCalendarEvents.get(getAdapterPosition()));
+
 
                 }
             }

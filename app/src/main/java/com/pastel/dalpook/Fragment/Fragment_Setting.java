@@ -89,9 +89,11 @@ public class Fragment_Setting extends Fragment {
                 if(chk_push.isChecked()){
                     chk_push.setText("ON");
                     dbHelper.updateSets("push", "T");
+                    dbModels.setPush("T");
                 }else{
                     chk_push.setText("OFF");
                     dbHelper.updateSets("push", "F");
+                    dbModels.setPush("F");
                 }
             }
         });
@@ -101,8 +103,10 @@ public class Fragment_Setting extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_month.isChecked()){
                     dbHelper.updateSets("month", "T");
+                    dbModels.setMonth("T");
                 }else{
                     dbHelper.updateSets("month", "F");
+                    dbModels.setMonth("F");
                 }
             }
         });
@@ -112,8 +116,10 @@ public class Fragment_Setting extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_month_list.isChecked()){
                     dbHelper.updateSets("month_list", "T");
+                    dbModels.setMonth_list("T");
                 }else{
                     dbHelper.updateSets("month_list", "F");
+                    dbModels.setMonth_list("F");
                 }
             }
         });
@@ -123,8 +129,10 @@ public class Fragment_Setting extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_week.isChecked()){
                     dbHelper.updateSets("week", "T");
+                    dbModels.setWeek("T");
                 }else{
                     dbHelper.updateSets("week", "F");
+                    dbModels.setWeek("F");
                 }
             }
         });
@@ -134,8 +142,10 @@ public class Fragment_Setting extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_lesson.isChecked()){
                     dbHelper.updateSets("lesson", "T");
+                    dbModels.setLesson("T");
                 }else{
                     dbHelper.updateSets("lesson", "F");
+                    dbModels.setLesson("F");
                 }
             }
         });
@@ -145,8 +155,10 @@ public class Fragment_Setting extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_work.isChecked()){
                     dbHelper.updateSets("work", "T");
+                    dbModels.setWork("T");
                 }else{
                     dbHelper.updateSets("work", "F");
+                    dbModels.setWork("F");
                 }
             }
         });
@@ -156,8 +168,10 @@ public class Fragment_Setting extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_diary.isChecked()){
                     dbHelper.updateSets("diary", "T");
+                    dbModels.setDiary("T");
                 }else{
                     dbHelper.updateSets("diary", "F");
+                    dbModels.setDiary("F");
                 }
             }
         });

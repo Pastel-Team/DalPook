@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/tb_border"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+        android:background="@drawable/ic_borderline">
+
+        <TextView
+            android:id="@+id/txt_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="9dp"
+            android:text="달력"
+            android:textSize="12dp"
+            android:textColor="#e8c792"
+            android:fontFamily="@font/mapo_flower_island"/>
+
+        <ImageView
+            android:id="@+id/iv_tb"
+            android:layout_width="60dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_cal" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
