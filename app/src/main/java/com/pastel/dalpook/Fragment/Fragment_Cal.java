@@ -73,31 +73,57 @@ public class Fragment_Cal extends Fragment {
 
         if(list.size() > 0){
             int rowidx = 0;
+            int rowCnt = (list.size()%2) + (list.size()/2);
+            int colCnt = 2;
+
+            tl.removeAllViews();
+            TableRow tableRow[] = new TableRow[rowCnt];
+            View view[][] = new View[rowCnt][colCnt];
+            LayoutInflater inflater=this.getLayoutInflater(); //this refers to Activity Foo.
+
+            for(int i = 0 ; i < rowCnt ; i++){
+                //tableRow[i].setBackground(new ColorDrawable(Color.TRANSPARENT));
+                //tableRow[i].setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                tableRow[i] = new TableRow(getContext());
+
+                for(int j = 0 ; j < colCnt ; j ++){
+
+                    if(i == rowCnt-1){
+                        if(list.size()%2 == 1){
+                            view[i][j] = inflater.inflate(R.layout.tablerow_borderline, null);
+                            tableRow[i].addView(view[i][j]);
+                            break;
+                        }
+                    }
+                    view[i][j] = inflater.inflate(R.layout.tablerow_borderline, null);
+                    tableRow[i].addView(view[i][j]);
+                }
+                tl.addView(tableRow[i]);
+            }
+
 
             // 행의 개수만큼 루프하며 행 생성
+            /*
             for(int i = 0 ; i < list.size() ; i++){
 
-                if(i%2 == 0){ // 테이블 로우 생성
-                    TableRow tableRow = new TableRow(getContext());
-                    tableRow.setBackground(new ColorDrawable(Color.TRANSPARENT));
-                    tl.addView(tableRow);
-                }
-
                 if( i>1 && ( i%2 == 0) ){ //테이블 로우 인덱스 변경
+                    tableRow.removeAllViews();
                     rowidx = rowidx + 1;
                 }
-                TableRow tableRow = (TableRow)tl.getChildAt(rowidx);
-                View view = (View) getLayoutInflater(). inflate(R.layout.tablerow_borderline, null);
+
+                View view = getActivity().getLayoutInflater().inflate(R.layout.tablerow_borderline, tableRow, true);
                 RelativeLayout bg = (RelativeLayout) view.findViewById(R.id.tb_border);
                 TextView textView = (TextView) view.findViewById(R.id.txt_tb);
                 ImageView imageView = (ImageView)view.findViewById(R.id.iv_tb);
 
+
+
                 // 이미지 리소스, 크기변경
-                /*
+
                 월간 : 60x48
                 월간리스트 : 35x54
                 나머지 등등
-                 */
+
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
                 params.width = 60;
                 params.height = 48;
@@ -106,8 +132,15 @@ public class Fragment_Cal extends Fragment {
                 imageView.setLayoutParams(params);
                 textView.setText("달력");
 
-                tableRow.addView(bg);
+                tableRow.addView(view);
+
+                if(i%2 == 0){
+                    tl.addView(tableRow, rowidx);
+                    tl.invalidate();
+                }
             }
+
+             */
 
         }
 
