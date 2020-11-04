@@ -6,11 +6,15 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -39,7 +43,7 @@ public class Fragment_Cal extends Fragment {
 
     private DBHelper dbHelper;
     private DBModels dbModels;
-    LoadingDialog loadingDialog;
+    private int itemWidth;
 
     @Nullable
     @Override
@@ -72,9 +76,9 @@ public class Fragment_Cal extends Fragment {
         if(dbModels.getDiary().equals("T")) list.add("diary");
 
         if(list.size() > 0){
-            int rowidx = 0;
             int rowCnt = (list.size()%2) + (list.size()/2);
             int colCnt = 2;
+            int listIdx = 0;
 
             tl.removeAllViews();
             TableRow tableRow[] = new TableRow[rowCnt];
@@ -82,65 +86,73 @@ public class Fragment_Cal extends Fragment {
             LayoutInflater inflater=this.getLayoutInflater(); //this refers to Activity Foo.
 
             for(int i = 0 ; i < rowCnt ; i++){
-                //tableRow[i].setBackground(new ColorDrawable(Color.TRANSPARENT));
-                //tableRow[i].setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 tableRow[i] = new TableRow(getContext());
+                tableRow[i].setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+                tableRow[i].setGravity(Gravity.CENTER);
+                tableRow[i].setWeightSum(2); //total row weight
+
+                TableRow.LayoutParams lp = (TableRow.LayoutParams) tableRow[i].getLayoutParams();
+                lp.weight = 1; //column weight
+                lp.height = lp.width;
+                lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+
 
                 for(int j = 0 ; j < colCnt ; j ++){
+                    view[i][j] = inflater.inflate(R.layout.tablerow_borderline, null);
+                    view[i][j].setLayoutParams(lp);
+                    TextView textView = view[i][j].findViewById(R.id.txt_tb);
+                    ImageView imageView = view[i][j].findViewById(R.id.iv_tb);
+
+                    tableRow[i].addView(view[i][j]);
+                    /**
+                     * 월간 : 60x48 / 월간목록 : 60x48 / 주간 : 35x54 / 수강 : 35x54 / 업무일지 : 60x48 / 다이어리 : 60x48
+                     */
+                    switch (list.get(listIdx)){
+                        case "month" :
+                            setItemChange(textView, imageView, "월간달력");
+                            tableRow[i].getChildAt(j).setTag("month");
+                            break;
+                        case "month_list":
+                            setItemChange(textView, imageView, "월간목록달력");
+                            tableRow[i].getChildAt(j).setTag("month_list");
+                            break;
+                        case "week" :
+                            setItemChange(textView, imageView, "주간달력");
+                            tableRow[i].getChildAt(j).setTag("week");
+                            break;
+                        case "lesson" :
+                            setItemChange(textView, imageView, "수강시간표");
+                            tableRow[i].getChildAt(j).setTag("lesson");
+                            break;
+                        case "work" :
+                            setItemChange(textView, imageView, "업무일지");
+                            tableRow[i].getChildAt(j).setTag("work");
+                            break;
+                        case "diary" :
+                            setItemChange(textView, imageView, "다이어리");
+                            tableRow[i].getChildAt(j).setTag("diary");
+                            break;
+                    }
+
+                    DisplayMetrics dm = getContext().getResources().getDisplayMetrics();
+                    int width = (int) (dm.widthPixels * 0.45); // Display 사이즈의 70%
+                    ViewGroup.LayoutParams params = tableRow[i].getChildAt(j).getLayoutParams();
+                    params.height = width;
+                    tableRow[i].getChildAt(j).setLayoutParams(params);
 
                     if(i == rowCnt-1){
                         if(list.size()%2 == 1){
-                            view[i][j] = inflater.inflate(R.layout.tablerow_borderline, null);
-                            tableRow[i].addView(view[i][j]);
                             break;
                         }
                     }
-                    view[i][j] = inflater.inflate(R.layout.tablerow_borderline, null);
-                    tableRow[i].addView(view[i][j]);
+
+                    listIdx = listIdx + 1;
                 }
                 tl.addView(tableRow[i]);
+                tl.invalidate();
+
             }
 
-
-            // 행의 개수만큼 루프하며 행 생성
-            /*
-            for(int i = 0 ; i < list.size() ; i++){
-
-                if( i>1 && ( i%2 == 0) ){ //테이블 로우 인덱스 변경
-                    tableRow.removeAllViews();
-                    rowidx = rowidx + 1;
-                }
-
-                View view = getActivity().getLayoutInflater().inflate(R.layout.tablerow_borderline, tableRow, true);
-                RelativeLayout bg = (RelativeLayout) view.findViewById(R.id.tb_border);
-                TextView textView = (TextView) view.findViewById(R.id.txt_tb);
-                ImageView imageView = (ImageView)view.findViewById(R.id.iv_tb);
-
-
-
-                // 이미지 리소스, 크기변경
-
-                월간 : 60x48
-                월간리스트 : 35x54
-                나머지 등등
-
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-                params.width = 60;
-                params.height = 48;
-                //params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
-                //params.height = RelativeLayout.LayoutParams.WRAP_CONTENT;
-                imageView.setLayoutParams(params);
-                textView.setText("달력");
-
-                tableRow.addView(view);
-
-                if(i%2 == 0){
-                    tl.addView(tableRow, rowidx);
-                    tl.invalidate();
-                }
-            }
-
-             */
 
         }
 
@@ -167,17 +179,55 @@ public class Fragment_Cal extends Fragment {
 
     }
 
+    private void setItemChange(TextView textView, ImageView imageView, String text){
+        textView.setText(text);
+
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+
+        switch (text){
+            case "월간달력":
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_month);
+                break;
+            case "월간목록달력":
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_month);
+                break;
+            case "주간달력":
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_lesson);
+                break;
+            case "수강시간표":
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_lesson);
+                break;
+            case "업무일지":
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_lesson);
+                break;
+            case "다이어리":
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_lesson);
+                break;
+        }
+        imageView.setLayoutParams(params);
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();
-
-
     }
 
     @Override
     public void onPause(){
         super.onPause();
-
-
     }
+
 }
