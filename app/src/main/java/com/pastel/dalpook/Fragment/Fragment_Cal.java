@@ -228,7 +228,7 @@ public class Fragment_Cal extends Fragment {
 
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
         /**
-         * 월간 : 60x48 / 월간목록 : 58x42 / 주간 : 35x54 / 수강 : 35x54 / 업무일지 : 42x50 / 다이어리 : 42x50
+         * 월간 : 60x48 / 월간목록 : 58x42 / 주간 : 70x60 / 수강 : 35x54 / 업무일지 : 42x50 / 다이어리 : 42x50
          */
         switch (text){
             case "월간달력":
@@ -242,9 +242,9 @@ public class Fragment_Cal extends Fragment {
                 imageView.setBackgroundResource(R.drawable.ic_month_list);
                 break;
             case "주간달력":
-                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
-                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 54, getResources().getDisplayMetrics());
-                imageView.setBackgroundResource(R.drawable.ic_lesson);
+                params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70, getResources().getDisplayMetrics());
+                params.height =(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+                imageView.setBackgroundResource(R.drawable.ic_week);
                 break;
             case "수강시간표":
                 params.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, getResources().getDisplayMetrics());
