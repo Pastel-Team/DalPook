@@ -12,9 +12,12 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.DB.DBModels;
+import com.pastel.dalpook.MainActivity;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.ViewPagerAdapter;
 
@@ -84,6 +87,7 @@ public class Fragment_Setting extends Fragment {
         }
 
         chk_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(chk_push.isChecked()){
@@ -95,6 +99,9 @@ public class Fragment_Setting extends Fragment {
                     dbHelper.updateSets("push", "F");
                     dbModels.setPush("F");
                 }
+
+                Fragment_Cal f = new Fragment_Cal();
+                f.setTableLayout();
             }
         });
 

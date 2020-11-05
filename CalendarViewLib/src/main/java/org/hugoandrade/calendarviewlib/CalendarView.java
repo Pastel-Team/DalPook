@@ -573,6 +573,7 @@ public class CalendarView extends FrameLayout {
             for (CalendarObject c : calendarObjectList) {
                 vNotes.setColor(i, c.getSecondaryColor());
                 vNotes.setTriangleBackgroundColor(i, c.getPrimaryColor());
+                vNotes.setTitle(i, c.getTitle());
 
                 i++;
                 if (i == vNotes.getNumberOfItems())
@@ -905,12 +906,14 @@ public class CalendarView extends FrameLayout {
         private Calendar mDatetime;
         private int mPrimaryColor;
         private int mSecondaryColor;
+        private String mTitle;
 
-        public CalendarObject(String id, Calendar datetime, int primaryColor, int secondaryColor) {
+        public CalendarObject(String id, Calendar datetime, int primaryColor, int secondaryColor, String title) {
             mID = id;
             mDatetime = datetime;
             mPrimaryColor = primaryColor;
             mSecondaryColor = secondaryColor;
+            mTitle = title;
         }
 
         public String getID() {
@@ -928,6 +931,8 @@ public class CalendarView extends FrameLayout {
         public int getSecondaryColor() {
             return mSecondaryColor;
         }
+
+        public String getTitle(){return  mTitle;}
     }
 
     public static class CalendarViewPager extends ViewPager {

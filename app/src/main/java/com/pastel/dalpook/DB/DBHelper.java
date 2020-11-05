@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.pastel.dalpook.Utils.CalModels;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "dalpook.db";
@@ -77,9 +82,86 @@ public class DBHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    /**
-     * Query only 1 record
-     **/
+    // 오늘의 일정 셀렉트
+    public Cursor getToday(String date) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                COLUMN_TIME,
+                COLUMN_CONT,
+                COLUMN_FLAG
+        };
+
+        //String selction = COLUMN_FLAG + " <> B OR D," + COLUMN_DATE + " = " + date;
+
+        Cursor cursor = db.query(
+                TABLE_NAME_CONT,
+                projection,
+                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=?",
+                new String[]{"B", "D", date},
+                null,
+                null,
+                COLUMN_TIME + " ASC");
+
+        return cursor;
+    }
+
+    // 오늘의 일정 (달력 프래그먼트) 셀렉트
+    public List<CalModels> getCalToday(String date) {
+
+        List<CalModels> urlLinkedList = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] projection = {
+                COLUMN_TIME,
+                COLUMN_FLAG
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_CONT,
+                projection,
+                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=?",
+                new String[]{"B", "D", date},
+                null,
+                null,
+                COLUMN_TIME + " ASC");
+
+        CalModels models;
+
+        if (cursor.moveToFirst()) {
+            do {
+                models = new CalModels();
+
+                models.setTime(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                models.setFlag(cursor.getString(cursor.getColumnIndex(COLUMN_FLAG)));
+                urlLinkedList.add(models);
+            } while (cursor.moveToNext());
+        }
+
+
+        return urlLinkedList;
+        /*
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                COLUMN_TIME,
+                COLUMN_FLAG
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_CONT,
+                projection,
+                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=?",
+                new String[]{"B", "D", date},
+                null,
+                null,
+                COLUMN_TIME + " ASC");
+
+        return cursor;
+
+         */
+    }
+
     // 세팅값 데이터 셀렉트
     public Cursor getSets() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -89,9 +171,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    /**
-     * Query only 1 record
-     **/
     // 기록내용 데이터 셀렉트
     public Cursor getConts(String flag) {
 

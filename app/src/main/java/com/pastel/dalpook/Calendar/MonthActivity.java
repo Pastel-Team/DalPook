@@ -409,7 +409,8 @@ public class MonthActivity extends AppCompatActivity {
                 event.getID(),
                 event.getDate(),
                 event.getColor(),
-                event.isCompleted() ? Color.TRANSPARENT : Color.parseColor("#e8c792"));
+                event.isCompleted() ? Color.TRANSPARENT : Color.parseColor("#2e3145"),
+                event.getTitle());
     }
 
     private void getDB(){

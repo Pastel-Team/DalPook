@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -29,6 +30,7 @@ public class MultipleTriangleView extends View {
 
         private int mColor;
         private int mBackgroundColor;
+        private String mTitle;
     }
 
     private static final Direction DEFAULT_DIRECTION = Direction.TOP_LEFT;
@@ -58,6 +60,7 @@ public class MultipleTriangleView extends View {
         int mColor;
         int mBackgroundColor;
         int mNumberOfItems;
+        String mTitle = "";
 
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.MultipleTriangleView);
@@ -96,6 +99,7 @@ public class MultipleTriangleView extends View {
             mViewDirection = ViewDirection.VERTICAL;
 
             mColor = DEFAULT_COLOR;
+            mTitle = "";
             mBackgroundColor = DEFAULT_BACKGROUND_COLOR;
 
             mSeparatorWidth = 0;
@@ -103,12 +107,13 @@ public class MultipleTriangleView extends View {
         }
 
         mTriangleAttr = new ArrayList<>();
-        for (int i = 0 ; i < mNumberOfItems ; i++) {
+        for (int i = 0; i < mNumberOfItems; i++) {
             TriangleAttr t = new TriangleAttr();
 
             t.mDirection = mDirection;
             t.mBackgroundColor = mBackgroundColor;
             t.mColor = mColor;
+            t.mTitle = mTitle;
 
             t.mPaint = new Paint();
             t.mPaint.setStyle(Paint.Style.FILL);
@@ -173,6 +178,7 @@ public class MultipleTriangleView extends View {
 
     /**
      * Set the color of the triangle.
+     *
      * @param color the color of the triangle.
      */
     public void setColor(int color) {
@@ -185,7 +191,7 @@ public class MultipleTriangleView extends View {
             invalidate();
     }
 
-    public void setContent(String content){
+    public void setContent(String content) {
 
     }
 
@@ -212,6 +218,34 @@ public class MultipleTriangleView extends View {
         }
         return false;
     }
+
+    public boolean setTitle(int i, String title) {
+        if (i >= mTriangleAttr.size())
+            return false;
+
+        boolean somethingHasChanged = setTitle(mTriangleAttr.get(i), title);
+
+        if (somethingHasChanged)
+            invalidate();
+
+        return true;
+    }
+
+    private boolean setTitle(TriangleAttr t, String title) {
+        if (t.mTitle != title) {
+            t.mTitle = title;
+            /*
+            if (t.mPaint != null) {
+                t.mPaint.setColor(color);
+            }
+
+             */
+            t.mTrianglePath = null;
+            return true;
+        }
+        return false;
+    }
+
 
     public void setTriangleBackgroundColor(int color) {
         boolean somethingHasChanged = false;
@@ -250,6 +284,7 @@ public class MultipleTriangleView extends View {
 
     /**
      * Set the direction of the triangle.
+     *
      * @param direction the direction of the triangle.
      */
     public void setDirection(Direction direction) {
@@ -271,6 +306,11 @@ public class MultipleTriangleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        Paint paint = new Paint();
+        paint.setColor(Color.parseColor("#000000"));
+        //paint.setStyle(Paint.Style.FILL);
+        //canvas.drawPaint(paint);
+
         if (mTriangleAttr.size() < 1)
             return;
 
@@ -291,15 +331,16 @@ public class MultipleTriangleView extends View {
 
             for (TriangleAttr t : mTriangleAttr) {
                 canvas.drawPath(getBackgroundPath(t, startX, startY, width, iheight), t.mBackgroundPaint);
-                canvas.drawPath(getTrianglePath(t, startX, startY, width, iheight), t.mPaint);
+                //canvas.drawPath(getTrianglePath(t, startX, startY, width, iheight), t.mPaint);
+                t.mPaint.setTextSize(25);
+                t.mPaint.setTypeface(Typeface.create(Typeface.DEFAULT_BOLD, Typeface.NORMAL));
+                canvas.drawText(t.mTitle, startX, startY + iheight - mSeparatorWidth, t.mPaint);
 
                 startY = startY + iheight + mSeparatorWidth;
             }
-        }
-        else {
+        } else {
             if (separatorWidthTotal > height)
                 return;
-
             float iwidth = (width - separatorWidthTotal) / mTriangleAttr.size();
 
             float startX = getPaddingStart();
@@ -308,6 +349,8 @@ public class MultipleTriangleView extends View {
             for (TriangleAttr t : mTriangleAttr) {
                 canvas.drawPath(getBackgroundPath(t, startX, startY, iwidth, height), t.mBackgroundPaint);
                 canvas.drawPath(getTrianglePath(t, startX, startY, iwidth, height), t.mPaint);
+                t.mPaint.setTextSize(20);
+                canvas.drawText("바봉", startX, startY, t.mPaint);
 
                 startX = startX + iwidth + mSeparatorWidth;
             }
@@ -332,25 +375,25 @@ public class MultipleTriangleView extends View {
             Point p1, p2, p3;
             switch (t.mDirection) {
                 case TOP_LEFT:
-                    p1 = new Point((int)(initX), (int)(initY));
-                    p2 = new Point((int)(initX + Math.min(width, height)), (int)(initY));
-                    p3 = new Point((int)(initX), (int)(initY + Math.min(width, height)));
+                    p1 = new Point((int) (initX), (int) (initY));
+                    p2 = new Point((int) (initX + Math.min(width, height)), (int) (initY));
+                    p3 = new Point((int) (initX), (int) (initY + Math.min(width, height)));
                     break;
                 case TOP_RIGHT:
-                    p1 = new Point((int)(initX + width), (int)(initY));
-                    p2 = new Point((int)(initX + width - Math.min(width, height)), (int)(initY));
-                    p3 = new Point((int)(initX + width), (int)(initY + Math.min(width, height)));
+                    p1 = new Point((int) (initX + width), (int) (initY));
+                    p2 = new Point((int) (initX + width - Math.min(width, height)), (int) (initY));
+                    p3 = new Point((int) (initX + width), (int) (initY + Math.min(width, height)));
                     break;
                 case BOTTOM_LEFT:
-                    p1 = new Point((int)(initX), (int)(initY + height));
-                    p2 = new Point((int)(initX - Math.min(width, height)), (int)(initY + height));
-                    p3 = new Point((int)(initX), (int)(initY + height - Math.min(width, height)));
+                    p1 = new Point((int) (initX), (int) (initY + height));
+                    p2 = new Point((int) (initX - Math.min(width, height)), (int) (initY + height));
+                    p3 = new Point((int) (initX), (int) (initY + height - Math.min(width, height)));
                     break;
                 case BOTTOM_RIGHT:
                 default:
-                    p1 = new Point((int)(initX + width), (int)(initY + height));
-                    p2 = new Point((int)(initX + width), (int)(initY + height - Math.min(width, height)));
-                    p3 = new Point((int)(initX + width - Math.min(width, height)), (int)(initY + height));
+                    p1 = new Point((int) (initX + width), (int) (initY + height));
+                    p2 = new Point((int) (initX + width), (int) (initY + height - Math.min(width, height)));
+                    p3 = new Point((int) (initX + width - Math.min(width, height)), (int) (initY + height));
             }
             t.mTrianglePath.moveTo(p1.x, p1.y);
             t.mTrianglePath.lineTo(p2.x, p2.y);

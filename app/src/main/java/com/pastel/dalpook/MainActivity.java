@@ -1,20 +1,17 @@
 package com.pastel.dalpook;
 
-import android.graphics.PorterDuff;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.facebook.stetho.Stetho;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 import com.pastel.dalpook.Fragment.Fragment_Cal;
 import com.pastel.dalpook.Fragment.Fragment_Setting;
 import com.pastel.dalpook.Fragment.Fragment_Today;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     // FrameLayout에 각 메뉴의 Fragment를 바꿔 줌
     private FragmentManager fragmentManager = getSupportFragmentManager();
-    // 4개의 메뉴에 들어갈 Fragment들
+    // 3개의 메뉴에 들어갈 Fragment들
     private Fragment_Today fragment_today;
     private Fragment_Cal fragment_cal;
     private Fragment_Setting fragment_setting;
@@ -65,11 +62,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
+
+                if(position==1){
+                    fragment_cal.setTableLayout();
+                }
+
                 if (prevMenuItem != null){
                     prevMenuItem.setChecked(false);
                 }else{
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    public void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         fragment_today = new Fragment_Today();
         fragment_cal = new Fragment_Cal();
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(fragment_today, "일정");
         adapter.addFragment(fragment_cal, "달력");
         adapter.addFragment(fragment_setting, "설정");
+
         viewPager.setAdapter(adapter);
     }
 }
