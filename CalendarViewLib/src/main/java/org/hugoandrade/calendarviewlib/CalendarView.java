@@ -263,7 +263,7 @@ public class CalendarView extends FrameLayout {
         if (calendarObjectList != null) {
             CalendarObject objectToRemove = null;
             for (CalendarObject object :calendarObjectList) {
-                if (object.getID() != null && object.getID().equals(calendarObject.getID())) {
+                if (object.getID() != null && object.getID().equals(calendarObject.getID()) && object.getDatetime().equals(calendarObject.getDatetime())) {
                     objectToRemove = object;
                     break;
                 }

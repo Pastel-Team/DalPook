@@ -1,19 +1,15 @@
 package com.pastel.dalpook.Utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pastel.dalpook.R;
+import com.pastel.dalpook.data.CalModels;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -112,6 +108,9 @@ public class CalListAdapter extends RecyclerView.Adapter<CalListAdapter.ViewHold
         String AMHour ="";
         if(Hour >= 0 && Hour < 10){
             AMHour = "0"+setCal.get(Calendar.HOUR);
+            if(AMHour.equals("00")){
+                AMHour = "12";
+            }
         }else{
             AMHour = String.valueOf(setCal.get(Calendar.HOUR));
         }

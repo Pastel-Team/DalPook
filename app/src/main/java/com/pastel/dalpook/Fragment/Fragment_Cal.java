@@ -1,10 +1,7 @@
 package com.pastel.dalpook.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -12,11 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,26 +17,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pastel.dalpook.Calendar.DiaryActivity;
+import com.pastel.dalpook.Calendar.LessonActivity;
 import com.pastel.dalpook.Calendar.MonthActivity;
+import com.pastel.dalpook.Calendar.MonthListActivity;
+import com.pastel.dalpook.Calendar.WeekActivity;
+import com.pastel.dalpook.Calendar.WorkActivity;
 import com.pastel.dalpook.DB.DBHelper;
-import com.pastel.dalpook.DB.DBModels;
+import com.pastel.dalpook.Utils.LoadingDialog;
+import com.pastel.dalpook.data.DBModels;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.CalListAdapter;
-import com.pastel.dalpook.Utils.CalModels;
-import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.Utils.RecyclerDecoration;
-import com.pastel.dalpook.Utils.TodayListAdapter;
 
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -76,7 +68,7 @@ public class Fragment_Cal extends Fragment {
 
         mRecyclerView = (RecyclerView)view.findViewById(R.id.rcv_cal);
         tl = (TableLayout) view.findViewById(R.id.tl_cal);
-    }
+            }
 
     public void setTableLayout(){
 
@@ -171,25 +163,36 @@ public class Fragment_Cal extends Fragment {
                     view[i][j].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (view.getTag().equals("month")){
-                                Intent intent = new Intent(getContext(), MonthActivity.class);
-                                startActivity(intent);
-                            }else if (view.getTag().equals("month_list")){
-                                Intent intent = new Intent(getContext(), MonthActivity.class);
-                                startActivity(intent);
-                            }else if (view.getTag().equals("week")){
-                                Intent intent = new Intent(getContext(), MonthActivity.class);
-                                startActivity(intent);
-                            }else if (view.getTag().equals("lesson")){
-                                Intent intent = new Intent(getContext(), MonthActivity.class);
-                                startActivity(intent);
-                            }else if (view.getTag().equals("work")){
-                                Intent intent = new Intent(getContext(), MonthActivity.class);
-                                startActivity(intent);
-                            }else if (view.getTag().equals("diary")){
-                                Intent intent = new Intent(getContext(), MonthActivity.class);
-                                startActivity(intent);
-                            }
+
+                            LoadingDialog loadingDialog = new LoadingDialog(getContext());
+                            loadingDialog.progressOn();
+                            new Thread() {
+                                @Override
+                                public void run() {
+                                    if (view.getTag().equals("month")){
+                                        Intent intent = new Intent(getContext(), MonthActivity.class);
+                                        startActivity(intent);
+                                    }else if (view.getTag().equals("month_list")){
+                                        Intent intent = new Intent(getContext(), MonthListActivity.class);
+                                        startActivity(intent);
+                                    }else if (view.getTag().equals("week")){
+                                        Intent intent = new Intent(getContext(), WeekActivity.class);
+                                        startActivity(intent);
+                                    }else if (view.getTag().equals("lesson")){
+                                        Intent intent = new Intent(getContext(), LessonActivity.class);
+                                        startActivity(intent);
+                                    }else if (view.getTag().equals("work")){
+                                        Intent intent = new Intent(getContext(), WorkActivity.class);
+                                        startActivity(intent);
+                                    }else if (view.getTag().equals("diary")){
+                                        Intent intent = new Intent(getContext(), DiaryActivity.class);
+                                        startActivity(intent);
+                                    }
+
+                                    loadingDialog.progressOff();
+                                }
+                            }.start();
+
                         }
                     });
                     if(i == rowCnt-1){
@@ -203,6 +206,7 @@ public class Fragment_Cal extends Fragment {
                 tl.invalidate();
             }
         }
+
     }
 
     private Cursor getSetDB(){
@@ -272,6 +276,7 @@ public class Fragment_Cal extends Fragment {
         /**
          * 오늘의 일정
          */
+
         mRecyclerView.setHasFixedSize(true);
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -299,19 +304,19 @@ public class Fragment_Cal extends Fragment {
                         startActivity(intent);
                         break;
                     case "W":
-                        Intent intent2 = new Intent(getContext(), MonthActivity.class);
+                        Intent intent2 = new Intent(getContext(), WeekActivity.class);
                         startActivity(intent2);
                         break;
                     case "L":
-                        Intent intent3 = new Intent(getContext(), MonthActivity.class);
+                        Intent intent3 = new Intent(getContext(), LessonActivity.class);
                         startActivity(intent3);
                         break;
                     case "B":
-                        Intent intent4 = new Intent(getContext(), MonthActivity.class);
+                        Intent intent4 = new Intent(getContext(), WorkActivity.class);
                         startActivity(intent4);
                         break;
                     case "D":
-                        Intent intent5 = new Intent(getContext(), MonthActivity.class);
+                        Intent intent5 = new Intent(getContext(), DiaryActivity.class);
                         startActivity(intent5);
                         break;
                 }
@@ -322,53 +327,6 @@ public class Fragment_Cal extends Fragment {
 
         mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mAdapter.getItemCount());
 
-        //오늘의 일정 데이터
-        /*
-        Cursor cursor = getTodayDB();
-        if (cursor.getCount() > 0) {
-            if(cursor.moveToFirst()){
-                do{
-                    String time = cursor.getString(cursor.getColumnIndex("time"));
-                    String flag = cursor.getString(cursor.getColumnIndex("flag"));
-                    String[] splTime = time.split(":");
-
-                    String hour = splTime[0];
-                    String minute = splTime[1];
-
-                    Calendar setCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
-                    setCal.setTime(new Date());
-                    setCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
-                    setCal.set(Calendar.MINUTE, Integer.parseInt(minute));
-
-                    String setTime = "";
-
-                    int isAMorPM = setCal.get(Calendar.AM_PM);
-                    switch (isAMorPM){
-                        case Calendar.AM :
-                            setTime = "오전 " + setCal.get(Calendar.HOUR) + ":" + setCal.get(Calendar.MINUTE);
-                            break;
-                        case Calendar.PM :
-                            setTime = "오후 " + setCal.get(Calendar.HOUR) + ":" + setCal.get(Calendar.MINUTE);
-                            break;
-                    }
-
-                    mAdapter.addItem(setTime, flag);
-
-                }while (cursor.moveToNext());
-
-            }
-        }
-
-        mRecyclerView.setAdapter(mAdapter);
-
-         */
-
         setTableLayout();
     }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-    }
-
 }

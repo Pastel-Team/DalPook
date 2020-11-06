@@ -12,18 +12,13 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.pastel.dalpook.DB.DBHelper;
-import com.pastel.dalpook.DB.DBModels;
-import com.pastel.dalpook.MainActivity;
+import com.pastel.dalpook.Utils.LoadingDialog;
+import com.pastel.dalpook.data.DBModels;
 import com.pastel.dalpook.R;
-import com.pastel.dalpook.ViewPagerAdapter;
 
 import java.util.Objects;
-
-import kotlinx.coroutines.channels.ChannelKt;
 
 public class Fragment_Setting extends Fragment {
 
@@ -198,6 +193,7 @@ public class Fragment_Setting extends Fragment {
     }
 
     private void getDB(){
+
         dbModels = new DBModels();
         dbHelper = new DBHelper(getContext());
         Cursor cursorSets = dbHelper.getSets();
@@ -214,6 +210,5 @@ public class Fragment_Setting extends Fragment {
             dbModels.setWork(cursorSets.getString(5));
             dbModels.setDiary(cursorSets.getString(6));
         }
-
     }
 }

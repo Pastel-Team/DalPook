@@ -3,6 +3,7 @@ package com.pastel.dalpook.Fragment;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +13,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.facebook.stetho.common.StringUtil;
 import com.pastel.dalpook.DB.DBHelper;
-import com.pastel.dalpook.DB.DBModels;
+import com.pastel.dalpook.MainActivity;
 import com.pastel.dalpook.R;
+import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.Utils.TodayListAdapter;
 import com.pastel.dalpook.Utils.TodayModels;
-import com.pastel.dalpook.data.Event;
 
-import org.w3c.dom.Text;
+import org.mozilla.javascript.tools.jsc.Main;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +40,8 @@ public class Fragment_Today extends Fragment {
     private TextView txt_month;
     private TextView txt_day;
     private ListView listView;
+
+    private LoadingDialog loadingDialog;
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -116,6 +117,9 @@ public class Fragment_Today extends Fragment {
                     String AMHour ="";
                     if(Hour >= 0 && Hour < 10){
                         AMHour = "0"+setCal.get(Calendar.HOUR);
+                        if(AMHour.equals("00")){
+                            AMHour = "12";
+                        }
                     }else{
                         AMHour = String.valueOf(setCal.get(Calendar.HOUR));
                     }
@@ -139,8 +143,14 @@ public class Fragment_Today extends Fragment {
                     listAdapter.addItem(setTime, cont, flag);
 
                 }while (cursor.moveToNext());
-
             }
         }
+
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+    }
+
 }

@@ -1,14 +1,20 @@
 package com.pastel.dalpook.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.pastel.dalpook.Calendar.DiaryActivity;
+import com.pastel.dalpook.Calendar.LessonActivity;
 import com.pastel.dalpook.Calendar.MonthActivity;
+import com.pastel.dalpook.Calendar.WeekActivity;
+import com.pastel.dalpook.Calendar.WorkActivity;
 import com.pastel.dalpook.R;
 
 import java.time.Month;
@@ -60,33 +66,46 @@ public class TodayListAdapter extends BaseAdapter {
         txt_time.setText(listViewItem.getTime());
         txt_content.setText(listViewItem.getCont());
 
+        final LoadingDialog loadingDialog = new LoadingDialog(mContext);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String flag = itemList.get(i).getFlag();
+
+                loadingDialog.progressOn();
                 Intent intent;
-                switch (flag){
-                    case "M":
-                        intent = new Intent(mContext, MonthActivity.class);
-                        mContext.startActivity(intent);
-                        break;
-                    case "W":
-                        intent = new Intent(mContext, MonthActivity.class);
-                        mContext.startActivity(intent);
-                        break;
-                    case "L":
-                        intent = new Intent(mContext, MonthActivity.class);
-                        mContext.startActivity(intent);
-                        break;
-                    case "B":
-                        intent = new Intent(mContext, MonthActivity.class);
-                        mContext.startActivity(intent);
-                        break;
-                    case "D":
-                        intent = new Intent(mContext, MonthActivity.class);
-                        mContext.startActivity(intent);
-                        break;
-                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        Intent intent;
+                        switch (flag){
+                            case "M":
+                                intent = new Intent(mContext, MonthActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            case "W":
+                                intent = new Intent(mContext, WeekActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            case "L":
+                                intent = new Intent(mContext, LessonActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            case "B":
+                                intent = new Intent(mContext, WorkActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            case "D":
+                                intent = new Intent(mContext, DiaryActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                        }
+                        loadingDialog.progressOff();
+                    }
+                }.start();
+
             }
         });
 

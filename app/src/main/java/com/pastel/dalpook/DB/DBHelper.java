@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.pastel.dalpook.Utils.CalModels;
+import com.pastel.dalpook.data.CalModels;
 
 import java.util.LinkedList;
 import java.util.List;

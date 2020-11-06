@@ -3,12 +3,14 @@ package com.pastel.dalpook;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.pastel.dalpook.Fragment.Fragment_Cal;
 import com.pastel.dalpook.Fragment.Fragment_Setting;
 import com.pastel.dalpook.Fragment.Fragment_Today;
+import com.pastel.dalpook.Utils.LoadingDialog;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MenuItem prevMenuItem;
 
+    private long backKeyPressedTime = 0;
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                  *  네비게이션 / 뷰페이저 세팅
                  */
         viewPager = (ViewPager)findViewById(R.id.view_pager);
+
         setupViewPager(viewPager);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -99,4 +105,24 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+            backKeyPressedTime = System.currentTimeMillis();
+            showGiude();
+            return;
+        }
+        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+            this.finish();
+            toast.cancel();
+        }
+    }
+    public void showGiude() {
+        toast = Toast.makeText(this, "한번 더 누르시면 종료됩니다", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+
 }

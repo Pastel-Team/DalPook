@@ -3,29 +3,21 @@ package com.pastel.dalpook.Calendar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialog;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.ModelLoader;
 import com.pastel.dalpook.DB.DBHelper;
+import com.pastel.dalpook.Popup.CreateEventActivity;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.CalendarDialog;
 import com.pastel.dalpook.Utils.LoadingDialog;
@@ -38,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -68,7 +59,6 @@ public class MonthActivity extends AppCompatActivity {
     private DBHelper dbHelper;
 
     private Event DelTargetEvent = null;
-    private LoadingDialog loadingDialog;
 
     AppCompatDialog progressDialog;
 
@@ -76,9 +66,6 @@ public class MonthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_month);
-
-        loadingDialog = new LoadingDialog(this);
-        loadingDialog.setLoadImage(R.drawable.ic_loading);
 
         dbHelper = new DBHelper(this);
 
@@ -188,13 +175,12 @@ public class MonthActivity extends AppCompatActivity {
                 .setOnDeleteClick(new CalendarDialog.OnCalendarDialogDeleteListener() {
                     @Override
                     public void onDelete(View view, Event targetEvent) {
-
-                        loadingDialog.show();
-
                         Event oldEvent = null;
                         for (Event e : mEventList) {
-                            if (Objects.equals(targetEvent.getID(), e.getID())) {
-                                oldEvent = e;
+                            if (Objects.equals(targetEvent.getDate(), e.getDate())) {
+                                if(Objects.equals(targetEvent.getTitle(), e.getTitle())){
+                                    oldEvent = e;
+                                }
                                 break;
                             }
                         }
@@ -204,21 +190,24 @@ public class MonthActivity extends AppCompatActivity {
 
                             mCalendarDialog.setEventList(mEventList);
                         }
-
                         // DB Delete
                         Calendar deleteCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
 
                         DBHelper dbHelper = new DBHelper(getApplicationContext());
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
-                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
-                        String oldSec = String.valueOf(oldEvent.getDate().getTime().getSeconds());
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                        assert oldEvent != null;
 
                         deleteCal = oldEvent.getDate();
+                        String oldSec = "";
+                        if(deleteCal.get(Calendar.SECOND) < 10){
+                            oldSec = "0" + String.valueOf(deleteCal.get(Calendar.SECOND));
+                        }else{
+                            oldSec = String.valueOf(deleteCal.get(Calendar.SECOND));
+                        }
                         String date = dateFormat.format(deleteCal.getTime());
                         String time = timeFormat.format(deleteCal.getTime()) + ":"+oldSec;
                         dbHelper.deleteConts(date, time,"M");
-
-                        loadingDialog.hide();
                     }
                 })
                 .create();
@@ -300,8 +289,6 @@ public class MonthActivity extends AppCompatActivity {
                 switch (action) {
                     case CreateEventActivity.ACTION_CREATE: { // insert
 
-                        loadingDialog.show();
-
                         mEventList.add(event);
                         mCalendarView.addCalendarObject(parseCalendarObject(event));
                         mCalendarDialog.setEventList(mEventList);
@@ -313,23 +300,24 @@ public class MonthActivity extends AppCompatActivity {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
                         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
                         Calendar secCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
-                        String secStr = String.valueOf(secCal.get(Calendar.SECOND));
+                        //String secStr = String.valueOf(secCal.get(Calendar.SECOND));
 
                         insertCal = event.getDate();
+                        String insertSec = "";
+                        if(insertCal.get(Calendar.SECOND) < 10){
+                            insertSec = "0" + insertCal.get(Calendar.SECOND);
+                        }else{
+                            insertSec = String.valueOf(insertCal.get(Calendar.SECOND));
+                        }
+
                         String date = dateFormat.format(insertCal.getTime());
-                        String time = timeFormat.format(insertCal.getTime()) + ":"+secStr;
+                        String time = timeFormat.format(insertCal.getTime()) + ":"+insertSec;
                         String title = event.getTitle();
                         int color = event.getColor();
                         dbHelper.insertConts(date, time, title, "M", String.valueOf(color));
-
-                        loadingDialog.hide();
-
                         break;
                     }
                     case CreateEventActivity.ACTION_EDIT: {
-
-                        loadingDialog.show();
-
                         Event oldEvent = null;
                         for (Event e : mEventList) {
                             if (Objects.equals(event.getID(), e.getID())) {
@@ -348,10 +336,16 @@ public class MonthActivity extends AppCompatActivity {
                             DBHelper dbHelper = new DBHelper(this);
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
                             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
-                            String oldSec = String.valueOf(event.getDate().getTime().getSeconds());
 
                             oldCal = oldEvent.getDate();
                             newCal = event.getDate();
+
+                            String oldSec = "";
+                            if(oldCal.get(Calendar.SECOND) < 10){
+                                oldSec = "0" + oldCal.get(Calendar.SECOND);
+                            }else{
+                                oldSec = String.valueOf(oldCal.get(Calendar.SECOND));
+                            }
 
                             String oldDate = dateFormat.format(oldCal.getTime());
                             String oldTime = timeFormat.format(oldCal.getTime()) + ":"+oldSec;
@@ -368,7 +362,6 @@ public class MonthActivity extends AppCompatActivity {
                             mCalendarView.addCalendarObject(parseCalendarObject(event));
                         }
 
-                        loadingDialog.hide();
                         break;
                     }
                     case CreateEventActivity.ACTION_DELETE: {
@@ -415,8 +408,6 @@ public class MonthActivity extends AppCompatActivity {
 
     private void getDB(){
 
-        loadingDialog.show();
-
         dbHelper = new DBHelper(this);
         Cursor contCursor = dbHelper.getConts("M");
 
@@ -460,9 +451,11 @@ public class MonthActivity extends AppCompatActivity {
                 mCalendarDialog.setEventList(mEventList);
             }
         }
-
-        loadingDialog.hide();
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finish();
+    }
 
 }
