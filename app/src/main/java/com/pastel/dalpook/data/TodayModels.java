@@ -1,16 +1,19 @@
-package com.pastel.dalpook.Utils;
+package com.pastel.dalpook.data;
+
+import java.util.Calendar;
 
 public class TodayModels {
     // 기록 내용
-    private String time;
+    private Calendar time;
     private String cont;
+    private int color;
     private String flag;
 
-    public String getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Calendar time) {
         this.time = time;
     }
 
@@ -21,6 +24,10 @@ public class TodayModels {
     public void setCont(String cont) {
         this.cont = cont;
     }
+
+    public int getColor() {return color;}
+
+    public void setColor(int color) {this.color = color;}
 
     public String getFlag() {
         return flag;

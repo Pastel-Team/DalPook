@@ -51,7 +51,7 @@ public class MonthActivity extends AppCompatActivity {
     private TextView txt_month_year;
     private TextView txt_month_month;
 
-    private RelativeLayout btn_month_back;
+    private Button btn_month_back;
     private Button btn_month_monback;
     private Button btn_month_monnext;
     private Button btn_month_add;
@@ -73,7 +73,7 @@ public class MonthActivity extends AppCompatActivity {
         txt_month_year = (TextView) findViewById(R.id.txt_month_year);
         btn_month_monback = (Button) findViewById(R.id.btn_month_monback);
         btn_month_monnext= (Button) findViewById(R.id.btn_month_monnext);
-        btn_month_back = (RelativeLayout) findViewById(R.id.btn_month_back);
+        btn_month_back = (Button) findViewById(R.id.btn_month_back);
         btn_month_add = (Button) findViewById(R.id.btn_month_add);
 
         mShortMonths = new DateFormatSymbols().getShortMonths();
@@ -320,7 +320,7 @@ public class MonthActivity extends AppCompatActivity {
                     case CreateEventActivity.ACTION_EDIT: {
                         Event oldEvent = null;
                         for (Event e : mEventList) {
-                            if (Objects.equals(event.getID(), e.getID())) {
+                            if (Objects.equals(event.getDate(), e.getDate())) {
                                 oldEvent = e;
                                 break;
                             }

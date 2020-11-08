@@ -90,6 +90,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String[] projection = {
                 COLUMN_TIME,
                 COLUMN_CONT,
+                COLUMN_COLOR,
                 COLUMN_FLAG
         };
 
@@ -114,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] projection = {
                 COLUMN_TIME,
+                COLUMN_COLOR,
                 COLUMN_FLAG
         };
 
@@ -133,6 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 models = new CalModels();
 
                 models.setTime(cursor.getString(cursor.getColumnIndex(COLUMN_TIME)));
+                models.setColor(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_COLOR))));
                 models.setFlag(cursor.getString(cursor.getColumnIndex(COLUMN_FLAG)));
                 urlLinkedList.add(models);
             } while (cursor.moveToNext());
@@ -140,26 +143,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         return urlLinkedList;
-        /*
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String[] projection = {
-                COLUMN_TIME,
-                COLUMN_FLAG
-        };
-
-        Cursor cursor = db.query(
-                TABLE_NAME_CONT,
-                projection,
-                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=?",
-                new String[]{"B", "D", date},
-                null,
-                null,
-                COLUMN_TIME + " ASC");
-
-        return cursor;
-
-         */
     }
 
     // 세팅값 데이터 셀렉트
@@ -193,7 +176,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 null,
                 null,
                 null,
-                null);
+                COLUMN_TIME + " ASC");
 
         return cursor;
     }

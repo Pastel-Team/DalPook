@@ -1,6 +1,7 @@
 package com.pastel.dalpook.Utils;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class CalListAdapter extends RecyclerView.Adapter<CalListAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
 
+        public View view_color;
         public TextView textView;
         public View layout;
 
@@ -43,18 +45,24 @@ public class CalListAdapter extends RecyclerView.Adapter<CalListAdapter.ViewHold
             //personAgeTxtV = (TextView) v.findViewById(R.id.age);
             //personOccupationTxtV = (TextView) v.findViewById(R.id.occupation);
             textView = (TextView) itemView.findViewById(R.id.txt_time_cal);
+            view_color = (View) itemView.findViewById(R.id.view_cal_today_color);
         }
     }
 
-    public void addItem(int position, String time, String flag) {
+    public void addItem(int position, String time, int color, String flag) {
 
-        CalModels models = new CalModels(time , flag);
+        CalModels models = new CalModels(time, color, flag);
 
         mTimeList.add(position, models);
         notifyItemInserted(position);
         notifyItemRangeChanged(position, mTimeList.size());
         notifyDataSetChanged();
 
+    }
+
+    public void removeItem(int position){
+        mTimeList.remove(position);
+        notifyDataSetChanged();
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -139,6 +147,9 @@ public class CalListAdapter extends RecyclerView.Adapter<CalListAdapter.ViewHold
                 mListener.onItemClick(holder.textView, position, models.getFlag());
             }
         });
+
+        GradientDrawable mGradientDrawable = (GradientDrawable) holder.view_color.getBackground();
+        mGradientDrawable.setStroke(10, models.getColor());
 
     }
 

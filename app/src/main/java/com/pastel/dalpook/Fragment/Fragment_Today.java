@@ -3,7 +3,6 @@ package com.pastel.dalpook.Fragment;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.pastel.dalpook.DB.DBHelper;
-import com.pastel.dalpook.MainActivity;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.Utils.TodayListAdapter;
-import com.pastel.dalpook.Utils.TodayModels;
-
-import org.mozilla.javascript.tools.jsc.Main;
+import com.pastel.dalpook.data.TodayModels;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -99,19 +95,23 @@ public class Fragment_Today extends Fragment {
                 do{
                     String time = cursor.getString(cursor.getColumnIndex("time"));
                     String cont = cursor.getString(cursor.getColumnIndex("cont"));
+                    int color = Integer.parseInt(cursor.getString(cursor.getColumnIndex("color")));
                     String flag = cursor.getString(cursor.getColumnIndex("flag"));
                     String[] splTime = time.split(":");
 
                     String hour = splTime[0];
                     String minute = splTime[1];
+                    String second = splTime[2];
 
                     Calendar setCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
                     setCal.setTime(new Date());
                     setCal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
                     setCal.set(Calendar.MINUTE, Integer.parseInt(minute));
+                    setCal.set(Calendar.SECOND, Integer.parseInt(second));
 
-                    String setTime = "";
+                    listAdapter.addItem(setCal, cont, color, flag);
 
+                    /*
                     int isAMorPM = setCal.get(Calendar.AM_PM);
                     int Hour = setCal.get(Calendar.HOUR);
                     String AMHour ="";
@@ -140,7 +140,7 @@ public class Fragment_Today extends Fragment {
                             break;
                     }
 
-                    listAdapter.addItem(setTime, cont, flag);
+                     */
 
                 }while (cursor.moveToNext());
             }

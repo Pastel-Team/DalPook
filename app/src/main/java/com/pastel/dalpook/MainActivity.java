@@ -11,6 +11,7 @@ import com.pastel.dalpook.Fragment.Fragment_Cal;
 import com.pastel.dalpook.Fragment.Fragment_Setting;
 import com.pastel.dalpook.Fragment.Fragment_Today;
 import com.pastel.dalpook.Utils.LoadingDialog;
+import com.pastel.dalpook.Utils.TodayListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(position==1){
                     fragment_cal.setTableLayout();
+                    fragment_cal.setRecyclerView();
                 }
 
                 if (prevMenuItem != null){
@@ -91,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void setupViewPager(ViewPager viewPager){

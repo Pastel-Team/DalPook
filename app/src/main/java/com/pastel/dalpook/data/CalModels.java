@@ -2,13 +2,15 @@ package com.pastel.dalpook.data;
 
 public class CalModels {
     private String time;
+    private int color;
     private String flag;
 
     public CalModels() {
     }
 
-    public CalModels(String time, String flag) {
+    public CalModels(String time, int color, String flag) {
         this.time = time;
+        this.color = color;
         this.flag = flag;
     }
 
@@ -19,6 +21,10 @@ public class CalModels {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public int getColor() {return color;}
+
+    public void setColor(int color) {this.color = color;}
 
     public String getFlag() {
         return flag;

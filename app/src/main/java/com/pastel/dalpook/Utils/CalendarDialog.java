@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.util.Pair;
 import android.view.Display;
@@ -352,6 +353,10 @@ public class CalendarDialog {
             //holder.rclEventIcon.setBackgroundColor(event.getColor());
             holder.tvEventStatus.setText(timeFormat.format(event.getDate().getTime()));
 
+            GradientDrawable mGradientDrawable = (GradientDrawable) holder.rclEventIcon.getBackground();
+            mGradientDrawable.setStroke(10, event.getColor());
+            mGradientDrawable.setColor(event.getColor());
+
             Typeface typeFace = ResourcesCompat.getFont(mContext, R.font.mapo_flower_island);
             holder.tvEventName.setTypeface(typeFace);
             holder.tvEventStatus.setTypeface(typeFace);
@@ -370,7 +375,7 @@ public class CalendarDialog {
 
             ViewHolder(View view) {
                 super(view);
-                //rclEventIcon = view.findViewById(R.id.rcl_calendar_event_icon);
+                rclEventIcon = view.findViewById(R.id.rcl_calendar_event_icon);
                 tvEventName = view.findViewById(R.id.tv_calendar_event_name);
                 tvEventStatus = view.findViewById(R.id.tv_calendar_event_status);
                 btn_delete = view.findViewById(R.id.btn_event_list_delete);

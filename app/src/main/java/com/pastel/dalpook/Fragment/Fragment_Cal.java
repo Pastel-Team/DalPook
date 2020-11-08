@@ -60,6 +60,7 @@ public class Fragment_Cal extends Fragment {
 
         init(rootView);
         setTableLayout();
+        setRecyclerView();
 
         return rootView;
     }
@@ -68,7 +69,68 @@ public class Fragment_Cal extends Fragment {
 
         mRecyclerView = (RecyclerView)view.findViewById(R.id.rcv_cal);
         tl = (TableLayout) view.findViewById(R.id.tl_cal);
+    }
+
+    public void setRecyclerView(){
+        mRecyclerView.setHasFixedSize(true);
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // Set Layout Manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        RecyclerDecoration recyclerDecoration = new RecyclerDecoration(2);
+        mRecyclerView.addItemDecoration(recyclerDecoration);
+
+        Calendar TodayCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+        String date = dateFormat.format(TodayCal.getTime());
+
+        mAdapter = new CalListAdapter(dbHelper.getCalToday(date), getContext(), mRecyclerView, new CalListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos, String getFlag) {
+
+                LoadingDialog loadingDialog = new LoadingDialog(getContext());
+                loadingDialog.progressOn();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        switch (getFlag){
+                            case "M":
+                                Intent intent = new Intent(getContext(), MonthActivity.class);
+                                startActivity(intent);
+                                break;
+                            case "W":
+                                Intent intent2 = new Intent(getContext(), WeekActivity.class);
+                                startActivity(intent2);
+                                break;
+                            case "L":
+                                Intent intent3 = new Intent(getContext(), LessonActivity.class);
+                                startActivity(intent3);
+                                break;
+                            case "B":
+                                Intent intent4 = new Intent(getContext(), WorkActivity.class);
+                                startActivity(intent4);
+                                break;
+                            case "D":
+                                Intent intent5 = new Intent(getContext(), DiaryActivity.class);
+                                startActivity(intent5);
+                                break;
+                        }
+                        loadingDialog.progressOff();
+                    }
+                }.start();
             }
+        });
+
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mAdapter.getItemCount());
+    }
 
     public void setTableLayout(){
 
@@ -276,7 +338,6 @@ public class Fragment_Cal extends Fragment {
         /**
          * 오늘의 일정
          */
-
         mRecyclerView.setHasFixedSize(true);
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
@@ -298,35 +359,47 @@ public class Fragment_Cal extends Fragment {
         mAdapter = new CalListAdapter(dbHelper.getCalToday(date), getContext(), mRecyclerView, new CalListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos, String getFlag) {
-                switch (getFlag){
-                    case "M":
-                        Intent intent = new Intent(getContext(), MonthActivity.class);
-                        startActivity(intent);
-                        break;
-                    case "W":
-                        Intent intent2 = new Intent(getContext(), WeekActivity.class);
-                        startActivity(intent2);
-                        break;
-                    case "L":
-                        Intent intent3 = new Intent(getContext(), LessonActivity.class);
-                        startActivity(intent3);
-                        break;
-                    case "B":
-                        Intent intent4 = new Intent(getContext(), WorkActivity.class);
-                        startActivity(intent4);
-                        break;
-                    case "D":
-                        Intent intent5 = new Intent(getContext(), DiaryActivity.class);
-                        startActivity(intent5);
-                        break;
-                }
+                LoadingDialog loadingDialog = new LoadingDialog(getContext());
+                loadingDialog.progressOn();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        switch (getFlag){
+                            case "M":
+                                Intent intent = new Intent(getContext(), MonthActivity.class);
+                                startActivity(intent);
+                                break;
+                            case "W":
+                                Intent intent2 = new Intent(getContext(), WeekActivity.class);
+                                startActivity(intent2);
+                                break;
+                            case "L":
+                                Intent intent3 = new Intent(getContext(), LessonActivity.class);
+                                startActivity(intent3);
+                                break;
+                            case "B":
+                                Intent intent4 = new Intent(getContext(), WorkActivity.class);
+                                startActivity(intent4);
+                                break;
+                            case "D":
+                                Intent intent5 = new Intent(getContext(), DiaryActivity.class);
+                                startActivity(intent5);
+                                break;
+                        }
+                        loadingDialog.progressOff();
+                    }
+                }.start();
             }
         });
 
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.notifyItemRangeChanged(mAdapter.getItemCount(), mAdapter.getItemCount());
+        //setTableLayout();
+    }
 
-        setTableLayout();
+    public void removeRecyclerItem(int pos){
+        CalListAdapter adapter = (CalListAdapter) mRecyclerView.getAdapter();
+        adapter.removeItem(pos);
     }
 }
