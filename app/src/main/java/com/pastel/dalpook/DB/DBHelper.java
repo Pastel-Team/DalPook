@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.pastel.dalpook.data.CalModels;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -177,6 +181,36 @@ public class DBHelper extends SQLiteOpenHelper {
                 null,
                 null,
                 COLUMN_TIME + " ASC");
+
+        return cursor;
+    }
+
+    public Cursor getMonthList(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+        calendar.setTime(new Date());
+        String Year = String.valueOf(calendar.get(Calendar.YEAR));
+        String Month = String.valueOf(calendar.get(Calendar.MONTH));
+        String toMonth = Year + "-" + Month + "-" +"01";
+
+
+        String[] projection = {
+                COLUMN_DATE,
+                COLUMN_TIME,
+                COLUMN_CONT,
+                COLUMN_FLAG,
+                COLUMN_COLOR
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_CONT,
+                projection,
+                COLUMN_DATE + ">=?",
+                new String[]{toMonth},
+                null,
+                null,
+                COLUMN_DATE + ","+ COLUMN_TIME +" ASC");
 
         return cursor;
     }

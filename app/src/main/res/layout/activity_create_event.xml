@@ -83,7 +83,10 @@
                 android:textColor="#e8c792"
                 android:textSize="16sp"
                 android:fontFamily="@font/mapo_flower_island"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_event_color"

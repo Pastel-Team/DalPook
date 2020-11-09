@@ -15,10 +15,13 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -157,11 +160,13 @@ public class CreateEventActivity extends AppCompatActivity {
     private void initializeUI() {
         setContentView(R.layout.activity_create_event);
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         View tvSave = findViewById(R.id.tv_save);
         tvSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mTitleView.getText().toString().equals("")){
+                    imm.hideSoftInputFromWindow(mTitleView.getWindowToken(), 0);
                     snackbar = Snackbar.make(v, "내용을 입력해주세요.", Snackbar.LENGTH_SHORT);
                     View snackView = snackbar.getView();
                     snackView.setBackgroundColor(Color.parseColor("#e8c792"));
@@ -235,8 +240,44 @@ public class CreateEventActivity extends AppCompatActivity {
                         .show();
             }
         });
+
         mTitleView = findViewById(R.id.et_event_title);
         mTitleView.setText(mTitle);
+        mTitleView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                switch (i){
+                    case EditorInfo.IME_ACTION_DONE:
+                        if(mTitleView.getText().toString().equals("")){
+                            imm.hideSoftInputFromWindow(mTitleView.getWindowToken(), 0);
+                            snackbar = Snackbar.make(textView, "내용을 입력해주세요.", Snackbar.LENGTH_SHORT);
+                            View snackView = snackbar.getView();
+                            snackView.setBackgroundColor(Color.parseColor("#e8c792"));
+                            textView = (TextView) snackView.findViewById(com.google.android.material.R.id.snackbar_text);
+                            textView.setTextColor(Color.parseColor("#2e3145"));
+                            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+                            TextView actTextView = (TextView) snackView.findViewById(com.google.android.material.R.id.snackbar_action);
+                            actTextView.setTypeface(actTextView.getTypeface(), Typeface.BOLD);
+                            actTextView.setTextColor(Color.parseColor("#2e3145"));
+                            actTextView.setTextSize( 16 );
+                            actTextView.setMaxLines( 3 );
+                            snackbar.setAction("확인", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    snackbar.dismiss();
+                                }
+                            }).show();
+                        }else{
+                            imm.hideSoftInputFromWindow(mTitleView.getWindowToken(), 0);
+                            save();
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+
+
         //mIsCompleteCheckBox = findViewById(R.id.checkbox_completed);
         //mIsCompleteCheckBox.setChecked(mIsComplete);
 
