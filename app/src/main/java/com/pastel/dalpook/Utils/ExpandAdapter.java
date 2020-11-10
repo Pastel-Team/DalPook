@@ -31,7 +31,8 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
     private ExpandAdapter.OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int pos, Event event);
+        void onDeleteItem(View v, int pos, Event event);
+        void onItemClick(Event event);
     }
 
     // CustomExpandableListViewAdapter 생성자
@@ -215,10 +216,19 @@ public class ExpandAdapter extends BaseExpandableListAdapter {
         mChildListViewHolder.txt_month_list_time.setText(setTime);
         mChildListViewHolder.txt_month_list_content.setText(childData.getTitle());
 
+        // 삭제
         mChildListViewHolder.btn_month_list_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onItemClick(mChildListViewHolder.ly_event, childPosition, (Event) getChild(groupPosition, childPosition));
+                mListener.onDeleteItem(mChildListViewHolder.ly_event, childPosition, (Event) getChild(groupPosition, childPosition));
+            }
+        });
+
+        // 수정
+        mChildListViewHolder.ly_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemClick((Event) getChild(groupPosition, childPosition));
             }
         });
 

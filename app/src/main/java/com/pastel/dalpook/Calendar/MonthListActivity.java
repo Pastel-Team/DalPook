@@ -58,8 +58,10 @@ public class MonthListActivity extends AppCompatActivity {
         getDB();
         setExpandList();
 
-        for(int i = 0 ; i < mAdapter.getGroupCount() ; i++){
-            expandableListView.expandGroup(i);
+        if(mAdapter != null && mAdapter.getGroupCount() > 0){
+            for(int i = 0 ; i < mAdapter.getGroupCount() ; i++){
+                expandableListView.expandGroup(i);
+            }
         }
 
         btn_month_list_add.setOnClickListener(new View.OnClickListener() {
@@ -82,26 +84,6 @@ public class MonthListActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        /*
-        btn_month_list_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createEvent(mCalendarView.getSelectedDate());
-            }
-        });
-
-         */
-
-        /*
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int i) {
-
-            }
-        });
-
-         */
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -203,8 +185,44 @@ public class MonthListActivity extends AppCompatActivity {
 
             mAdapter = new ExpandAdapter(this, mParentList, childList, new ExpandAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(View v, int pos, Event event) {
-                    // 클릭이벤트
+                public void onDeleteItem(View v, int pos, Event event) {
+                    // DB Delete
+                    Calendar deleteCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+
+                    DBHelper dbHelper = new DBHelper(getApplicationContext());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+                    deleteCal = event.getDate();
+                    String Sec = "";
+                    if(deleteCal.get(Calendar.SECOND) < 10){
+                        Sec = "0" + String.valueOf(deleteCal.get(Calendar.SECOND));
+                    }else{
+                        Sec = String.valueOf(deleteCal.get(Calendar.SECOND));
+                    }
+                    String date = dateFormat.format(deleteCal.getTime());
+                    String time = timeFormat.format(deleteCal.getTime()) + ":"+Sec;
+                    dbHelper.deleteConts(date, time,"M");
+
+
+                    mParentList.clear();
+                    mEventList.clear();
+                    childList.clear();
+                    mAdapter = null;
+                    expandableListView.setAdapter(mAdapter);
+                    getDB();
+                    setExpandList();
+
+                    if(mAdapter != null && mAdapter.getGroupCount() > 0){
+                        for(int i = 0 ; i < mAdapter.getGroupCount() ; i ++){
+                            expandableListView.expandGroup(i);
+                        }
+                    }
+                }
+
+                @Override
+                public void onItemClick(Event event) {
+                    onEventSelected(event);
                 }
             });
 
@@ -215,6 +233,14 @@ public class MonthListActivity extends AppCompatActivity {
     private void createEvent(Calendar selectedDate) {
         Activity context = MonthListActivity.this;
         Intent intent = CreateEventActivity.makeIntent(context, selectedDate);
+
+        startActivityForResult(intent, CREATE_EVENT_REQUEST_CODE);
+        overridePendingTransition( R.anim.slide_in_up, R.anim.stay );
+    }
+
+    private void onEventSelected(Event event) {
+        Activity context = MonthListActivity.this;
+        Intent intent = CreateEventActivity.makeIntent(context, event);
 
         startActivityForResult(intent, CREATE_EVENT_REQUEST_CODE);
         overridePendingTransition( R.anim.slide_in_up, R.anim.stay );
@@ -309,9 +335,15 @@ public class MonthListActivity extends AppCompatActivity {
 
                             dbHelper.updateConts(oldDate, oldTime, newDate, newTime, newTitle, newColor, "M");
 
-                            //mCalendarDialog.setEventList(mEventList);
-                            //mCalendarView.removeCalendarObjectByID(parseCalendarObject(oldEvent));
-                            //mCalendarView.addCalendarObject(parseCalendarObject(event));
+                            mParentList.clear();
+                            mEventList.clear();
+                            childList.clear();
+                            getDB();
+                            setExpandList();
+
+                            for(int i = 0 ; i < mAdapter.getGroupCount() ; i ++){
+                                expandableListView.expandGroup(i);
+                            }
                         }
 
                         break;
