@@ -34,6 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_CONT = "CONTENTS";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_TIME_END = "time_end";
     public static final String COLUMN_CONT = "cont";
     public static final String COLUMN_FLAG = "flag"; //달력 식별용.  M:월간 / W:주간 / L:수강표 / B:업무일지 / D:다이어리
     public static final String COLUMN_COLOR = "color";
@@ -60,6 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(" CREATE TABLE " + TABLE_NAME_CONT + " (" +
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_TIME + " TEXT," +
+                COLUMN_TIME_END + " TEXT," +
                 COLUMN_CONT + " TEXT, " +
                 COLUMN_COLOR + " TEXT, " +
                 COLUMN_FLAG + " TEXT);"
@@ -166,6 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String[] projection = {
                 COLUMN_DATE,
                 COLUMN_TIME,
+                COLUMN_TIME_END,
                 COLUMN_CONT,
                 COLUMN_FLAG,
                 COLUMN_COLOR

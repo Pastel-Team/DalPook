@@ -24,7 +24,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:textColor="#666d99"
-                android:text="이벤트 등록 색상 선택"
+                android:text="일정 등록 색상 선택"
                 android:fontFamily="@font/mapo_flower_island"
                 android:padding="5dp"/>
 

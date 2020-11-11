@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.View;
 import org.hugoandrade.calendarviewlib.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MultipleTriangleView extends View {
@@ -25,6 +27,7 @@ public class MultipleTriangleView extends View {
 
         private Path mTrianglePath;
         private Path mBackgroundPath;
+        private RectF mRectF;
 
         private Direction mDirection;
 
@@ -306,11 +309,6 @@ public class MultipleTriangleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Paint paint = new Paint();
-        paint.setColor(Color.parseColor("#000000"));
-        //paint.setStyle(Paint.Style.FILL);
-        //canvas.drawPaint(paint);
-
         if (mTriangleAttr.size() < 1)
             return;
 
@@ -330,11 +328,12 @@ public class MultipleTriangleView extends View {
             float startY = getPaddingTop();
 
             for (TriangleAttr t : mTriangleAttr) {
+                //canvas.drawRoundRect(getRectF(t, startX, startY, width, iheight), 10,10,t.mBackgroundPaint);
                 canvas.drawPath(getBackgroundPath(t, startX, startY, width, iheight), t.mBackgroundPaint);
                 //canvas.drawPath(getTrianglePath(t, startX, startY, width, iheight), t.mPaint);
                 t.mPaint.setTextSize(25);
                 t.mPaint.setTypeface(Typeface.create(Typeface.DEFAULT_BOLD, Typeface.NORMAL));
-                canvas.drawText(t.mTitle, startX, startY + iheight - mSeparatorWidth, t.mPaint);
+                canvas.drawText(t.mTitle, startX+10, startY + iheight - mSeparatorWidth, t.mPaint);
 
                 startY = startY + iheight + mSeparatorWidth;
             }
@@ -350,7 +349,7 @@ public class MultipleTriangleView extends View {
                 canvas.drawPath(getBackgroundPath(t, startX, startY, iwidth, height), t.mBackgroundPaint);
                 canvas.drawPath(getTrianglePath(t, startX, startY, iwidth, height), t.mPaint);
                 t.mPaint.setTextSize(20);
-                canvas.drawText("바봉", startX, startY, t.mPaint);
+                //canvas.drawText("바봉", startX, startY, t.mPaint);
 
                 startX = startX + iwidth + mSeparatorWidth;
             }
@@ -402,6 +401,13 @@ public class MultipleTriangleView extends View {
         return t.mTrianglePath;
     }
 
+    private RectF getRectF(TriangleAttr t, float offsetX, float offsetY, float width , float height){
+        if(t.mRectF == null){
+            t.mRectF = new RectF(offsetX, offsetY, width, height);
+        }
+        return t.mRectF;
+    }
+
     private Path getBackgroundPath(TriangleAttr t,
                                    float initX,
                                    float initY,
@@ -415,10 +421,17 @@ public class MultipleTriangleView extends View {
             p3 = new Point((int) (initX + width), (int) (initY + height));
             p4 = new Point((int) (initX + width), (int) initY);
 
+            //t.mBackgroundPath.moveTo(p1.x, p1.y);
+            //t.mBackgroundPath.lineTo(p2.x, p2.y);
+            //t.mBackgroundPath.lineTo(p3.x, p3.y);
+            //t.mBackgroundPath.lineTo(p4.x, p4.y);
+
+            float[] radii = new float[8];
+            Arrays.fill(radii, 15);
+
             t.mBackgroundPath.moveTo(p1.x, p1.y);
-            t.mBackgroundPath.lineTo(p2.x, p2.y);
-            t.mBackgroundPath.lineTo(p3.x, p3.y);
-            t.mBackgroundPath.lineTo(p4.x, p4.y);
+            t.mBackgroundPath.addRoundRect(new RectF(p1.x, p1.y, p3.x, p3.y), radii, Path.Direction.CW);
+
         }
         return t.mBackgroundPath;
     }
