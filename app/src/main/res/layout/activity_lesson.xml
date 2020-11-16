@@ -1,9 +1,1575 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Calendar.LessonActivity">
+    tools:context=".Calendar.LessonActivity"
+    android:background="#2e3145">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="338.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_grad_center"/>
+
+    <RelativeLayout
+        android:id="@+id/ly_week_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8.5dp"
+            android:layout_marginEnd="8.5dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_week_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8.5dp"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:drawableStart="@drawable/button_back_resize"
+                android:text="주간달력"
+                android:textSize="16sp"
+                android:textColor="#999fc9"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_week_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:drawableEnd="@drawable/button_add_resize"
+                android:text="일정등록"
+                android:textColor="#e8c792"
+                android:textSize="16sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/ly_week_header"
+        android:background="#666d99"/>
+
+
+    <ScrollView
+        android:id="@+id/table_scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view">
+
+        <TableLayout
+            android:id="@+id/tb_main"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1,2,3,4,5,6,7,8">
+            <TableRow
+                android:background="#2e3145">
+                <TextView
+                    android:layout_height="20dp"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center"
+                    android:text="일"
+                    android:textColor="#de4e54"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="월"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="화"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="수"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="목"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="금"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="토"
+                    android:textColor="#6176ff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+            </TableRow> <!-- 헤더 -->
+            <TableRow>
+                <LinearLayout
+                    android:layout_height="60dp"
+                    android:layout_width="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="오전"
+                        android:textColor="#6176ff"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/mapo_flower_island"/>
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="12시"
+                        android:textColor="#c4ccff"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/mapo_flower_island"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 12시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="1시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 01시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="2시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 02시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="3시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 03시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="4시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 04시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="5시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 05시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="6시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 06시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="7시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 07시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="8시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 08시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="9시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 09시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="10시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 10시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="11시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오전 11시 -->
+            <TableRow>
+                <LinearLayout
+                    android:layout_height="60dp"
+                    android:layout_width="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="오후"
+                        android:textColor="#de4e54"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/mapo_flower_island"/>
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:text="12시"
+                        android:textColor="#c4ccff"
+                        android:textSize="10sp"
+                        android:fontFamily="@font/mapo_flower_island"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 12시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="13시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 13시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="14시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 14시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="15시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 15시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="16시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 16시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="17시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 17시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="18시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 18시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="19시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 19시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="20시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 20시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="21시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 21시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="22시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 22시 -->
+            <TableRow>
+                <TextView
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="23시"
+                    android:textColor="#c4ccff"
+                    android:textSize="10sp"
+                    android:fontFamily="@font/mapo_flower_island"/>
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/tablecorner_fill"
+                    android:gravity="center" />
+            </TableRow> <!-- 오후 23시 -->
+
+        </TableLayout>
+
+    </ScrollView>
+
+    <TableLayout
+        android:id="@+id/tb_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:stretchColumns="1,2,3,4,5,6,7,8">
+        <TableRow
+            android:background="#2e3145">
+            <View
+                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner_fill"
+                android:gravity="center"
+                android:text="일"
+                android:textColor="#de4e54"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="월"
+                android:textColor="#c4ccff"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner_fill"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="화"
+                android:textColor="#c4ccff"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="수"
+                android:textColor="#c4ccff"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner_fill"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="목"
+                android:textColor="#c4ccff"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="#c4ccff"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:background="@drawable/tablecorner_fill"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="토"
+                android:textColor="#6176ff"
+                android:textSize="10sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+        </TableRow>
+    </TableLayout>
+
+
+</RelativeLayout>

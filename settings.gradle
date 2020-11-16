@@ -1,3 +1,4 @@
+include ':library'
 include ':CalendarViewLib'
 include ':app'
 rootProject.name = "DalPook"

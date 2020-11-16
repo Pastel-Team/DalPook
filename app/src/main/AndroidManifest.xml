@@ -10,20 +10,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DalPook">
         <activity
+            android:name=".Popup.CreateWeekEventActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".Utils.SelectTimeActivity"
+            android:theme="@style/Transparent" />
+        <activity
             android:name=".Calendar.DiaryActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar"/>
+            android:theme="@style/Theme.DalPook.NoActionBar" />
         <activity
             android:name=".Calendar.WorkActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar"/>
+            android:theme="@style/Theme.DalPook.NoActionBar" />
         <activity
             android:name=".Calendar.LessonActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar"/>
+            android:theme="@style/Theme.DalPook.NoActionBar" />
         <activity
             android:name=".Calendar.WeekActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar"/>
+            android:theme="@style/Theme.DalPook.NoActionBar" />
         <activity
             android:name=".Calendar.MonthListActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar"/>
+            android:theme="@style/Theme.DalPook.NoActionBar" />
         <activity
             android:name=".Utils.SelectDateAndTimeActivity"
             android:theme="@style/Transparent" />

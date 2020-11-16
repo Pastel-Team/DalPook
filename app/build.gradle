@@ -44,7 +44,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     implementation project(':CalendarViewLib')
-    implementation 'com.github.alamkanak:android-week-view:1.2.6'
 
     //SQLITE DB 실시간 확인
     implementation 'com.facebook.stetho:stetho:1.5.1'

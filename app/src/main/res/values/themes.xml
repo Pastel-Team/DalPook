@@ -119,7 +119,7 @@
     </style>
 
     <style name="selectablebackground">
-        <item name="android:background">@drawable/roundcorner</item>
         <item name="selectableItemBackground">?attr/selectableItemBackground</item>
+        <item name="android:background">@drawable/roundcorner</item>
     </style>
 </resources>

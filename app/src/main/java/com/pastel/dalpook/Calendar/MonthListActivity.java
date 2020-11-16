@@ -190,8 +190,8 @@ public class MonthListActivity extends AppCompatActivity {
                     Calendar deleteCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
 
                     DBHelper dbHelper = new DBHelper(getApplicationContext());
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.KOREA);
 
                     deleteCal = event.getDate();
                     String Sec = "";
