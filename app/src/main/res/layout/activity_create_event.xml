@@ -111,7 +111,8 @@
                 android:text="취소"
                 android:textColor="#c4ccff"
                 android:textSize="16sp"
-                android:fontFamily="@font/mapo_flower_island"/>
+                android:fontFamily="@font/mapo_flower_island"
+                android:background="?selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/tv_save"
@@ -119,7 +120,8 @@
                 android:text="완료"
                 android:textColor="#e8c792"
                 android:textSize="16sp"
-                android:fontFamily="@font/mapo_flower_island"/>
+                android:fontFamily="@font/mapo_flower_island"
+                android:background="?selectableItemBackground"/>
 
         </LinearLayout>
 

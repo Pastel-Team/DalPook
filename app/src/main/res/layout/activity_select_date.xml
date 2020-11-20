@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@null">
+
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/v_go_back"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#2e3145"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp">
+
+            <org.hugoandrade.calendarviewlib.CalendarView
+                android:id="@+id/cv_select_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:current_day_circle_enable="true"
+                app:current_day_circle_color="#505578"
+                app:month_header_arrows_color="#c4ccff"
+                app:month_header_text_color="#c4ccff"
+                app:week_header_text_color="#c4ccff"
+                app:week_header_background_color="#2e3145"
+                app:day_text_color="#c4ccff"
+                app:week_header_movable="false"
+                app:content_background_color="#00FF0000"
+                app:current_day_text_color="#e8c792"
+                app:month_header_show="true"
+                app:selected_day_border_color="#c4ccff"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="취소"
+                    android:textSize="16sp"
+                    android:textColor="#c4ccff"
+                    android:fontFamily="@font/mapo_flower_island"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:background="?selectableItemBackground"/>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:text="선택"
+                    android:textSize="16sp"
+                    android:textColor="#e8c792"
+                    android:fontFamily="@font/mapo_flower_island"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:background="?selectableItemBackground"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,10 @@
 package com.pastel.dalpook;
 
+import android.app.AlarmManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this); // DB 데이터 확인용
 
                 /**
                  *  네비게이션 / 뷰페이저 세팅
@@ -124,6 +130,5 @@ public class MainActivity extends AppCompatActivity {
         toast = Toast.makeText(this, "한번 더 누르시면 종료됩니다", Toast.LENGTH_SHORT);
         toast.show();
     }
-
 
 }

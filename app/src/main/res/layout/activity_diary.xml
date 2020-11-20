@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Calendar.DiaryActivity">
+    tools:context=".Calendar.DiaryActivity"
+    android:background="#2e3145">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="338.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_grad_center"/>
+
+    <RelativeLayout
+        android:id="@+id/ly_diary_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8.5dp"
+            android:layout_marginEnd="8.5dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_diary_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8.5dp"
+                android:layout_gravity="center_vertical"
+                android:background="?selectableItemBackground"
+                android:drawableStart="@drawable/button_back_resize"
+                android:text="다이어리"
+                android:textSize="16sp"
+                android:textColor="#999fc9"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_diary_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="?selectableItemBackground"
+                android:drawableEnd="@drawable/button_add_resize"
+                android:text="일기등록"
+                android:textColor="#e8c792"
+                android:textSize="16sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/ly_diary_header"
+        android:background="#666d99"/>
+
+    <ListView
+        android:id="@+id/lv_diary"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/view"
+        android:groupIndicator="@null"
+        android:childDivider="#00FF0000"/>
+
+</RelativeLayout>

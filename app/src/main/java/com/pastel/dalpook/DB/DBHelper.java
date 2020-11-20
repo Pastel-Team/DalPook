@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.pastel.dalpook.data.CalModels;
+import com.pastel.dalpook.data.TodayModels;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -36,11 +39,21 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_TIME_END = "time_end";
     public static final String COLUMN_CONT = "cont";
-    public static final String COLUMN_FLAG = "flag"; //달력 식별용.  M:월간 / W:주간 / L:수강표 / B:업무일지 / D:다이어리
+    public static final String COLUMN_FLAG = "flag"; //달력 식별용.  M:월간 / W:주간
     public static final String COLUMN_COLOR = "color";
+
+    // 다이어리 내용
+    public static final String TABLE_NAME_DIA = "DIARY";
+    public static final String COLUMN_DIA_DATE = "date";
+    public static final String COLUMN_DIA_TITLE = "title";
+    public static final String COLUMN_DIA_CONT = "cont";
+    public static final String COLUMN_DIA_PIC = "pic";
+
+    private Context mContext;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.mContext = context;
     }
 
     @Override
@@ -67,14 +80,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUMN_FLAG + " TEXT);"
         );
 
+        // 다이어리 테이블
+        db.execSQL(" CREATE TABLE " + TABLE_NAME_DIA + " (" +
+                COLUMN_DIA_DATE + " TEXT, " +
+                COLUMN_DIA_TITLE + " TEXT," +
+                COLUMN_DIA_CONT + " TEXT, " +
+                COLUMN_DIA_PIC + " TEXT);"
+        );
+
         // 초기 설정
         ContentValues infValues = new ContentValues();
-        infValues.put(COLUMN_PUSH, "T");
+        infValues.put(COLUMN_PUSH, "F");
         infValues.put(COLUMN_MONTH, "T");
         infValues.put(COLUMN_MONTH_LIST, "T");
         infValues.put(COLUMN_WEEK, "T");
-        infValues.put(COLUMN_LESSON, "T");
-        infValues.put(COLUMN_WORK, "T");
+        infValues.put(COLUMN_LESSON, "F");
+        infValues.put(COLUMN_WORK, "F");
         infValues.put(COLUMN_DIARY, "T");
         db.insert(TABLE_NAME_SET, null, infValues);
     }
@@ -85,11 +106,56 @@ public class DBHelper extends SQLiteOpenHelper {
         // you can implement here migration process
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_SET);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CONT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_DIA);
         this.onCreate(db);
     }
 
+    // 푸시 이벤트
+    public List<TodayModels> getAlarms(String date, String week) {
+
+        List<TodayModels> urlLinkedList = new LinkedList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        String[] projection = {
+                COLUMN_TIME,
+                COLUMN_COLOR,
+                COLUMN_FLAG
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_CONT,
+                projection,
+                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=? OR " + COLUMN_DATE + "=?",
+                new String[]{"B", "D", date, week},
+                null,
+                null,
+                COLUMN_TIME + " ASC");
+
+        TodayModels models;
+
+        if (cursor.moveToFirst()) {
+            do {
+                models = new TodayModels();
+
+                Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
+                String time = cursor.getString(cursor.getColumnIndex(COLUMN_TIME));
+                String[] splitTime = time.split(":");
+                int hour = Integer.parseInt(splitTime[0]);
+                int minute = Integer.parseInt(splitTime[1]);
+                int second = Integer.parseInt(splitTime[2]);
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, second);
+
+                models.setTime(calendar);
+                models.setCont(cursor.getString(cursor.getColumnIndex(COLUMN_CONT)));
+                urlLinkedList.add(models);
+            } while (cursor.moveToNext());
+        }
+        return urlLinkedList;
+    }
+
     // 오늘의 일정 셀렉트
-    public Cursor getToday(String date) {
+    public Cursor getToday(String date, String week) {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -100,13 +166,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUMN_FLAG
         };
 
-        //String selction = COLUMN_FLAG + " <> B OR D," + COLUMN_DATE + " = " + date;
-
         Cursor cursor = db.query(
                 TABLE_NAME_CONT,
                 projection,
-                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=?",
-                new String[]{"B", "D", date},
+                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=? OR " + COLUMN_DATE + "=?",
+                new String[]{"B", "D", date, week},
                 null,
                 null,
                 COLUMN_TIME + " ASC");
@@ -115,7 +179,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // 오늘의 일정 (달력 프래그먼트) 셀렉트
-    public List<CalModels> getCalToday(String date) {
+    public List<CalModels> getCalToday(String date, String week) {
 
         List<CalModels> urlLinkedList = new LinkedList<>();
         SQLiteDatabase db = this.getWritableDatabase();
@@ -128,8 +192,8 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 TABLE_NAME_CONT,
                 projection,
-                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=?",
-                new String[]{"B", "D", date},
+                COLUMN_FLAG+"<>? AND "+ COLUMN_FLAG + "<>? AND "+ COLUMN_DATE + "=? OR " + COLUMN_DATE + "=?",
+                new String[]{"B", "D", date, week},
                 null,
                 null,
                 COLUMN_TIME + " ASC");
@@ -188,6 +252,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+    // 월간목록 데이터 셀렉트
     public Cursor getMonthList(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -209,13 +275,43 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 TABLE_NAME_CONT,
                 projection,
-                COLUMN_DATE + ">=?",
-                new String[]{toMonth},
+                COLUMN_DATE + ">=? AND " + COLUMN_FLAG + "<>?",
+                new String[]{toMonth, "W"},
                 null,
                 null,
                 COLUMN_DATE + ","+ COLUMN_TIME +" ASC");
 
         return cursor;
+    }
+
+
+    // 주간일정 변경
+    public void updateWeek(String date, String time, String newCont, int newColor, String flag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String[] projection = {
+                COLUMN_DATE,
+        };
+
+        String selction = COLUMN_FLAG + " = '" + flag +"'";
+
+        Cursor cursor = db.query(
+                TABLE_NAME_DIA,
+                projection,
+                selction,
+                null,
+                null,
+                null,
+                COLUMN_TIME + " ASC");
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE, date);
+        values.put(COLUMN_TIME, time);
+        values.put(COLUMN_CONT, newCont);
+        values.put(COLUMN_COLOR, newColor);
+
+        db.update(TABLE_NAME_CONT, values, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?", new String[]{date, time, flag});
+        Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -238,7 +334,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }else if(content.equals("diary")){
             db.execSQL("UPDATE " + TABLE_NAME_SET + " SET '" + COLUMN_DIARY + "' = '" + flag + "'");
         }
-        //Toast.makeText(context, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     // 기록 내용 변경
@@ -252,8 +348,9 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_COLOR, newColor);
 
         db.update(TABLE_NAME_CONT, values, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?", new String[]{oldDate, oldTime, flag});
-
+        Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
     }
+
 
     // 기록 내용 추가
     public void insertConts(String date, String time, String content, String flag, String color){
@@ -265,14 +362,120 @@ public class DBHelper extends SQLiteOpenHelper {
         infValues.put(COLUMN_FLAG, flag);
         infValues.put(COLUMN_COLOR, color);
         db.insert(TABLE_NAME_CONT, null, infValues);
+        Toast.makeText(mContext, "등록되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     // 기록 삭제
     public void deleteConts(String date, String time, String flag) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_CONT, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?" , new String[]{date, time, flag});
-        //db.execSQL("DELETE FROM " + TABLE_NAME_CONT + " WHERE '" + COLUMN_DATE + "' = '" + date + "' AND '" + COLUMN_TIME + "' = '" + time + "' AND '" + COLUMN_FLAG + "' = '" + flag + "'" );
-        //Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+    }
 
+
+    // 다이어리 셀렉트
+    public Cursor getDiary() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                COLUMN_DIA_DATE,
+                COLUMN_DIA_TITLE,
+                COLUMN_DIA_CONT,
+                COLUMN_DIA_PIC
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_DIA,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_DIA_DATE + " DESC");
+
+        return cursor;
+    }
+
+    // 다이어리 내용 추가
+    public String insertDiary(String date, String title, String desc, String uri){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String msg = "";
+
+        String[] projection = {
+                COLUMN_DIA_DATE
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_DIA,
+                projection,
+                COLUMN_DIA_DATE+" =?",
+                new String[]{date},
+                null,
+                null,
+                COLUMN_DIA_DATE + " ASC");
+
+        if (cursor.getCount() < 1) {
+            ContentValues infValues = new ContentValues();
+            infValues.put(COLUMN_DIA_DATE, date);
+            infValues.put(COLUMN_DIA_TITLE, title);
+            infValues.put(COLUMN_DIA_CONT, desc);
+            infValues.put(COLUMN_DIA_PIC, uri);
+            db.insert(TABLE_NAME_DIA, null, infValues);
+            Toast.makeText(mContext, "등록되었습니다.", Toast.LENGTH_SHORT).show();
+        }else{
+            msg = "이미 해당 일자의 일기가 작성되어있습니다.";
+        }
+
+        return msg;
+    }
+
+    // 다이어리 내용 변경
+    public String updateDiary(String oldDate, String newDate, String newTitle, String newDesc, String newUri) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String msg = "";
+
+        String[] projection = {
+                COLUMN_DIA_DATE
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME_DIA,
+                projection,
+                COLUMN_DIA_DATE+" =?",
+                new String[]{newDate},
+                null,
+                null,
+                COLUMN_DIA_DATE + " ASC");
+
+        if (cursor.getCount() < 1 || oldDate.equals(newDate)) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_DIA_DATE, newDate);
+            values.put(COLUMN_DIA_TITLE, newTitle);
+            values.put(COLUMN_DIA_CONT, newDesc);
+            values.put(COLUMN_DIA_PIC, newUri);
+
+            db.update(TABLE_NAME_DIA,
+                    values,
+                    COLUMN_DIA_DATE+" =?",
+                    new String[]{oldDate}
+            );
+            Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+        }else{
+            msg = "변경한 날짜의 일기가 이미 작성되어있습니다.";
+        }
+
+        return msg;
+    }
+
+    // 다이어리 삭제
+    public void deleteDiary(String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME_DIA,
+                COLUMN_DIA_DATE+"=?",
+                new String[]{date});
+        Toast.makeText(mContext, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
     }
 }

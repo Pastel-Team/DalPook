@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="?selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        style="@style/selectablebackground">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:background="@null"
+            app:cardCornerRadius="7dp">
+
+            <ImageView
+                android:id="@+id/iv_diary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:scaleType="fitXY"/>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="오전 00:00"
+                android:textColor="#e8c792"
+                android:textSize="16sp"
+                android:lines="1"
+                android:fontFamily="@font/mapo_flower_island"/>
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="내용"
+                android:textColor="#999fc9"
+                android:textSize="12sp"
+                android:fontFamily="@font/mapo_flower_island"/>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_diary_delete"
+            android:layout_width="35dp"
+            android:layout_height="41.5dp"
+            android:background="@drawable/ic_delete"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="7dp"/>
+    </LinearLayout>
+
+</LinearLayout>

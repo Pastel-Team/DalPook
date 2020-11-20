@@ -61,7 +61,8 @@
                 android:textColor="#666d99"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                android:fontFamily="@font/mapo_flower_island"/>
+                android:fontFamily="@font/mapo_flower_island"
+                android:background="?selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/tv_set"
@@ -72,7 +73,8 @@
                 android:textColor="#e8c792"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                android:fontFamily="@font/mapo_flower_island"/>
+                android:fontFamily="@font/mapo_flower_island"
+                android:background="?selectableItemBackground"/>
 
         </LinearLayout>
 

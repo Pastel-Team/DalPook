@@ -1,20 +1,33 @@
 package com.pastel.dalpook.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.Popup.CreateEventActivity;
 import com.pastel.dalpook.Popup.CreateWeekEventActivity;
 import com.pastel.dalpook.R;
+import com.pastel.dalpook.data.Event;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class WeekActivity extends AppCompatActivity{
 
@@ -37,12 +50,14 @@ public class WeekActivity extends AppCompatActivity{
 
     private final static int CREATE_EVENT_REQUEST_CODE = 100;
 
+    private final List<Event> eventList = new ArrayList<Event>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week);
         init();
-
+        getDB();
     }
 
     private void init(){
@@ -55,10 +70,22 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][0].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 1); //일요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 1); //일요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
             cnt++;
@@ -72,10 +99,22 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][1].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 2); //월요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 2); //월요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
         }
@@ -88,10 +127,22 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][2].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 3); //화요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 3); //화요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
         }
@@ -104,10 +155,22 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][3].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 4); //수요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 4); //수요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
         }
@@ -120,10 +183,22 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][4].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 5); //목요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 5); //목요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
         }
@@ -136,10 +211,22 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][5].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 6); //금요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 6); //금요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
         }
@@ -152,13 +239,33 @@ public class WeekActivity extends AppCompatActivity{
             cell[i][6].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_WEEK, 7); //토요일
-                    calendar.set(Calendar.HOUR, Integer.parseInt(String.valueOf(view.getTag())));
-                    createEvent(calendar);
+                    Boolean isItem = false;
+                    if(eventList.size() > 0){
+                        for(int i = 0 ; i < eventList.size() ; i ++){
+                            if( (eventList.get(i).getDate().get(Calendar.HOUR_OF_DAY) == Integer.parseInt(String.valueOf(view.getTag()))) &&
+                                    (eventList).get(i).getDate().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+                                onEventSelected(eventList.get(i));
+                                isItem = true;
+                            }
+                        }
+                    }
+                    if(!isItem){
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_WEEK, 7); //토요일
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(String.valueOf(view.getTag())));
+                        createEvent(calendar);
+                    }
                 }
             });
         }
+
+        Button btn_back = (Button)findViewById(R.id.btn_week_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -168,5 +275,183 @@ public class WeekActivity extends AppCompatActivity{
 
         startActivityForResult(intent, CREATE_EVENT_REQUEST_CODE);
         overridePendingTransition( R.anim.slide_in_up, R.anim.stay );
+    }
+
+    private void onEventSelected(Event event) {
+        Activity context = WeekActivity.this;
+        Intent intent = CreateWeekEventActivity.makeIntent(context, event);
+
+        startActivityForResult(intent, CREATE_EVENT_REQUEST_CODE);
+        overridePendingTransition( R.anim.slide_in_up, R.anim.stay );
+    }
+
+    private void getDB(){
+        DBHelper dbHelper = new DBHelper(this);
+        Cursor contCursor = dbHelper.getConts("W");
+
+        //INF 정보
+        if (contCursor.getCount() > 0) {
+            if(contCursor.moveToFirst()){
+                do{
+                    String date = contCursor.getString(contCursor.getColumnIndex("date"));
+                    String time = contCursor.getString(contCursor.getColumnIndex("time"));
+                    String[] splTime = time.split(":");
+
+                    String hour = splTime[0];
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
+                    calendar.set(Calendar.DAY_OF_WEEK, Integer.parseInt(date));
+
+                    Event event = new Event(
+                            Long.toString(System.currentTimeMillis()),
+                            contCursor.getString(contCursor.getColumnIndex("cont")),
+                            calendar,
+                            Integer.parseInt(contCursor.getString(contCursor.getColumnIndex("color"))),
+                            false//mIsCompleteCheckBox.isChecked()
+                    );
+                    //calendar = event.getDate();
+                    int week = calendar.get(Calendar.DAY_OF_WEEK);
+                    final GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this, R.drawable.tablecorner_color);
+                    drawable.setColor(event.getColor());
+                    cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setBackground(drawable);
+                    cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setText(event.getTitle());
+
+                    eventList.add(event);
+
+                }while (contCursor.moveToNext());
+
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CREATE_EVENT_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                int action = CreateWeekEventActivity.extractActionFromIntent(data);
+                Event event = CreateWeekEventActivity.extractEventFromIntent(data);
+
+                switch (action) {
+                    case CreateWeekEventActivity.ACTION_CREATE: { // insert
+
+                        eventList.add(event);
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar = event.getDate();
+                        int week = calendar.get(Calendar.DAY_OF_WEEK);
+
+                        final GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this, R.drawable.tablecorner_color);
+                        drawable.setColor(event.getColor());
+                        cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setBackground(drawable);
+                        cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setText(event.getTitle());
+
+                        // DB Insert
+
+                        DBHelper dbHelper = new DBHelper(this);
+                        String date = String.valueOf(week);
+                        String time = "";
+                        if(calendar.get(Calendar.HOUR_OF_DAY) < 10 ){
+                            time = "0"+String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":00:00";
+                        }else{
+                            time = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":00:00";
+                        }
+                        String title = event.getTitle();
+                        int color = event.getColor();
+                        dbHelper.insertConts(date, time, title, "W", String.valueOf(color));
+
+                        break;
+                    }
+                    case CreateWeekEventActivity.ACTION_EDIT: {
+
+                        Event oldEvent = null;
+                        for (Event e : eventList) {
+                            if (Objects.equals(event.getDate(), e.getDate())) {
+                                oldEvent = e;
+                                break;
+                            }
+                        }
+                        if (oldEvent != null) {
+
+                            eventList.remove(oldEvent);
+                            eventList.add(event);
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar = event.getDate();
+                            int week = calendar.get(Calendar.DAY_OF_WEEK);
+
+                            final GradientDrawable drawable = (GradientDrawable) ContextCompat.getDrawable(this, R.drawable.tablecorner_color);
+                            drawable.setColor(event.getColor());
+                            cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setBackground(drawable);
+                            cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setText(event.getTitle());
+
+                            // DB Update
+                            DBHelper dbHelper = new DBHelper(this);
+
+                            String date = String.valueOf(week);
+                            String time = "";
+                            if(calendar.get(Calendar.HOUR_OF_DAY) < 10 ){
+                                time = "0"+String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":00:00";
+                            }else{
+                                time = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":00:00";
+                            }
+                            String title = event.getTitle();
+                            int color = event.getColor();
+                            dbHelper.updateWeek(date, time, title, color, "W");
+                        }
+
+                        break;
+                    }
+                    case CreateWeekEventActivity.ACTION_DELETE :{
+
+                        Event oldEvent = null;
+                        for (Event e : eventList) {
+                            if (Objects.equals(event.getDate(), e.getDate())) {
+                                oldEvent = e;
+                                break;
+                            }
+                        }
+                        if (oldEvent != null) {
+                            eventList.remove(oldEvent);
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar = oldEvent.getDate();
+                            int week = calendar.get(Calendar.DAY_OF_WEEK);
+                            if((week-1)%2 == 0){
+                                cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setBackgroundResource(R.drawable.tablecorner_fill);
+                            }else{
+                                cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setBackgroundResource(R.drawable.tablecorner);
+                            }
+                            cell[calendar.get(Calendar.HOUR_OF_DAY)][week-1].setText("");
+
+
+                            // DB delete
+                            DBHelper dbHelper = new DBHelper(this);
+
+                            String date = String.valueOf(week);
+                            String time = "";
+                            if(calendar.get(Calendar.HOUR_OF_DAY) < 10 ){
+                                time = "0"+String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":00:00";
+                            }else{
+                                time = String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":00:00";
+                            }
+                            dbHelper.deleteConts(date, time, "W");
+                        }
+
+                        break;
+                    }
+
+                }
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
     }
 }

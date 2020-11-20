@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class CreateWeekEventActivity extends AppCompatActivity {
     private static final String INTENT_EXTRA_ACTION = "intent_extra_action";
     private static final String INTENT_EXTRA_EVENT = "intent_extra_event";
     private static final String INTENT_EXTRA_CALENDAR = "intent_extra_calendar";
+    private static final String INTENT_EXTRA_VIEW = "intent_extra_view";
 
     private static final int SET_DATE_AND_TIME_REQUEST_CODE = 200;
 
@@ -304,6 +306,19 @@ public class CreateWeekEventActivity extends AppCompatActivity {
         else {
             setupEditMode();
         }
+
+        Button btn_delete = (Button) findViewById(R.id.btn_delete);
+        if(mOriginalEvent == null){
+            btn_delete.setVisibility(View.GONE);
+        }else{
+            btn_delete.setVisibility(View.VISIBLE);
+        }
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                delete();
+            }
+        });
     }
 
     private void setupEditMode() {

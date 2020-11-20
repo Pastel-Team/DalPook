@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.Popup.CreateEventActivity;
+import com.pastel.dalpook.PushService.PushManager;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.CalendarDialog;
 import com.pastel.dalpook.Utils.LoadingDialog;
@@ -61,6 +62,8 @@ public class MonthActivity extends AppCompatActivity {
     private Event DelTargetEvent = null;
 
     AppCompatDialog progressDialog;
+
+    private PushManager pushManager = new PushManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,6 +318,16 @@ public class MonthActivity extends AppCompatActivity {
                         String title = event.getTitle();
                         int color = event.getColor();
                         dbHelper.insertConts(date, time, title, "M", String.valueOf(color));
+
+                        /*
+                        // 알람 세팅
+                        String[] splitTime = time.split(":");
+                        String hour = splitTime[0];
+                        String min = splitTime[1];
+                        pushManager.setPush(this, hour, min, insertSec, title);
+
+                         */
+
                         break;
                     }
                     case CreateEventActivity.ACTION_EDIT: {

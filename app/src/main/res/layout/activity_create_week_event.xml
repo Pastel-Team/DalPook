@@ -15,22 +15,47 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/roundpopup">
 
-        <TextView
-            android:id="@+id/txt1"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12.5dp"
+            android:layout_marginEnd="12.5dp"
             android:layout_marginTop="11.5dp"
-            android:fontFamily="@font/mapo_flower_island"
-            android:text="일정등록"
-            android:textColor="#666d99"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mapo_flower_island"
+                android:text="일정등록"
+                android:textColor="#666d99"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/button_delete_resize"
+                android:background="?selectableItemBackground"
+                android:text="삭제하기"
+                android:textSize="16sp"
+                android:textColor="#999fc9"
+                android:fontFamily="@font/mapo_flower_island" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txt2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txt1"
+            android:layout_below="@+id/header"
             android:layout_marginTop="22dp"
             android:layout_marginStart="12.5dp"
             android:text="시간"
@@ -111,7 +136,8 @@
                 android:text="취소"
                 android:textColor="#c4ccff"
                 android:textSize="16sp"
-                android:fontFamily="@font/mapo_flower_island"/>
+                android:fontFamily="@font/mapo_flower_island"
+                android:background="?selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/tv_save"
@@ -119,7 +145,8 @@
                 android:text="완료"
                 android:textColor="#e8c792"
                 android:textSize="16sp"
-                android:fontFamily="@font/mapo_flower_island"/>
+                android:fontFamily="@font/mapo_flower_island"
+                android:background="?selectableItemBackground"/>
 
         </LinearLayout>
 

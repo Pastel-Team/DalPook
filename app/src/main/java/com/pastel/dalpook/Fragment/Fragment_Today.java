@@ -76,8 +76,9 @@ public class Fragment_Today extends Fragment {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         String date = dateFormat.format(TodayCal.getTime());
+        int week = TodayCal.get(Calendar.DAY_OF_WEEK);
 
-        return  dbHelper.getToday(date);
+        return  dbHelper.getToday(date, String.valueOf(week));
     }
 
     @Override

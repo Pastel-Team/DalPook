@@ -25,7 +25,8 @@
 
     <!-- 탭 테마 -->
     <style name="TabTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/main_color</item>                                <!-- 배경 -->
+        <item name="colorPrimary">@color/main_color
+        </item>                                <!-- 배경 -->
 
         <item name="android:textColorPrimary">#c4ccff</item>       <!-- 탭바 선택된 텍스트 -->
         <item name="android:textColorSecondary">#e8c792</item>     <!-- 탭바 텍스트 -->
@@ -35,13 +36,17 @@
 
     <!-- 텍스트 폰트, 크기 지정 -->
     <style name="BottomNavigationView">
-        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active</item>
-        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.Inactive</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active
+        </item>
+        <item name="itemTextAppearanceInactive">
+            @style/TextAppearance.BottomNavigationView.Inactive
+        </item>
     </style>
 
     <!-- blank styles for better code readability-->
-    <style name="TextAppearance"/>
-    <style name="TextAppearance.BottomNavigationView"/>
+    <style name="TextAppearance" />
+
+    <style name="TextAppearance.BottomNavigationView" />
 
     <!-- inactive tab icon style -->
     <style name="TextAppearance.BottomNavigationView.Inactive">
@@ -121,5 +126,10 @@
     <style name="selectablebackground">
         <item name="selectableItemBackground">?attr/selectableItemBackground</item>
         <item name="android:background">@drawable/roundcorner</item>
+    </style>
+
+    <style name="ThemeOverlay.DalPook.AppWidgetContainer" parent="">
+        <item name="appWidgetBackgroundColor">@color/light_blue_600</item>
+        <item name="appWidgetTextColor">@color/light_blue_50</item>
     </style>
 </resources>

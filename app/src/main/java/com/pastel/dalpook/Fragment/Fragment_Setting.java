@@ -25,24 +25,25 @@ public class Fragment_Setting extends Fragment {
     private DBHelper dbHelper;
     private DBModels dbModels;
 
-    private CheckBox chk_push;
+    //private CheckBox chk_push;
     private CheckBox chk_month;
     private CheckBox chk_month_list;
     private CheckBox chk_week;
-    private CheckBox chk_lesson;
-    private CheckBox chk_work;
+    //private CheckBox chk_lesson;
+    //private CheckBox chk_work;
     private CheckBox chk_diary;
     private Button btn_donate;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LayoutInflater lf = Objects.requireNonNull(getActivity()).getLayoutInflater();
+        LayoutInflater lf = requireActivity().getLayoutInflater();
         View rootView = lf.inflate(R.layout.fragment_third, container, false); //pass the correct layout name for the fragment
 
         init(rootView);
         getDB();
 
+        /*
         if(dbModels.getPush().equals("T")){
             chk_push.setChecked(true);
             chk_push.setText("ON");
@@ -50,6 +51,8 @@ public class Fragment_Setting extends Fragment {
             chk_push.setChecked(false);
             chk_push.setText("OFF");
         }
+
+         */
         if(dbModels.getMonth().equals("T")){
             chk_month.setChecked(true);
         }else{
@@ -65,6 +68,7 @@ public class Fragment_Setting extends Fragment {
         }else{
             chk_week.setChecked(false);
         }
+        /*
         if(dbModels.getLesson().equals("T")){
             chk_lesson.setChecked(true);
         }else{
@@ -75,12 +79,15 @@ public class Fragment_Setting extends Fragment {
         }else{
             chk_work.setChecked(false);
         }
+
+         */
         if(dbModels.getDiary().equals("T")){
             chk_diary.setChecked(true);
         }else{
             chk_diary.setChecked(false);
         }
 
+        /*
         chk_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -99,6 +106,8 @@ public class Fragment_Setting extends Fragment {
                 f.setTableLayout();
             }
         });
+
+         */
 
         chk_month.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -139,6 +148,7 @@ public class Fragment_Setting extends Fragment {
             }
         });
 
+        /*
         chk_lesson.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -165,6 +175,8 @@ public class Fragment_Setting extends Fragment {
             }
         });
 
+         */
+
         chk_diary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -182,12 +194,12 @@ public class Fragment_Setting extends Fragment {
     }
 
     private void init(View view){
-        chk_push = (CheckBox) view.findViewById(R.id.chk_push);
+        //chk_push = (CheckBox) view.findViewById(R.id.chk_push);
         chk_month = (CheckBox) view.findViewById(R.id.chk_month);
         chk_month_list = (CheckBox) view.findViewById(R.id.chk_month_list);
         chk_week = (CheckBox) view.findViewById(R.id.chk_week);
-        chk_lesson = (CheckBox) view.findViewById(R.id.chk_lesson);
-        chk_work = (CheckBox) view.findViewById(R.id.chk_work);
+        //chk_lesson = (CheckBox) view.findViewById(R.id.chk_lesson);
+        //chk_work = (CheckBox) view.findViewById(R.id.chk_work);
         chk_diary = (CheckBox) view.findViewById(R.id.chk_diary);
         btn_donate = (Button) view.findViewById(R.id.btn_donate);
     }

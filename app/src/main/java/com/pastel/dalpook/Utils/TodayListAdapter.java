@@ -120,6 +120,7 @@ public class TodayListAdapter extends BaseAdapter {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // DB Delete
                 Calendar deleteCal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA);
 
@@ -134,9 +135,16 @@ public class TodayListAdapter extends BaseAdapter {
                 }else{
                     Sec = String.valueOf(deleteCal.get(Calendar.SECOND));
                 }
-                String date = dateFormat.format(deleteCal.getTime());
+
+                String date = "";
+                String flag = itemList.get(i).getFlag();
+                if(flag.equals("M")){
+                    date = dateFormat.format(deleteCal.getTime());
+                }else if(flag.equals("W")){
+                    date = String.valueOf(deleteCal.get(Calendar.DAY_OF_WEEK));
+                }
                 String time = timeFormat.format(deleteCal.getTime()) + ":"+Sec;
-                dbHelper.deleteConts(date, time,"M");
+                dbHelper.deleteConts(date, time,"W");
 
                 itemList.remove(i);
                 notifyDataSetInvalidated();

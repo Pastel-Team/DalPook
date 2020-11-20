@@ -55,7 +55,7 @@ public class Fragment_Cal extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LayoutInflater lf = Objects.requireNonNull(getActivity()).getLayoutInflater();
+        LayoutInflater lf = requireActivity().getLayoutInflater();
         View rootView = lf.inflate(R.layout.fragment_second, container, false); //pass the correct layout name for the fragment
 
         init(rootView);
@@ -89,8 +89,9 @@ public class Fragment_Cal extends Fragment {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         String date = dateFormat.format(TodayCal.getTime());
+        int week = TodayCal.get(Calendar.DAY_OF_WEEK);
 
-        mAdapter = new CalListAdapter(dbHelper.getCalToday(date), getContext(), mRecyclerView, new CalListAdapter.OnItemClickListener() {
+        mAdapter = new CalListAdapter(dbHelper.getCalToday(date, String.valueOf(week)), getContext(), mRecyclerView, new CalListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos, String getFlag) {
 
@@ -355,8 +356,9 @@ public class Fragment_Cal extends Fragment {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         String date = dateFormat.format(TodayCal.getTime());
+        int week = TodayCal.get(Calendar.DAY_OF_WEEK);
 
-        mAdapter = new CalListAdapter(dbHelper.getCalToday(date), getContext(), mRecyclerView, new CalListAdapter.OnItemClickListener() {
+        mAdapter = new CalListAdapter(dbHelper.getCalToday(date, String.valueOf(week)), getContext(), mRecyclerView, new CalListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos, String getFlag) {
                 LoadingDialog loadingDialog = new LoadingDialog(getContext());

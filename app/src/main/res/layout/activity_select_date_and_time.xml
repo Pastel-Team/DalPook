@@ -128,7 +128,8 @@
                     android:textColor="#c4ccff"
                     android:fontFamily="@font/mapo_flower_island"
                     android:textStyle="bold"
-                    android:textAllCaps="true"/>
+                    android:textAllCaps="true"
+                    android:background="?selectableItemBackground"/>
 
                 <Space
                     android:layout_width="40dp"
@@ -144,7 +145,8 @@
                     android:textColor="#e8c792"
                     android:fontFamily="@font/mapo_flower_island"
                     android:textStyle="bold"
-                    android:textAllCaps="true"/>
+                    android:textAllCaps="true"
+                    android:background="?selectableItemBackground"/>
             </LinearLayout>
 
         </LinearLayout>
