@@ -21,11 +21,15 @@
         android:roundIcon="@drawable/ic_blackmoon"
         android:supportsRtl="true"
         android:theme="@style/Theme.DalPook">
+
+        <service android:name=".Widget.MyRemoteViewsService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
         <receiver android:name=".Widget.TodayWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/today_widget_info" />
@@ -33,10 +37,12 @@
 
         <activity
             android:name=".Popup.DiaryDialogActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar">
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,44 +51,57 @@
         </activity>
         <activity
             android:name=".Utils.SelectDateActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Popup.CreateDiaryActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Popup.CreateWeekEventActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Utils.SelectTimeActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Calendar.DiaryActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Calendar.WorkActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Calendar.LessonActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Calendar.WeekActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Calendar.MonthListActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Utils.SelectDateAndTimeActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Popup.CreateEventActivity"
-            android:theme="@style/Transparent" />
+            android:theme="@style/Transparent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Calendar.MonthActivity"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.DalPook.NoActionBar" />
+            android:theme="@style/Theme.DalPook.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

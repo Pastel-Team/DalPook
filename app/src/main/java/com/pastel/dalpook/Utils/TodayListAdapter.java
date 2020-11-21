@@ -137,14 +137,15 @@ public class TodayListAdapter extends BaseAdapter {
                 }
 
                 String date = "";
+                String time = timeFormat.format(deleteCal.getTime()) + ":"+Sec;
                 String flag = itemList.get(i).getFlag();
                 if(flag.equals("M")){
                     date = dateFormat.format(deleteCal.getTime());
+                    dbHelper.deleteConts(date, time,"M");
                 }else if(flag.equals("W")){
                     date = String.valueOf(deleteCal.get(Calendar.DAY_OF_WEEK));
+                    dbHelper.deleteConts(date, time,"W");
                 }
-                String time = timeFormat.format(deleteCal.getTime()) + ":"+Sec;
-                dbHelper.deleteConts(date, time,"W");
 
                 itemList.remove(i);
                 notifyDataSetInvalidated();

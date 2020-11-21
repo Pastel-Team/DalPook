@@ -44,7 +44,7 @@ public class Fragment_Today extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        LayoutInflater lf = Objects.requireNonNull(getActivity()).getLayoutInflater();
+        LayoutInflater lf = requireActivity().getLayoutInflater();
         View rootView = lf.inflate(R.layout.fragment_main, container, false); //pass the correct layout name for the fragment
         init(rootView);
 

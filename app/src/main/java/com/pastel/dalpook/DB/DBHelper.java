@@ -1,12 +1,19 @@
 package com.pastel.dalpook.DB;
 
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.SyncStateContract;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.pastel.dalpook.Widget.TodayWidget;
 import com.pastel.dalpook.data.CalModels;
 import com.pastel.dalpook.data.TodayModels;
 
@@ -312,6 +319,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME_CONT, values, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?", new String[]{date, time, flag});
         Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+
+        Intent widgetIntent = new Intent(mContext, TodayWidget.class);
+        widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); // 위젯 업데이트 액션
+        mContext.sendBroadcast(widgetIntent); // 브로드캐스팅
     }
 
 
@@ -335,6 +346,10 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("UPDATE " + TABLE_NAME_SET + " SET '" + COLUMN_DIARY + "' = '" + flag + "'");
         }
         Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+
+        Intent widgetIntent = new Intent(mContext, TodayWidget.class);
+        widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); // 위젯 업데이트 액션
+        mContext.sendBroadcast(widgetIntent); // 브로드캐스팅
     }
 
     // 기록 내용 변경
@@ -349,6 +364,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME_CONT, values, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?", new String[]{oldDate, oldTime, flag});
         Toast.makeText(mContext, "수정되었습니다.", Toast.LENGTH_SHORT).show();
+
+        Intent widgetIntent = new Intent(mContext, TodayWidget.class);
+        widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); // 위젯 업데이트 액션
+        mContext.sendBroadcast(widgetIntent); // 브로드캐스팅
     }
 
 
@@ -363,6 +382,10 @@ public class DBHelper extends SQLiteOpenHelper {
         infValues.put(COLUMN_COLOR, color);
         db.insert(TABLE_NAME_CONT, null, infValues);
         Toast.makeText(mContext, "등록되었습니다.", Toast.LENGTH_SHORT).show();
+
+        Intent widgetIntent = new Intent(mContext, TodayWidget.class);
+        widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); // 위젯 업데이트 액션
+        mContext.sendBroadcast(widgetIntent); // 브로드캐스팅
     }
 
     // 기록 삭제
@@ -370,6 +393,10 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_CONT, COLUMN_DATE+"=? AND "+ COLUMN_TIME + "=? AND "+ COLUMN_FLAG + "=?" , new String[]{date, time, flag});
         Toast.makeText(mContext, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+        Intent widgetIntent = new Intent(mContext, TodayWidget.class);
+        widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE); // 위젯 업데이트 액션
+        mContext.sendBroadcast(widgetIntent); // 브로드캐스팅
     }
 
 
@@ -427,7 +454,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }else{
             msg = "이미 해당 일자의 일기가 작성되어있습니다.";
         }
-
         return msg;
     }
 
