@@ -1,6 +1,9 @@
 package com.pastel.dalpook.Fragment;
 
 import android.database.Cursor;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.data.DBModels;
@@ -20,7 +26,9 @@ import com.pastel.dalpook.R;
 
 import java.util.Objects;
 
-public class Fragment_Setting extends Fragment {
+public class Fragment_Setting extends Fragment implements BillingProcessor.IBillingHandler, SensorEventListener {
+
+    private BillingProcessor bp;
 
     private DBHelper dbHelper;
     private DBModels dbModels;
@@ -39,6 +47,9 @@ public class Fragment_Setting extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LayoutInflater lf = requireActivity().getLayoutInflater();
         View rootView = lf.inflate(R.layout.fragment_third, container, false); //pass the correct layout name for the fragment
+
+        bp = new BillingProcessor(getContext(), getString(R.string.bill_license_key), this);
+        bp.initialize();
 
         init(rootView);
         getDB();
@@ -190,6 +201,14 @@ public class Fragment_Setting extends Fragment {
             }
         });
 
+
+        btn_donate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPurchase();
+            }
+        });
+
         return rootView;
     }
 
@@ -202,6 +221,7 @@ public class Fragment_Setting extends Fragment {
         //chk_work = (CheckBox) view.findViewById(R.id.chk_work);
         chk_diary = (CheckBox) view.findViewById(R.id.chk_diary);
         btn_donate = (Button) view.findViewById(R.id.btn_donate);
+
     }
 
     private void getDB(){
@@ -222,5 +242,50 @@ public class Fragment_Setting extends Fragment {
             dbModels.setWork(cursorSets.getString(5));
             dbModels.setDiary(cursorSets.getString(6));
         }
+    }
+
+
+    /**
+     * 인앱 결제
+     */
+
+    private void onPurchase(){
+        bp.purchase(getActivity(), "donate");
+    }
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void onProductPurchased(String productId, TransactionDetails details) {
+        // 구매 성공시 호출
+        if (productId.equals(getString(R.string.bill_sku))) {
+            Toast.makeText(getContext(), "후원 해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
+
+            // 결제후 다시 지속 결제가 가능하도록 컨슘처리.
+            bp.consumePurchase(getString(R.string.bill_sku));
+        }
+    }
+
+    @Override
+    public void onPurchaseHistoryRestored() {
+        // 구매 여부 이력 저장용으로 사용하면됨
+    }
+
+    @Override
+    public void onBillingError(int errorCode, Throwable error) {
+        // 결제 오류시 메세지 처리정도 하면 됨
+
+    }
+
+    @Override
+    public void onBillingInitialized() {
+        // 구매여부를 여기서 저장하면됨
     }
 }

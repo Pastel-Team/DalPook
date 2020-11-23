@@ -10,8 +10,8 @@ android {
         applicationId "com.pastel.dalpook"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.02"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,4 +58,7 @@ dependencies {
 
     //endless viewpager
     implementation 'com.github.devlight:infinitecycleviewpager:1.0.2'
+
+    // 인앱결제
+    implementation 'com.anjlab.android.iab.v3:library:1.0.44'
 }

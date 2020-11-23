@@ -35,4 +35,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
 
+    // 인앱결제 라이선스키
+    <string name="bill_license_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjKQeoDAGaS2ZGndtfepMjUyNNuNlnMCYFEzJ6AdC98unahJtZ0CBcK1JSWr8HqcjrvBMl0hiP/5ESVBOo+AQtrBPBW1s3qbgpIEFbGoxS9nT6/0S20mVtpIzBzjoVA/e9lHappORNC2Ro/H/KKZNfx9/C2/Lp5ZCc6ZUN/mzGxr/GaCe+1S0iob5zBz73XGffAqtUF8oTKNOLEIa8YZEoPcdLrqC0u7CW+ajqLWx29kIl5IKO9qL+9xxqjtKYIby3FE6V6rb2jTVT0m9A8q7mWUWaIThBw76WSgpZt/rTOzraDhwcM5AiUR0MQ4VLpSP9/fyWqIMKxl1uUIUs9lu4wIDAQAB</string>
+    <string name="bill_sku">donate</string> // sku
+
 </resources>
