@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pastel.dalpook.Calendar.DiaryActivity;
 import com.pastel.dalpook.Popup.CreateDiaryActivity;
 import com.pastel.dalpook.R;
@@ -75,12 +77,18 @@ public class DiaryPagerAdapter extends PagerAdapter {
         Button btn_mod = (Button)view.findViewById(R.id.btn_mod);
 
         if(eventLists.get(position).getmImg().equals("")){
-            imageView.setImageResource(R.drawable.diary_default);
+            Glide.with(context)
+                    .load(R.drawable.diary_default)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .into(imageView);
         }else{
             Uri uri = Uri.parse(eventLists.get(position).getmImg());
             imageView.setImageURI(uri);
             if(imageView.getDrawable() == null){
-                imageView.setImageResource(R.drawable.diary_default);
+                Glide.with(context)
+                        .load(R.drawable.diary_default)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .into(imageView);
             }
         }
         //txtDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(eventLists.get(position).getmDate()));

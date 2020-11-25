@@ -17,6 +17,7 @@ import com.pastel.dalpook.Popup.CreateEventActivity;
 import com.pastel.dalpook.Popup.DiaryDialogActivity;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.DiaryListAdapter;
+import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.Utils.TodayListAdapter;
 import com.pastel.dalpook.data.DiaryModels;
 import com.pastel.dalpook.data.Event;
@@ -84,10 +85,18 @@ public class DiaryActivity extends AppCompatActivity {
         listAdapter = new DiaryListAdapter(this, new DiaryListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos, DiaryModels event) {
-                Intent intent = new Intent(DiaryActivity.this, DiaryDialogActivity.class);
-                intent.putParcelableArrayListExtra("eventList", (ArrayList<? extends Parcelable>) eventLists);
-                intent.putExtra("event", event);
-                startActivityForResult(intent, VIEW_EVENT_REQUEST_CODE);
+                LoadingDialog loadingDialog = new LoadingDialog(DiaryActivity.this);
+                loadingDialog.progressOn();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(DiaryActivity.this, DiaryDialogActivity.class);
+                        intent.putParcelableArrayListExtra("eventList", (ArrayList<? extends Parcelable>) eventLists);
+                        intent.putExtra("event", event);
+                        startActivityForResult(intent, VIEW_EVENT_REQUEST_CODE);
+                        loadingDialog.progressOff();
+                    }
+                }.start();
             }
         });
 

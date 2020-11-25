@@ -337,7 +337,7 @@ public class CalendarDialog {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater vi = LayoutInflater.from(parent.getContext());
+            LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);//LayoutInflater.from(parent.getContext());
             View v = vi.inflate(R.layout.list_item_calendar_event, parent, false);
             return new ViewHolder(v);
         }

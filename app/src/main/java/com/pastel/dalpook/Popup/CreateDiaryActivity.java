@@ -12,6 +12,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,11 +23,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.material.snackbar.Snackbar;
+import com.pastel.dalpook.Calendar.DiaryActivity;
+import com.pastel.dalpook.Calendar.LessonActivity;
+import com.pastel.dalpook.Calendar.MonthActivity;
+import com.pastel.dalpook.Calendar.WeekActivity;
+import com.pastel.dalpook.Calendar.WorkActivity;
 import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.ColorUtils;
 import com.pastel.dalpook.Utils.DiaryPagerAdapter;
+import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.Utils.SelectDateActivity;
 import com.pastel.dalpook.Utils.SelectDateAndTimeActivity;
 import com.pastel.dalpook.data.DiaryModels;
@@ -119,12 +129,18 @@ public class CreateDiaryActivity extends AppCompatActivity {
             btn_delete.setVisibility(View.VISIBLE);
 
             if(mOriginalEvent.getmImg().equals("")){
-                iv_img.setImageResource(R.drawable.diary_default);
+                Glide.with(this)
+                        .load(R.drawable.diary_default)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .into(iv_img);
             }else{
                 Uri uri = Uri.parse(mOriginalEvent.getmImg());
                 iv_img.setImageURI(uri);
                 if(iv_img.getDrawable() == null){
-                    iv_img.setImageResource(R.drawable.diary_default);
+                    Glide.with(this)
+                            .load(R.drawable.diary_default)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .into(iv_img);
                 }
             }
             txt_date.setText(dateFormat.format(mCalendar.getTime()));
@@ -138,12 +154,22 @@ public class CreateDiaryActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                Activity context = CreateDiaryActivity.this;
-                Intent intent = SelectDateActivity.makeIntent(context, mCalendar);
+                LoadingDialog loadingDialog = new LoadingDialog(CreateDiaryActivity.this);
+                loadingDialog.progressOn();
 
-                startActivityForResult(intent,
-                        SET_DATE_AND_TIME_REQUEST_CODE,
-                        ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+                Handler mHanlder = new Handler(Looper.getMainLooper());
+                mHanlder.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Activity context = CreateDiaryActivity.this;
+                        Intent intent = SelectDateActivity.makeIntent(context, mCalendar);
+                        startActivityForResult(intent,
+                                SET_DATE_AND_TIME_REQUEST_CODE,
+                                ActivityOptions.makeSceneTransitionAnimation(context).toBundle());
+                        loadingDialog.progressOff();
+                    }
+                }, 1000);
+
             }
         });
         iv_img.setOnClickListener(new View.OnClickListener() {

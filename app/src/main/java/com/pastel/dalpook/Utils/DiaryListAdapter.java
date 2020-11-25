@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.pastel.dalpook.Calendar.DiaryActivity;
 import com.pastel.dalpook.Calendar.LessonActivity;
 import com.pastel.dalpook.Calendar.MonthActivity;
@@ -97,12 +99,18 @@ public class DiaryListAdapter extends BaseAdapter {
         txt_date.setText(date);
         txt_title.setText(listViewItem.getmTitle());
         if(listViewItem.getmImg().equals("")){
-            iv_img.setImageResource(R.drawable.diary_default);
+            Glide.with(mContext)
+                    .load(R.drawable.diary_default)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .into(iv_img);
         }else{
             Uri uri = Uri.parse(listViewItem.getmImg());
             iv_img.setImageURI(uri);
             if(iv_img.getDrawable() == null){
-                iv_img.setImageResource(R.drawable.diary_default);
+                Glide.with(mContext)
+                        .load(R.drawable.diary_default)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .into(iv_img);
             }
         }
 

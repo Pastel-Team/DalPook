@@ -18,6 +18,7 @@ import com.pastel.dalpook.Calendar.DiaryActivity;
 import com.pastel.dalpook.DB.DBHelper;
 import com.pastel.dalpook.R;
 import com.pastel.dalpook.Utils.DiaryPagerAdapter;
+import com.pastel.dalpook.Utils.LoadingDialog;
 import com.pastel.dalpook.data.DiaryModels;
 
 import java.text.SimpleDateFormat;

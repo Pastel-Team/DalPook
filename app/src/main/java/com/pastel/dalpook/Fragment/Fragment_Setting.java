@@ -205,6 +205,7 @@ public class Fragment_Setting extends Fragment implements BillingProcessor.IBill
         btn_donate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 onPurchase();
             }
         });
@@ -248,9 +249,11 @@ public class Fragment_Setting extends Fragment implements BillingProcessor.IBill
     /**
      * 인앱 결제
      */
-
     private void onPurchase(){
-        bp.purchase(getActivity(), "donate");
+        if(bp.loadOwnedPurchasesFromGoogle() || bp.isPurchased(getString(R.string.bill_sku))){
+            bp.consumePurchase(getString(R.string.bill_sku));
+        }
+        bp.purchase(getActivity(), getString(R.string.bill_sku));
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -265,12 +268,8 @@ public class Fragment_Setting extends Fragment implements BillingProcessor.IBill
     @Override
     public void onProductPurchased(String productId, TransactionDetails details) {
         // 구매 성공시 호출
-        if (productId.equals(getString(R.string.bill_sku))) {
-            Toast.makeText(getContext(), "후원 해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
-
-            // 결제후 다시 지속 결제가 가능하도록 컨슘처리.
-            bp.consumePurchase(getString(R.string.bill_sku));
-        }
+        Toast.makeText(getContext(), "후원 해주셔서 감사합니다!", Toast.LENGTH_SHORT).show();
+        bp.consumePurchase(getString(R.string.bill_sku));
     }
 
     @Override
