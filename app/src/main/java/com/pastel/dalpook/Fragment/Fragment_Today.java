@@ -112,37 +112,6 @@ public class Fragment_Today extends Fragment {
 
                     listAdapter.addItem(setCal, cont, color, flag);
 
-                    /*
-                    int isAMorPM = setCal.get(Calendar.AM_PM);
-                    int Hour = setCal.get(Calendar.HOUR);
-                    String AMHour ="";
-                    if(Hour >= 0 && Hour < 10){
-                        AMHour = "0"+setCal.get(Calendar.HOUR);
-                        if(AMHour.equals("00")){
-                            AMHour = "12";
-                        }
-                    }else{
-                        AMHour = String.valueOf(setCal.get(Calendar.HOUR));
-                    }
-
-                    int Minute = setCal.get(Calendar.MINUTE);
-                    String AMMinute ="";
-                    if(Minute >= 0 && Minute < 10){
-                        AMMinute = "0"+ setCal.get(Calendar.MINUTE);
-                    }else{
-                        AMMinute = String.valueOf(setCal.get(Calendar.MINUTE));
-                    }
-                    switch (isAMorPM){
-                        case Calendar.AM :
-                            setTime = "오전 " + AMHour + ":" + AMMinute;
-                            break;
-                        case Calendar.PM :
-                            setTime = "오후 " + AMHour + ":" + AMMinute;
-                            break;
-                    }
-
-                     */
-
                 }while (cursor.moveToNext());
             }
         }
